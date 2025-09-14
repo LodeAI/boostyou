@@ -1,461 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BOOSTYOU.AI - Gaming Content Hub</title>
-
-<!-- SEO / Social -->
-<meta name="description" content="BOOSTYOU.AI — the hub for the latest gaming news, trailers, guides, and community submissions for modern games like GTA6, Cyberpunk 2077, Battlefield 6 and more.">
-<link rel="canonical" href="https://lodeai.github.io/boostyou/index.html">
-<meta property="og:title" content="BOOSTYOU.AI - Gaming Content Hub">
-<meta property="og:description" content="Latest gaming news, trailers, and community submissions.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://lodeai.github.io/boostyou/index.html">
-<meta property="og:image" content="https://lodeai.github.io/boostyou/preview.png">
-<meta name="twitter:card" content="summary_large_image">
-
-<!-- JSON-LD structured data for site -->
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"WebSite",
-  "name":"BOOSTYOU.AI",
-  "url":"https://lodeai.github.io/boostyou/",
-  "description":"Gaming news hub for trailers, guides and community content.",
-  "publisher": {
-    "@type":"Organization",
-    "name":"BOOSTYOU.AI"
-  }
-}
-</script>
-
-<!-- Google Analytics: Replace G-XXXXXXX with your measurement ID -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXX');
-</script>
-
-<style>
-  :root{
-    --bg:#0a0a0f; --card:#111218; --glass:rgba(255,255,255,0.03);
-    --accent1:#00ff88; --accent2:#00d4ff; --neon:#ff0080;
-    --text:#ffffff; --muted:rgba(255,255,255,0.68);
-    --radius:14px; --maxw:1200px;
-  }
-
-  /* Light variables (overridden when body.light) */
-  body.light { --bg: #f6f7fb; --card:#ffffff; --glass: rgba(0,0,0,0.04); --text:#111827; --muted:rgba(0,0,0,0.6); }
-  /* base layout */
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;}
-  body{background:linear-gradient(180deg,#07070a,#0e0e14);color:var(--text);min-height:100%;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:20px}
-
-  header{position:sticky;top:0;z-index:60;background:linear-gradient(180deg,rgba(6,6,8,0.55),rgba(6,6,8,0.35));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.02)}
-  .header-inner{display:flex;gap:16px;align-items:center;padding:12px 20px}
-  .logo{font-weight:800;letter-spacing:0.6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:18px}
-  .search{flex:1;position:relative}
-  .search input{width:100%;padding:10px 40px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:var(--text);outline:none}
-  .search .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.9}
-  .btn{padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
-  .subscribe-btn{background:linear-gradient(90deg,var(--neon),var(--accent2));color:#061018}
-  .theme-toggle{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
-
-  .top-controls{display:flex;gap:8px;align-items:center}
-
-  /* Filters */
-  .filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
-  .filter-group h4{margin:0 0 8px 0;color:var(--accent1);font-size:13px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{padding:8px 12px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer;font-size:13px;color:var(--muted)}
-  .chip.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061018;border-color:transparent;box-shadow:0 6px 30px rgba(0,255,136,0.06)}
-
-  /* Grid / cards */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin:18px 0}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-  .media{height:200px;background:#0b0b10;display:flex;align-items:center;justify-content:center;position:relative}
-  .media iframe{width:100%;height:100%;border:0}
-  .badge{position:absolute;top:10px;right:10px;padding:6px 10px;border-radius:10px;background:linear-gradient(90deg,var(--neon),var(--accent2));font-size:12px;font-weight:700;color:#061018}
-  .card-body{padding:14px;display:flex;flex-direction:column;gap:10px}
-  .title{font-weight:700;font-size:15px}
-  .tags{display:flex;gap:8px;flex-wrap:wrap}
-  .tag{background:linear-gradient(90deg,#8b5cf6,#00d4ff);color:#fff;padding:5px 8px;border-radius:8px;font-size:12px}
-  .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
-  .btn-link{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text);text-decoration:none}
-
-  .loading{padding:40px;text-align:center;color:var(--muted)}
-  .no-results{padding:40px;text-align:center;color:var(--muted)}
-
-  .ad-placeholder{padding:18px;text-align:center;border-radius:10px;border:1px dashed rgba(255,255,255,0.04);color:var(--muted);background:rgba(255,255,255,0.01)}
-
-  /* Modal/Submit */
-  .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);visibility:hidden;opacity:0;transition:opacity .18s}
-  .modal.show{visibility:visible;opacity:1}
-  .modal-card{background:linear-gradient(180deg,#0b0b10,#0f0f14);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);width:420px}
-  .modal h3{margin:0 0 8px 0}
-  .form-row{display:flex;gap:8px;margin-top:8px}
-  .form-row input, .form-row textarea, .form-row select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
-
-  @media (max-width:880px){.filters{grid-template-columns:1fr;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BoostYou.AI Gaming Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <style>
+    body {
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    #logo {
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+    #filters {
+      margin: 1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .card {
+      padding: 1rem;
+      border-radius: 8px;
+      background: var(--card-bg, #f4f4f4);
+      margin-bottom: 1rem;
+    }
+    .card img {
+      max-width: 100%;
+      border-radius: 6px;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .theme-gta6 { --card-bg: #2b2b3d; background: #1a1a24; color: #d2b3ff; }
+    .theme-battlefield6 { --card-bg: #344a3f; background: #1c2a24; color: #a8e6a1; }
+    .theme-wow { --card-bg: #1a2b4a; background: #0e1624; color: #ffd700; }
+    .theme-cod { --card-bg: #2a2a2a; background: #0d0d0d; color: #e0e0e0; }
+    .theme-fortnite { --card-bg: #3a1f4d; background: #2b1540; color: #ff66cc; }
+  </style>
 </head>
 <body>
   <header>
-    <div class="header-inner wrap">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="logo">BOOSTYOU.AI</div>
-        <div style="font-size:12px;color:var(--muted)">Gaming Content Hub • 2025</div>
-      </div>
-
-      <div class="search" style="flex:1;max-width:640px">
-        <span class="icon">🔍</span>
-        <input id="searchInput" placeholder="Search games, titles, content..." />
-      </div>
-
-      <div class="top-controls">
-        <select id="themeSelector" title="Pick a theme">
-          <option value="default">Default Theme</option>
-          <option value="gta6">GTA6</option>
-          <option value="cyberpunk">Cyberpunk 2077</option>
-          <option value="bf6">Battlefield 6</option>
-          <option value="elden">Elden Ring</option>
-        </select>
-
-        <button id="modeToggle" class="btn theme-toggle" title="Toggle light / dark">🌙</button>
-        <button id="submitNewsBtn" class="btn" title="Submit news">➕ Submit News</button>
-        <button id="subscribeBtn" class="btn subscribe-btn">Subscribe</button>
-      </div>
+    <input type="search" id="search" placeholder="Search news..." />
+    <div id="logo">boostyou.ai [LOGO]</div>
+    <div>
+      <button id="themeToggle">🌙</button>
+      <button id="subscribeBtn">Subscribe</button>
+      <button id="submitNewsBtn">Submit News</button>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="filters" id="filters">
-      <div class="filter-group">
-        <h4>Games</h4>
-        <div id="gameFilters" class="chips"></div>
-      </div>
+  <section id="filters" class="container">
+    <select id="gameFilter">
+      <option value="">All Games</option>
+    </select>
+    <select id="platformFilter">
+      <option value="">All Platforms</option>
+      <option value="YouTube">YouTube</option>
+      <option value="Shorts">YouTube Shorts</option>
+      <option value="TikTok">TikTok</option>
+      <option value="Instagram">Instagram</option>
+      <option value="Reddit">Reddit</option>
+      <option value="Article">Article</option>
+    </select>
+    <select id="timeFilter">
+      <option value="">Anytime</option>
+      <option value="daily">Last Day</option>
+      <option value="weekly">Last Week</option>
+      <option value="monthly">Last Month</option>
+      <option value="yearly">Last Year</option>
+    </select>
+  </section>
 
-      <div class="filter-group">
-        <h4>Platforms</h4>
-        <div id="platformFilters" class="chips"></div>
-      </div>
+  <main class="container" id="feed"></main>
 
-      <div class="filter-group">
-        <h4>Timeframe</h4>
-        <div id="timeFilters" class="chips">
-          <div class="chip" data-time="daily">Daily</div>
-          <div class="chip active" data-time="monthly">Monthly</div>
-          <div class="chip" data-time="weekly">Weekly</div>
-          <div class="chip" data-time="yearly">Yearly</div>
-        </div>
-      </div>
-    </section>
-
-    <div id="topAd" class="ad-placeholder" style="display:none">Ad slot (728x90)</div>
-
-    <section id="contentGrid" class="grid">
-      <div id="loadingBlock" class="loading">⏳ Loading content...</div>
-    </section>
-
-    <div id="midAd" class="ad-placeholder" style="display:none">Ad slot (300x250)</div>
-
-    <div id="sentinel" style="height:1px"></div>
-  </main>
+  <footer class="container">
+    <small>
+      <a href="#">About</a> • 
+      <a href="#">Contact</a> • 
+      <a href="#">Privacy</a>
+    </small>
+  </footer>
 
   <!-- Submit News Modal -->
-  <div id="submitModal" class="modal" aria-hidden="true">
-    <div class="modal-card">
-      <h3>Submit News / Content</h3>
-      <form id="submitForm">
-        <div style="margin-top:8px">
-          <input id="submitTitle" type="text" placeholder="Title" required />
-        </div>
-        <div style="margin-top:8px">
-          <input id="submitLink" type="url" placeholder="Content URL (https://...)" required />
-        </div>
-        <div style="margin-top:8px">
-          <input id="submitEmail" type="email" placeholder="Your email (will be auto-subscribed)" required />
-        </div>
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="subscribe-btn" type="submit" style="flex:1">Submit & Subscribe</button>
-          <button type="button" id="cancelSubmit" class="chip" style="align-self:center">Cancel</button>
-        </div>
-        <p id="submitMsg" style="color:var(--muted);margin-top:8px"></p>
+  <dialog id="submitNewsModal">
+    <article>
+      <h3>Submit Gaming News</h3>
+      <form id="submitNewsForm">
+        <input type="email" id="newsEmail" placeholder="Your Email" required />
+        <input type="url" id="newsLink" placeholder="News Link" required />
+        <button type="submit">Send</button>
+        <button type="button" onclick="submitNewsModal.close()">Cancel</button>
       </form>
-    </div>
-  </div>
+    </article>
+  </dialog>
 
-  <!-- Subscribe Modal (simple placeholder) -->
-  <div id="subscribeModal" class="modal" aria-hidden="true">
-    <div class="modal-card">
-      <h3>Subscribe to BOOSTYOU</h3>
+  <!-- Subscribe Modal -->
+  <dialog id="subscribeModal">
+    <article>
+      <h3>Subscribe to Newsletter</h3>
       <form id="subscribeForm">
-        <input id="subscribeEmail" type="email" placeholder="your@email.com" required />
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="subscribe-btn" type="submit" style="flex:1">Subscribe</button>
-          <button type="button" id="closeSub" class="chip" style="align-self:center">Close</button>
-        </div>
-        <p id="subMsg" style="color:var(--muted);margin-top:8px"></p>
+        <input type="text" id="firstname" placeholder="First Name" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <button type="submit">Subscribe</button>
+        <button type="button" onclick="subscribeModal.close()">Cancel</button>
       </form>
-    </div>
-  </div>
+    </article>
+  </dialog>
 
-<script>
-/* ---------------- App State ---------------- */
-const state = {
-  allContent: [],
-  filteredContent: [],
-  displayedCount: 0,
-  itemsPerLoad: 12,
-  filters: { games: [], platforms: [], timeframe: 'monthly', search: '' },
-  themes: ['default','gta6','cyberpunk','bf6','elden']
-};
+  <script>
+    const feed = document.getElementById('feed');
+    const gameFilter = document.getElementById('gameFilter');
+    const platformFilter = document.getElementById('platformFilter');
+    const timeFilter = document.getElementById('timeFilter');
+    const searchInput = document.getElementById('search');
+    let allData = [];
+    let visibleData = [];
+    let itemsPerLoad = 5;
+    let currentIndex = 0;
 
-/* ---------------- Utilities ---------------- */
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
-const escapeHtml = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
-function extractYouTubeId(url){ if(!url) return null; const m = url.match(/(?:youtube\\.com\\/(?:watch\\?v=|embed\\/)|youtu\\.be\\/)([A-Za-z0-9_-]{6,})/); return m?m[1]:null; }
-function formatDateISO(d){ const dt=new Date(d); if(isNaN(dt)) return ''; return dt.toLocaleString(); }
+    // Fetch data
+    async function loadData() {
+      // For demo, simulate loading from one file. You can extend to loop over /data folder.
+      const res = await fetch('/data/gaming.json');
+      const data = await res.json();
+      allData = data;
+      populateGameFilter();
+      applyFilters();
+    }
 
-/* ---------------- Load monthly data (tries last 12 months) ---------------- */
-async function loadAllMonthlyData(monthsToTry=12){
-  const now=new Date(); const merged=[];
-  for(let i=0;i<monthsToTry;i++){
-    const dt=new Date(now.getFullYear(), now.getMonth()-i, 1);
-    const y=dt.getFullYear(); const m=String(dt.getMonth()+1).padStart(2,'0');
-    const url=`data/content_${y}_${m}.json`;
-    try{
-      const res = await fetch(url, {cache:'no-cache'});
-      if(res.ok){
-        const json = await res.json();
-        if(Array.isArray(json) && json.length) merged.push(...json);
+    function populateGameFilter() {
+      const games = new Set();
+      allData.forEach(item => item.game.forEach(g => games.add(g)));
+      games.forEach(g => {
+        let opt = document.createElement('option');
+        opt.value = g;
+        opt.textContent = g;
+        gameFilter.appendChild(opt);
+      });
+    }
+
+    function applyFilters() {
+      const game = gameFilter.value;
+      const platform = platformFilter.value;
+      const timeframe = timeFilter.value;
+      const search = searchInput.value.toLowerCase();
+
+      visibleData = allData.filter(item => {
+        let match = true;
+        if (game && !item.game.includes(game)) match = false;
+        if (platform && item.platform !== platform) match = false;
+        if (search && !item.title.toLowerCase().includes(search)) match = false;
+        if (timeframe) {
+          const now = new Date();
+          const date = new Date(item.date);
+          if (timeframe === 'daily' && (now - date) > 86400000) match = false;
+          if (timeframe === 'weekly' && (now - date) > 604800000) match = false;
+          if (timeframe === 'monthly' && (now - date) > 2592000000) match = false;
+          if (timeframe === 'yearly' && (now - date) > 31536000000) match = false;
+        }
+        return match;
+      });
+
+      feed.innerHTML = '';
+      currentIndex = 0;
+      loadMore();
+    }
+
+    function loadMore() {
+      const slice = visibleData.slice(currentIndex, currentIndex + itemsPerLoad);
+      slice.forEach(item => renderCard(item));
+      currentIndex += itemsPerLoad;
+    }
+
+    function renderCard(item) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const unsplashUrl = `https://source.unsplash.com/400x200/?${item.game[0]},gaming`;
+      card.innerHTML = `
+        <h4>${item.title}</h4>
+        <p><strong>${item.game.join(', ')}</strong> • ${item.platform} • ${new Date(item.date).toLocaleString()}</p>
+        <img src="${unsplashUrl}" alt="${item.game[0]} preview">
+        <p><a href="${item.url}" target="_blank">Watch/Read</a></p>
+      `;
+      feed.appendChild(card);
+    }
+
+    // Infinite Scroll
+    window.addEventListener('scroll', () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        loadMore();
       }
-    }catch(e){
-      // skip quietly
-      console.log('skip',url);
-    }
-  }
-  return merged;
-}
-
-/* ---------------- Build filters ---------------- */
-function buildFilterChips(){
-  const games = [...new Set(state.allContent.flatMap(it => it.game || []))].sort();
-  const pf = $('#gameFilters'); pf.innerHTML='';
-  if(games.length===0) pf.innerHTML='<div style="color:var(--muted)">No games found</div>';
-  else { games.forEach(g=>{ const el=document.createElement('div'); el.className='chip active'; el.dataset.game=g; el.textContent=g; el.addEventListener('click',()=>toggleGameChip(el)); pf.appendChild(el); }); state.filters.games=games.slice(); }
-
-  const platforms = [...new Set(state.allContent.map(it=>it.platform).filter(Boolean))].sort();
-  const ppf = $('#platformFilters'); ppf.innerHTML='';
-  if(platforms.length===0) ppf.innerHTML='<div style="color:var(--muted)">No platforms found</div>';
-  else { platforms.forEach(p=>{ const el=document.createElement('div'); el.className='chip active'; el.dataset.platform=p; el.textContent=p; el.addEventListener('click',()=>togglePlatformChip(el)); ppf.appendChild(el);}); state.filters.platforms=platforms.slice(); }
-}
-
-/* ---------------- Toggle handlers ---------------- */
-function toggleGameChip(el){ el.classList.toggle('active'); state.filters.games = $$('#gameFilters .chip.active').map(x=>x.dataset.game); applyFilters(); }
-function togglePlatformChip(el){ el.classList.toggle('active'); state.filters.platforms = $$('#platformFilters .chip.active').map(x=>x.dataset.platform); applyFilters(); }
-
-/* ---------------- Apply filters ---------------- */
-function applyFilters(){
-  let items = state.allContent.slice();
-
-  // search
-  const q = state.filters.search && state.filters.search.trim().toLowerCase();
-  if(q) items = items.filter(it => (it.title||'').toLowerCase().includes(q) || (it.game||[]).join(' ').toLowerCase().includes(q));
-
-  // games
-  if(state.filters.games.length) items = items.filter(it => (it.game||[]).some(g=>state.filters.games.includes(g)));
-
-  // platforms
-  if(state.filters.platforms.length) items = items.filter(it => state.filters.platforms.includes(it.platform));
-
-  // timeframe
-  const tf = state.filters.timeframe || 'monthly';
-  if(tf!=='yearly'){
-    const now = Date.now(); let days=30;
-    if(tf==='daily') days=1; if(tf==='weekly') days=7;
-    const cutoff = now - days*24*60*60*1000;
-    items = items.filter(it => { const t=new Date(it.date).getTime(); return !isNaN(t) && t>=cutoff; });
-  }
-
-  // sort
-  items.sort((a,b)=> new Date(b.date)-new Date(a.date));
-  state.filteredContent = items;
-  // reset
-  state.displayedCount = 0;
-  $('#contentGrid').innerHTML = '';
-  renderMore();
-}
-
-/* ---------------- Render ---------------- */
-function createCard(item){
-  const card=document.createElement('article'); card.className='card';
-  const media=document.createElement('div'); media.className='media';
-  const yt=extractYouTubeId(item.url);
-  if(item.platform==='YouTube' && yt){ const iframe=document.createElement('iframe'); iframe.src=`https://www.youtube.com/embed/${yt}`; iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'; iframe.allowFullscreen=true; media.appendChild(iframe); }
-  else {
-    const ph=document.createElement('div'); ph.style.padding='20px'; ph.style.textAlign='center'; ph.style.color='var(--muted)'; ph.innerHTML=`<div style="font-size:28px">${getPlatformIcon(item.platform)}</div><div style="margin-top:8px">${escapeHtml(item.platform||'')}</div>`; media.appendChild(ph);
-  }
-  const badge=document.createElement('div'); badge.className='badge'; badge.textContent = item.platform || 'Content'; media.appendChild(badge);
-  card.appendChild(media);
-
-  const body=document.createElement('div'); body.className='card-body';
-  const title=document.createElement('div'); title.className='title'; title.innerHTML=escapeHtml(item.title||'Untitled'); body.appendChild(title);
-  const tagRow=document.createElement('div'); tagRow.className='tags'; (item.game||[]).slice(0,3).forEach(g=>{ const t=document.createElement('div'); t.className='tag'; t.textContent=g; tagRow.appendChild(t); }); body.appendChild(tagRow);
-  const meta=document.createElement('div'); meta.className='meta';
-  const date=document.createElement('div'); date.className='date'; date.textContent = formatDateISO(item.date);
-  const link=document.createElement('a'); link.className='btn-link'; link.href=item.url||'#'; link.target='_blank'; link.textContent='View';
-  meta.appendChild(date); meta.appendChild(link); body.appendChild(meta);
-  card.appendChild(body);
-  return card;
-}
-
-function getPlatformIcon(p){ const map={'YouTube':'📺','YouTubeShorts':'📱','Article':'📰','Reddit':'🔴','Instagram':'📸','TikTok':'🎵'}; return map[p]||'🎮'; }
-
-function renderMore(){
-  const grid=$('#contentGrid');
-  const start=state.displayedCount; const end=Math.min(state.filteredContent.length, start+state.itemsPerLoad);
-  if(start>=end){ if(state.displayedCount===0) grid.innerHTML = '<div class="no-results"><strong>No content found</strong><div style="margin-top:8px;color:var(--muted)">Try resetting filters or add content to /data</div></div>'; $('#loadingBlock').style.display='none'; return; }
-  for(let i=start;i<end;i++){
-    const item=state.filteredContent[i];
-    const card=createCard(item);
-    grid.appendChild(card);
-    if((i+1)%6===0){
-      const ad=document.createElement('div'); ad.className='ad-placeholder'; ad.style.display='none'; ad.textContent='Ad placeholder (in between cards)'; grid.appendChild(ad);
-    }
-  }
-  state.displayedCount=end;
-  $('#loadingBlock').style.display='none';
-}
-
-/* ---------------- Infinite scroll ---------------- */
-let observer;
-function setupInfiniteScroll(){
-  const sentinel=document.getElementById('sentinel');
-  if(observer) observer.disconnect();
-  observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) renderMore();
     });
-  }, {rootMargin:'400px'});
-  if(sentinel) observer.observe(sentinel);
-}
 
-/* ---------------- Theme / Mode handling ---------------- */
-function applySavedTheme(){
-  const mode = localStorage.getItem('bsy_mode') || 'dark';
-  if(mode==='light') document.body.classList.add('light'); else document.body.classList.remove('light');
-  const theme = localStorage.getItem('bsy_theme') || 'default';
-  // remove existing theme classes
-  state.themes.forEach(t => document.body.classList.remove('theme-'+t));
-  if(theme && theme!=='default') document.body.classList.add('theme-'+theme);
-  $('#themeSelector').value = theme;
-  $('#modeToggle').textContent = (mode==='light' ? '☀️' : '🌙');
-}
+    // Filters events
+    [gameFilter, platformFilter, timeFilter, searchInput].forEach(el => {
+      el.addEventListener('input', applyFilters);
+    });
 
-$('#modeToggle')?.addEventListener('click', ()=>{
-  const isLight = document.body.classList.toggle('light');
-  localStorage.setItem('bsy_mode', isLight ? 'light' : 'dark');
-  $('#modeToggle').textContent = isLight ? '☀️' : '🌙';
-});
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    });
 
-$('#themeSelector')?.addEventListener('change', (e)=>{
-  const v = e.target.value;
-  state.themes.forEach(t => document.body.classList.remove('theme-'+t));
-  if(v && v!=='default') document.body.classList.add('theme-'+v);
-  localStorage.setItem('bsy_theme', v);
-});
+    // Persist theme
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+    }
 
-/* ---------------- Submit news handling ---------------- */
-$('#submitNewsBtn')?.addEventListener('click', ()=> $('#submitModal').classList.add('show'));
-$('#cancelSubmit')?.addEventListener('click', ()=> $('#submitModal').classList.remove('show'));
-$('#submitForm')?.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const title = $('#submitTitle').value.trim();
-  const link = $('#submitLink').value.trim();
-  const email = $('#submitEmail').value.trim();
-  const msg = $('#submitMsg');
-  if(!title||!link||!email){ msg.textContent='Please fill all fields'; return; }
-  // store in localStorage as a fallback and "subscribe"
-  const pending = JSON.parse(localStorage.getItem('bsy_submissions')||'[]');
-  pending.push({title,link,email,date:new Date().toISOString()});
-  localStorage.setItem('bsy_submissions', JSON.stringify(pending));
-  // also store subscribed emails locally (demo only)
-  const subs = JSON.parse(localStorage.getItem('bsy_subscribed')||'[]');
-  if(!subs.includes(email)){ subs.push(email); localStorage.setItem('bsy_subscribed', JSON.stringify(subs)); }
-  msg.style.color='var(--accent1)'; msg.textContent='Thanks — submission saved. We auto-subscribed your email (demo).';
-  setTimeout(()=>{ msg.textContent=''; $('#submitModal').classList.remove('show'); $('#submitForm').reset(); }, 1800);
+    // Submit news modal
+    const submitNewsBtn = document.getElementById('submitNewsBtn');
+    const submitNewsModal = document.getElementById('submitNewsModal');
+    submitNewsBtn.onclick = () => submitNewsModal.showModal();
 
-  // Optional: if you provide a server endpoint, you can post here.
-  // Example:
-  // const BEEHIIV_ENDPOINT = 'https://your-server.example/submit';
-  // try{ await fetch(BEEHIIV_ENDPOINT, {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({title,link,email})}); }catch(e){console.log(e)}
-});
+    // Subscribe modal
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const subscribeModal = document.getElementById('subscribeModal');
+    subscribeBtn.onclick = () => subscribeModal.showModal();
 
-/* ---------------- Subscribe modal handling ---------------- */
-$('#subscribeBtn')?.addEventListener('click', ()=> $('#subscribeModal').classList.add('show'));
-$('#closeSub')?.addEventListener('click', ()=> $('#subscribeModal').classList.remove('show'));
-$('#subscribeForm')?.addEventListener('submit', (e)=>{ e.preventDefault(); const mail=$('#subscribeEmail').value.trim(); if(!mail){ $('#subMsg').textContent='Enter a valid email'; return;} const arr = JSON.parse(localStorage.getItem('bsy_subscribed')||'[]'); if(!arr.includes(mail)){ arr.push(mail); localStorage.setItem('bsy_subscribed', JSON.stringify(arr)); } $('#subMsg').textContent='Subscribed (demo).'; setTimeout(()=>{ $('#subscribeModal').classList.remove('show'); $('#subscribeForm').reset(); $('#subMsg').textContent=''; },1500); });
-
-/* ---------------- Initialization ---------------- */
-async function init(){
-  $('#loadingBlock').style.display='block';
-  applySavedTheme();
-  const monthly = await loadAllMonthlyData(12);
-  const sample = [
-    {"id":"1757871414916","title":"Grand Theft Auto VI Trailer 1","game":["GTA6"],"platform":"YouTube","url":"https://www.youtube.com/watch?v=QdBZY2fkU-0","date":"2025-09-14T17:31:00.000Z"},
-    {"id":"1757874102744","title":"Grand Theft Auto VI Trailer 2","game":["GTA6"],"platform":"YouTube","url":"https://www.youtube.com/watch?v=VQRLujxTm3c","date":"2025-09-14T18:21:00.000Z"}
-  ];
-  state.allContent = (monthly.length? monthly : sample).map(it=>{ if(it.game && !Array.isArray(it.game)) it.game=[it.game]; return it; });
-  buildFilterChips();
-
-  // wire time chips
-  $$('#timeFilters .chip').forEach(c=>c.addEventListener('click', ()=>{
-    $$('#timeFilters .chip').forEach(x=>x.classList.remove('active'));
-    c.classList.add('active');
-    state.filters.timeframe = c.dataset.time;
-    applyFilters();
-  }));
-
-  // search debounce
-  let d; $('#searchInput').addEventListener('input', e=>{ clearTimeout(d); d=setTimeout(()=>{ state.filters.search = e.target.value; applyFilters(); },300); });
-
-  // check for saved theme selection
-  const savedTheme = localStorage.getItem('bsy_theme') || 'default';
-  if(savedTheme && savedTheme!=='default'){ $('#themeSelector').value = savedTheme; state.themes.forEach(t=>document.body.classList.remove('theme-'+t)); document.body.classList.add('theme-'+savedTheme); }
-
-  applyFilters();
-  setupInfiniteScroll();
-  $('#loadingBlock').style.display='none';
-}
-
-/* ---------------- run ---------------- */
-document.addEventListener('DOMContentLoaded', init);
-</script>
-
-<!-- ---------------- Theme palettes (game-based) ---------------- -->
-<style>
-/* GTA6 theme */
-body.theme-gta6 { --accent1:#ff4c4c; --accent2:#ffb86b; --neon:#ff5c5c; }
-body.theme-gta6.light { --bg:#fff7f6; --card:#ffffff; --text:#111; --muted:rgba(0,0,0,0.6); }
-
-/* Cyberpunk 2077 palette */
-body.theme-cyberpunk { --accent1:#ffd400; --accent2:#00eaff; --neon:#ffd400; }
-body.theme-cyberpunk.light { --bg:#fffdfa; --card:#fff; --text:#111; --muted:rgba(0,0,0,0.6); }
-
-/* Battlefield 6 palette */
-body.theme-bf6 { --accent1:#ff9f1c; --accent2:#e63946; --neon:#ff9f1c; }
-body.theme-bf6.light { --bg:#fffaf6; --card:#fff; --text:#111; --muted:rgba(0,0,0,0.6); }
-
-/* Elden Ring palette */
-body.theme-elden { --accent1:#b48e5a; --accent2:#6b8a4a; --neon:#b48e5a; }
-body.theme-elden.light { --bg:#fbf8f2; --card:#fff; --text:#111; --muted:rgba(0,0,0,0.6); }
-</style>
-
+    // Start
+    loadData();
+  </script>
 </body>
 </html>
