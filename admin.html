@@ -101,6 +101,36 @@
   .modal.active { display:flex; }
   .modal-window { width:100%; max-width:780px; background:var(--card); border-radius:12px; padding:18px; border:1px solid var(--glass-border); }
 
+  /* Login splash screen */
+  .login-splash {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .login-splash h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--accent1);
+  }
+
+  .login-splash p {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0;
+    max-width: 500px;
+  }
+
+  /* Main dashboard - initially hidden */
+  #dashboard {
+    display: none;
+  }
+
   /* Responsiveness */
   @media (max-width:1100px) {
     .grid.cols-3 { grid-template-columns: 1fr; }
@@ -144,8 +174,14 @@
 
     <div id="statusArea"></div>
 
-    <!-- Main grid: files | add form + table | filters / helper -->
-    <main class="grid cols-3" style="align-items:start;">
+    <!-- Login splash screen (shown when not logged in) -->
+    <div id="loginSplash" class="login-splash">
+      <h2>Welcome to BOOSTYOU.AI Admin</h2>
+      <p>Please enter your GitHub credentials above to access the content management system. You'll need a Personal Access Token with repository permissions to manage your content files.</p>
+    </div>
+
+    <!-- Main dashboard (hidden initially, shown after login) -->
+    <main id="dashboard" class="grid cols-3" style="align-items:start;">
       <!-- Left: Files list -->
       <aside class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -409,6 +445,8 @@
   // ---------- DOM refs ----------
   const loginPanel = qs('loginPanel');
   const authPanel  = qs('authPanel');
+  const loginSplash = qs('loginSplash');
+  const dashboard = qs('dashboard');
   const whoDisplay = qs('whoDisplay');
 
   const patField   = qs('patField');
@@ -495,11 +533,13 @@
     if (auth) {
       loginPanel.style.display = 'none';
       authPanel.style.display  = 'flex';
-      qs('dashboard')?.style && (qs('dashboard').style.display = 'block');
+      loginSplash.style.display = 'none';
+      dashboard.style.display = 'block';
     } else {
       loginPanel.style.display = 'flex';
       authPanel.style.display  = 'none';
-      qs('dashboard')?.style && (qs('dashboard').style.display = 'none');
+      loginSplash.style.display = 'flex';
+      dashboard.style.display = 'none';
     }
   }
 
