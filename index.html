@@ -1,332 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BOOSTYOU.AI — Admin</title>
-  <style>
-    /* ---- Minimal gaming 2025 theme based on your original file ---- */
-    :root{
-      --bg:#05040a; --card:#0c0b10; --glass:rgba(255,255,255,0.04);
-      --glass-border:rgba(255,255,255,0.08);
-      --accent:#00ff88; --accent2:#7c3aed; --danger:#ef4444; --muted:rgba(255,255,255,0.6);
-      --maxWidth:1200px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
-    body{background:linear-gradient(180deg,#06050a 0%, #0b0810 100%); color:#fff; -webkit-font-smoothing:antialiased;}
-    .wrap{max-width:var(--maxWidth); margin:24px auto; padding:16px;}
-    .header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px;}
-    .brand{display:flex; gap:12px; align-items:center;}
-    .logo{width:56px; height:56px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-weight:800; color:#051018;}
-    .title{font-size:20px; font-weight:800; letter-spacing:-0.5px;}
-    .subtitle{font-size:12px; color:var(--muted); margin-top:2px;}
-    .controls{display:flex; gap:8px; align-items:center;}
-    .btn{padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:700}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#051018;}
-    .btn-ghost{background:transparent; border:1px solid var(--glass-border); color:var(--muted);}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--glass-border); padding:16px; border-radius:14px}
-    .grid{display:grid; gap:12px}
-    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
-    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
-    .flex{display:flex; gap:12px; align-items:center}
-    input[type=text], input[type=url], input[type=datetime-local], select, textarea{
-      width:100%; padding:10px; border-radius:8px; border:1px solid var(--glass-border); background:transparent; color:#fff;
-    }
-    label{font-size:13px; color:var(--muted); display:block; margin-bottom:6px}
-    .small{font-size:12px; color:var(--muted)}
-    .file-list{max-height:220px; overflow:auto; padding:8px; border-radius:10px; border:1px dashed var(--glass-border)}
-    table{width:100%; border-collapse:collapse; font-size:14px}
-    th, td{padding:10px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.03)}
-    th{color:var(--muted); font-weight:700}
-    .chips{display:flex; gap:8px; flex-wrap:wrap}
-    .chip{background:rgba(255,255,255,0.03); padding:6px 10px; border-radius:999px; font-size:13px}
-    .muted{color:var(--muted)}
-    .actions{display:flex; gap:8px}
-    .danger{background:linear-gradient(90deg,#ff6b6b,#ef4444); color:#fff}
-    .ok{background:linear-gradient(90deg,#10b981,#00c48f); color:#051018}
-    .searchbar{padding:10px 12px; border-radius:10px; background:transparent; border:1px solid var(--glass-border); color:#fff; width:360px}
-    @media(max-width:900px){
-      .grid.cols-3{grid-template-columns:1fr}
-      .header{flex-direction:column; align-items:stretch}
-      .controls{justify-content:space-between}
-      .searchbar{width:100%}
-    }
-    .status{padding:8px 10px; border-radius:8px; font-size:13px}
-    .status.ok{background:rgba(16,185,129,0.12); color:#10b981; border:1px solid rgba(16,185,129,0.14)}
-    .status.error{background:rgba(239,68,68,0.08); color:#ef4444; border:1px solid rgba(239,68,68,0.12)}
-    .file-meta{font-size:12px; color:var(--muted); margin-top:6px}
-    .empty{padding:24px; text-align:center; color:var(--muted)}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BOOSTYOU.AI — Admin</title>
+
+<!--
+  Full Admin Page
+  - Login with GitHub PAT (saved in localStorage)
+  - Lists /data/content_YYYY_MM.json files
+  - Load all month files, merge entries into a table
+  - Add / Edit / Delete entries -> commits to GitHub via REST API
+  - Mobile friendly, dark gaming style
+-->
+
+<style>
+  /* ---------- Theme ---------- */
+  :root{
+    --bg:#05030a; --card:#0d0c11; --glass:rgba(255,255,255,0.04);
+    --glass-border:rgba(255,255,255,0.07);
+    --accent1:#00ff88; --accent2:#7c3aed; --accent3:#ff5c8a;
+    --muted:rgba(255,255,255,0.65);
+    --danger:#ff6b6b;
+    --radius:14px;
+    --maxw:1300px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%; margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+  body{
+    background: radial-gradient(ellipse at 10% 20%, rgba(124,58,237,0.06), transparent 20%),
+                radial-gradient(ellipse at 90% 80%, rgba(0,255,136,0.03), transparent 20%),
+                var(--bg);
+    color: #fff;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+    padding:24px;
+  }
+
+  /* ---------- Layout ---------- */
+  .container { max-width:var(--maxw); margin: 0 auto; }
+  .header {
+    display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .brand { display:flex; gap:12px; align-items:center; }
+  .logo {
+    width:60px; height:60px; border-radius:12px;
+    background: linear-gradient(135deg,var(--accent1),var(--accent2));
+    display:flex; align-items:center; justify-content:center; font-weight:800; color:#051018;
+    font-size:20px;
+  }
+  .title { font-size:20px; font-weight:800; letter-spacing:-0.3px; }
+  .subtitle { font-size:12px; color:var(--muted); margin-top:2px; }
+
+  .top-controls { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+  .card { background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:var(--radius); padding:16px; border:1px solid var(--glass-border); }
+  .shadow-sm { box-shadow: 0 10px 30px rgba(2,6,23,0.4); }
+
+  .grid { display:grid; gap:14px; }
+  .grid.cols-3 { grid-template-columns: 360px 1fr 360px; }
+  .grid.cols-2 { grid-template-columns: 1fr 420px; }
+
+  label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  input[type=text], input[type=url], input[type=password], input[type=datetime-local], select, textarea {
+    width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.02); color:#fff;
+    font-size:14px;
+  }
+  .small { font-size:12px; color:var(--muted); }
+
+  .btn {
+    padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:700; font-size:14px;
+  }
+  .btn-primary { background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#051018; }
+  .btn-ghost { background:transparent; border:1px solid var(--glass-border); color:var(--muted); }
+  .btn-danger { background: linear-gradient(90deg,#ff6b6b,#ef4444); color:#fff; }
+  .btn-sm { padding:6px 10px; font-size:13px; border-radius:8px; }
+
+  .status { padding:10px; border-radius:10px; margin-bottom:12px; }
+  .status.ok { background: rgba(16,185,129,0.08); color:#10b981; border:1px solid rgba(16,185,129,0.12); }
+  .status.err { background: rgba(239,68,68,0.06); color:var(--danger); border:1px solid rgba(239,68,68,0.10); }
+
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th,td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; }
+  th { color:var(--muted); text-align:left; font-weight:700; font-size:13px; }
+  td small { color:var(--muted); display:block; font-size:12px; }
+
+  .file-list { max-height:320px; overflow:auto; padding:8px; border-radius:8px; border:1px dashed var(--glass-border); background:transparent; }
+  .file-item { padding:8px; border-radius:8px; display:flex; justify-content:space-between; gap:8px; align-items:center; }
+  .file-item:hover { background: rgba(255,255,255,0.01); }
+
+  .muted { color:var(--muted); }
+
+  .chips { display:flex; gap:8px; flex-wrap:wrap; }
+  .chip { padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.03); font-size:13px; }
+
+  /* Modal */
+  .modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,0.6); z-index:2000; padding:16px; }
+  .modal.active { display:flex; }
+  .modal-window { width:100%; max-width:780px; background:var(--card); border-radius:12px; padding:18px; border:1px solid var(--glass-border); }
+
+  /* Responsiveness */
+  @media (max-width:1100px) {
+    .grid.cols-3 { grid-template-columns: 1fr; }
+    .grid.cols-2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width:600px) {
+    .top-controls input { width:140px; }
+    .logo { width:48px; height:48px; }
+  }
+</style>
 </head>
 <body>
-  <div class="wrap" id="app">
-    <!-- Header / Login state -->
-    <div class="header">
+  <div class="container">
+    <header class="header">
       <div class="brand">
         <div class="logo">BY</div>
         <div>
           <div class="title">BOOSTYOU.AI — Admin</div>
-          <div class="subtitle small">Manage content_YYYY_MM.json files • Add / Edit / Remove entries • Commits via GitHub API</div>
+          <div class="subtitle">Manage content_YYYY_MM.json • Add / Edit / Delete • Commits to GitHub</div>
         </div>
       </div>
 
-      <div class="controls" id="topControls">
-        <!-- Login form shown when not authenticated -->
-        <div id="loginArea" style="display:flex; gap:8px; align-items:center;">
-          <input id="patInput" type="password" placeholder="GitHub Personal Access Token (PAT)" style="width:320px" />
-          <input id="ownerInput" type="text" placeholder="Repo owner (username/org)" style="width:180px" />
-          <input id="repoInput" type="text" placeholder="Repo name" style="width:180px" />
-          <button class="btn btn-primary" id="loginBtn">Login</button>
+      <div class="top-controls">
+        <!-- Login area (when logged out) -->
+        <div id="loginPanel" style="display:flex; gap:8px; align-items:center;">
+          <input id="patField" type="password" placeholder="GitHub Personal Access Token (PAT)" style="width:360px" />
+          <input id="ownerField" type="text" placeholder="Repo owner (username/org)" style="width:180px" />
+          <input id="repoField"  type="text" placeholder="Repo name" style="width:180px" />
+          <button id="loginBtn" class="btn btn-primary">Login</button>
         </div>
 
-        <!-- When logged in -->
-        <div id="authArea" style="display:none; gap:8px; align-items:center;">
-          <div id="who" class="muted small">Logged in as <span id="whoName">—</span></div>
-          <button class="btn btn-ghost" id="logoutBtn">Logout</button>
+        <!-- Auth area (when logged in) -->
+        <div id="authPanel" style="display:none; gap:8px; align-items:center;">
+          <div class="small muted">Logged in as <strong id="whoDisplay">—</strong></div>
+          <button id="testBtn" class="btn btn-ghost btn-sm">Test</button>
+          <button id="refreshBtnTop" class="btn btn-ghost btn-sm">Refresh</button>
+          <button id="logoutBtn" class="btn btn-ghost btn-sm">Logout</button>
         </div>
       </div>
-    </div>
+    </header>
 
-    <!-- Status -->
-    <div id="statusBar" style="margin-bottom:12px"></div>
+    <div id="statusArea"></div>
 
-    <!-- Main dashboard -->
-    <div id="dashboard" style="display:none;">
-      <div class="grid cols-3" style="margin-bottom:12px;">
-        <div class="card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
-            <div style="font-weight:800">Repository / Data</div>
-            <div class="small muted">Files in /data/</div>
-          </div>
-          <div class="file-list" id="filesBox">
-            <div class="muted small">Loading data files…</div>
-          </div>
-          <div class="file-meta" id="filesMeta"></div>
+    <!-- Main grid: files | add form + table | filters / helper -->
+    <main class="grid cols-3" style="align-items:start;">
+      <!-- Left: Files list -->
+      <aside class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="font-weight:800">Repository / Data</div>
+          <div class="small muted">files in /data</div>
         </div>
 
-        <div class="card">
-          <div style="font-weight:800; margin-bottom:8px">Quick Add</div>
-          <div class="small muted" style="margin-bottom:10px">Add an entry to the current month's <strong>content_YYYY_MM.json</strong></div>
-
-          <div style="margin-bottom:8px">
-            <label>Title</label>
-            <input id="inputTitle" type="text" placeholder="Title e.g. GTA6 trailer leak" />
-          </div>
-
-          <div style="margin-bottom:8px">
-            <label>Games (comma separated)</label>
-            <input id="inputGames" type="text" placeholder="GTA6,BF6" />
-          </div>
-
-          <div style="margin-bottom:8px">
-            <label>Platform</label>
-            <select id="inputPlatform">
-              <option>Article</option>
-              <option>Reddit</option>
-              <option>YouTube</option>
-              <option>YouTubeShorts</option>
-              <option>Instagram</option>
-              <option>TikTok</option>
-            </select>
-          </div>
-
-          <div style="margin-bottom:8px">
-            <label>URL</label>
-            <input id="inputURL" type="url" placeholder="https://..." />
-          </div>
-
-          <div style="margin-bottom:8px">
-            <label>Date & time (UTC)</label>
-            <input id="inputDate" type="datetime-local" />
-          </div>
-
-          <div style="display:flex; gap:8px; margin-top:8px;">
-            <button class="btn btn-primary" id="addBtn">Add Content</button>
-            <button class="btn btn-ghost" id="refreshBtn">Refresh Files</button>
-          </div>
+        <div id="filesBox" class="file-list muted">
+          Loading files...
         </div>
 
-        <div class="card">
-          <div style="font-weight:800; margin-bottom:8px">Search / Filters</div>
+        <div style="display:flex; gap:8px; margin-top:12px;">
+          <button id="downloadMonthBtn" class="btn btn-ghost btn-sm">Download current month JSON</button>
+          <button id="wipeMonthBtn" class="btn btn-danger btn-sm">Wipe current month</button>
+        </div>
 
-          <div style="margin-bottom:10px">
-            <label>Search (title / url / game)</label>
-            <input id="searchInput" type="text" placeholder="Search…" />
-          </div>
+        <div id="filesMeta" class="small muted" style="margin-top:12px;"></div>
+      </aside>
 
-          <div style="margin-bottom:10px">
-            <label>Filter platform</label>
-            <div class="chips" id="filterPlatforms">
-              <!-- generated -->
+      <!-- Middle: Add form & table -->
+      <section>
+        <div class="card" style="margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-weight:800">Quick Add Content</div>
+              <div class="small muted">Adds into the current month's content_YYYY_MM.json (creates file if missing)</div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <input id="searchInput" type="text" placeholder="Search title / url / games" style="width:360px;" />
             </div>
           </div>
 
-          <div style="margin-bottom:8px">
-            <label>Timeframe</label>
-            <select id="timeframeSelect">
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly" selected>Monthly</option>
-              <option value="yearly">Yearly</option>
-            </select>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
+            <div>
+              <label>Title</label>
+              <input id="titleInput" type="text" placeholder="GTA6 trailer leak" />
+            </div>
+            <div>
+              <label>Games (comma separated)</label>
+              <input id="gamesInput" type="text" placeholder="GTA6,BF6" />
+            </div>
+            <div>
+              <label>Platform</label>
+              <select id="platformInput">
+                <option>Article</option><option>Reddit</option><option>YouTube</option><option>YouTubeShorts</option>
+                <option>Instagram</option><option>TikTok</option>
+              </select>
+            </div>
+            <div>
+              <label>URL</label>
+              <input id="urlInput" type="url" placeholder="https://..." />
+            </div>
+
+            <div>
+              <label>Date & Time (local)</label>
+              <input id="dateInput" type="datetime-local" />
+            </div>
+            <div style="display:flex; align-items:end; gap:8px;">
+              <button id="addBtn" class="btn btn-primary">Add Content</button>
+              <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            </div>
           </div>
-
-          <div style="margin-top:8px">
-            <div class="small muted">Tip: click rows in table below to edit directly.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Table of content entries -->
-      <div class="card" style="margin-bottom:14px">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
-          <div style="font-weight:800">All Content Entries</div>
-          <div class="small muted">Live editing directly in your Git repo</div>
-        </div>
-
-        <div style="overflow:auto;">
-          <table id="entriesTable">
-            <thead>
-              <tr><th>ID</th><th>Title</th><th>Games</th><th>Platform</th><th>Date (UTC)</th><th>URL</th><th>Actions</th></tr>
-            </thead>
-            <tbody>
-              <tr><td colspan="7" class="empty">No data loaded yet. Click <strong>Refresh Files</strong> after login.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="grid cols-2">
-        <div class="card">
-          <div style="font-weight:800; margin-bottom:8px">Selected File Content (debug)</div>
-          <pre id="selectedFilePre" style="white-space:pre-wrap; max-height:280px; overflow:auto; padding:10px; border-radius:8px; background:rgba(0,0,0,0.35)"></pre>
         </div>
 
         <div class="card">
-          <div style="font-weight:800; margin-bottom:8px">Actions</div>
-          <div style="display:flex; gap:8px; flex-direction:column;">
-            <button class="btn btn-ghost" id="downloadJsonBtn">Download current month JSON</button>
-            <button class="btn danger" id="wipeMonthBtn">Delete current month file (danger)</button>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-weight:800">All Content Entries</div>
+            <div class="small muted">Click "Edit" to open the editor</div>
           </div>
-          <div class="small muted" style="margin-top:10px">All writes commit to the repo. Review commit messages in the repo.</div>
+
+          <div style="overflow:auto; max-height:520px;">
+            <table id="entriesTable">
+              <thead>
+                <tr><th style="width:110px">ID</th><th>Title</th><th style="width:160px">Games</th><th style="width:120px">Platform</th><th style="width:160px">Date</th><th style="width:180px">URL</th><th style="width:120px"></th></tr>
+              </thead>
+              <tbody id="entriesBody">
+                <tr><td colspan="7" class="muted">No entries loaded. Click Refresh.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Filters / Info -->
+      <aside class="card">
+        <div style="font-weight:800; margin-bottom:8px">Filters</div>
+
+        <div style="margin-bottom:10px;">
+          <label>Platforms</label>
+          <div class="chips" id="platformChips">
+            <label><input type="checkbox" class="plat" value="Article" checked /> Article</label>
+            <label><input type="checkbox" class="plat" value="Reddit" checked /> Reddit</label>
+            <label><input type="checkbox" class="plat" value="YouTube" checked /> YouTube</label>
+            <label><input type="checkbox" class="plat" value="YouTubeShorts" checked /> Shorts</label>
+            <label><input type="checkbox" class="plat" value="Instagram" checked /> Instagram</label>
+            <label><input type="checkbox" class="plat" value="TikTok" checked /> TikTok</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label>Timeframe</label>
+          <select id="timeframeSelect">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly" selected>Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div style="font-weight:700; margin-bottom:6px">Repo Help</div>
+          <div class="small muted">
+            This admin uses GitHub REST API to read & write files under <code>/data/</code>. You need a PAT with <strong>repo</strong> scope to write.
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal" aria-hidden="true">
+    <div class="modal-window">
+      <h3 style="margin-top:0">Edit Entry</h3>
+
+      <div style="display:grid; gap:10px;">
+        <div>
+          <label>Title</label>
+          <input id="editTitle" type="text" />
+        </div>
+        <div>
+          <label>Games (comma separated)</label>
+          <input id="editGames" type="text" />
+        </div>
+        <div>
+          <label>Platform</label>
+          <select id="editPlatform">
+            <option>Article</option><option>Reddit</option><option>YouTube</option><option>YouTubeShorts</option><option>Instagram</option><option>TikTok</option>
+          </select>
+        </div>
+        <div>
+          <label>URL</label>
+          <input id="editUrl" type="url" />
+        </div>
+        <div>
+          <label>Date & Time (local)</label>
+          <input id="editDate" type="datetime-local" />
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:6px;">
+          <button id="deleteBtn" class="btn btn-danger">Delete</button>
+          <button id="saveBtn" class="btn btn-primary">Save</button>
+          <button id="cancelBtn" class="btn btn-ghost">Cancel</button>
         </div>
       </div>
     </div>
-
-    <!-- Edit modal -->
-    <div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:20px;">
-      <div style="background:var(--card); padding:18px; border-radius:12px; max-width:720px; width:100%;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
-          <div style="font-weight:800">Edit Entry</div>
-          <button id="closeEdit" class="btn btn-ghost">Close</button>
-        </div>
-
-        <div style="margin-bottom:8px"><label>Title</label><input id="editTitle" type="text"></div>
-        <div style="margin-bottom:8px"><label>Games (comma separated)</label><input id="editGames" type="text"></div>
-        <div style="margin-bottom:8px"><label>Platform</label>
-          <select id="editPlatform"><option>Article</option><option>Reddit</option><option>YouTube</option><option>YouTubeShorts</option><option>Instagram</option><option>TikTok</option></select>
-        </div>
-        <div style="margin-bottom:8px"><label>URL</label><input id="editURL" type="url"></div>
-        <div style="margin-bottom:8px"><label>Date & time (UTC)</label><input id="editDate" type="datetime-local"></div>
-
-        <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:10px">
-          <button id="deleteEntryBtn" class="btn danger">Delete</button>
-          <button id="saveEntryBtn" class="btn ok">Save changes</button>
-        </div>
-      </div>
-    </div>
-
   </div>
 
 <script>
 /*
-  Admin page logic
-  - Login with GitHub PAT
-  - List /data/ files named content_YYYY_MM.json
-  - Load all month files and show merged list
-  - Add entry -> append to current month file -> PUT commit
-  - Edit / Delete -> modify the month file -> PUT commit
+  BOOSTYOU.AI - admin.html
+  - login with GitHub PAT
+  - load /data/content_YYYY_MM.json files
+  - add/edit/delete entries (commit via GitHub API)
+  - files are base64 encoded in GitHub contents API
 */
 
 (() => {
-  // --- Helpers ---
-  function qs(id){return document.getElementById(id)}
-  function showStatus(html, kind='') {
-    const status = qs('statusBar')
-    status.innerHTML = html ? ('<div class="status '+(kind||'')+'">'+html+'</div>') : ''
+  // ---------- Utilities ----------
+  const qs = id => document.getElementById(id);
+  const el = sel => document.querySelector(sel);
+  const qsa = sel => Array.from(document.querySelectorAll(sel));
+
+  function status(msg, ok=true) {
+    const bar = qs('statusArea');
+    if (!msg) { bar.innerHTML = ''; return; }
+    bar.innerHTML = `<div class="status ${ok ? 'ok' : 'err'}">${msg}</div>`;
   }
-  function isoNowLocalInput() {
+
+  // encode unicode safely
+  function b64EncodeUnicode(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+  function b64DecodeUnicode(b64) {
+    try {
+      return decodeURIComponent(escape(atob(b64)));
+    } catch(e) {
+      // fallback
+      return atob(b64);
+    }
+  }
+
+  function isoLocalNowInput() {
     const now = new Date();
-    // convert to local datetime-local value (no timezone suffix)
-    const tzOffset = now.getTimezoneOffset()*60000;
+    const tzOffset = now.getTimezoneOffset() * 60000;
     const local = new Date(now - tzOffset);
     return local.toISOString().slice(0,16);
   }
-  function encodeContentUnicode(str){
-    // base64 encode unicode
-    return btoa(unescape(encodeURIComponent(str)));
-  }
-  function decodeContentUnicode(base64){
-    try { return decodeURIComponent(escape(atob(base64))); }
-    catch(e){ return atob(base64); }
-  }
-  function formatISOForDisplay(iso) {
-    try { return new Date(iso).toISOString().replace('T',' ').replace('Z',''); }
-    catch(e){ return iso; }
-  }
-  function monthFileNameFromDate(d) {
+
+  function monthFileNameFromDateUTC(d) {
     const y = d.getUTCFullYear();
     const m = String(d.getUTCMonth()+1).padStart(2,'0');
     return `content_${y}_${m}.json`;
   }
 
-  // --- State ---
-  let state = {
-    token: null,
-    owner: null,
-    repo: null,
-    username: null,
-    filesMeta: [], // file entries from /data/
-    fileContents: {}, // filename -> {sha, content (parsed array)}
-    mergedEntries: [], // flattened entries with metadata: {file, index}
-    selectedFileName: null
-  };
-
-  // --- DOM references & init ---
-  const loginArea = qs('loginArea'), authArea = qs('authArea'), dashboard = qs('dashboard');
-  const patInput = qs('patInput'), ownerInput = qs('ownerInput'), repoInput = qs('repoInput');
-  const loginBtn = qs('loginBtn'), logoutBtn = qs('logoutBtn');
-  const filesBox = qs('filesBox'), filesMeta = qs('filesMeta');
-  const addBtn = qs('addBtn'), refreshBtn = qs('refreshBtn'), searchInput = qs('searchInput');
-  const inputTitle = qs('inputTitle'), inputGames = qs('inputGames'), inputPlatform = qs('inputPlatform'), inputURL = qs('inputURL'), inputDate = qs('inputDate');
-  const entriesTableBody = qs('entriesTable').querySelector('tbody');
-  const selectedFilePre = qs('selectedFilePre');
-  const downloadJsonBtn = qs('downloadJsonBtn'), wipeMonthBtn = qs('wipeMonthBtn');
-
-  const editModal = qs('editModal'), closeEdit = qs('closeEdit');
-  const editTitle = qs('editTitle'), editGames = qs('editGames'), editPlatform = qs('editPlatform'), editURL = qs('editURL'), editDate = qs('editDate');
-  const saveEntryBtn = qs('saveEntryBtn'), deleteEntryBtn = qs('deleteEntryBtn');
-
-  // prefill date inputs
-  inputDate.value = isoNowLocalInput();
-  editDate.value = isoNowLocalInput();
-
-  // --- Storage ---
-  const LS_KEY = 'boostyou_admin_settings_v1';
-  function saveSettingsToLocal() {
-    const settings = { token: state.token, owner: state.owner, repo: state.repo, username: state.username };
-    localStorage.setItem(LS_KEY, JSON.stringify(settings));
-  }
-  function loadSettingsFromLocal() {
-    const raw = localStorage.getItem(LS_KEY);
-    if(raw) {
-      try { const s = JSON.parse(raw); state.token = s.token; state.owner = s.owner; state.repo = s.repo; state.username = s.username; }
-      catch(e){}
+  function formatISOForTable(iso) {
+    try {
+      const d = new Date(iso);
+      return d.toISOString().replace('T',' ').replace('Z','');
+    } catch(e) {
+      return iso;
     }
   }
 
-  // --- GitHub API helpers ---
+  // ---------- App state ----------
+  const state = {
+    token: null, owner: null, repo: null,
+    username: null,
+    filesMeta: [],         // array of file meta objects from /contents/data
+    fileContents: {},      // filename => { sha, arr }
+    mergedEntries: [],     // flattened with meta: { ...entry, __file, __index }
+    selectedFile: null,
+  };
+
+  // ---------- GitHub helpers ----------
   function ghHeaders() {
     return {
       'Authorization': 'token ' + state.token,
@@ -337,418 +380,556 @@
   async function ghGet(path) {
     const url = `https://api.github.com${path}`;
     const res = await fetch(url, { headers: ghHeaders() });
-    if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    // return { ok, status, json } style? just handle upstream
+    if (!res.ok) {
+      const txt = await res.text();
+      const err = new Error(`GitHub GET ${res.status} ${res.statusText}: ${txt}`);
+      err.status = res.status;
+      throw err;
+    }
     return res.json();
   }
 
-  async function ghPut(path, body) {
+  async function ghPut(path, bodyObj) {
     const url = `https://api.github.com${path}`;
-    const res = await fetch(url, { method:'PUT', headers: {...ghHeaders(), 'Content-Type':'application/json'}, body: JSON.stringify(body) });
-    const txt = await res.text();
-    if(!res.ok) throw new Error(`PUT ${res.status} ${res.statusText} ${txt}`);
-    return JSON.parse(txt);
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify(bodyObj)
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      const err = new Error(`GitHub PUT ${res.status} ${res.statusText}: ${txt}`);
+      err.status = res.status;
+      throw err;
+    }
+    return res.json();
   }
 
-  // --- Login / Auth ---
-  async function handleLogin(){
-    const pat = patInput.value.trim();
-    const owner = ownerInput.value.trim();
-    const repo = repoInput.value.trim();
-    if(!pat || !owner || !repo) { showStatus('Enter token, owner and repo', 'error'); return; }
-    state.token = pat; state.owner = owner; state.repo = repo;
-    showStatus('Checking token…');
+  // ---------- DOM refs ----------
+  const loginPanel = qs('loginPanel');
+  const authPanel  = qs('authPanel');
+  const whoDisplay = qs('whoDisplay');
 
+  const patField   = qs('patField');
+  const ownerField = qs('ownerField');
+  const repoField  = qs('repoField');
+  const loginBtn   = qs('loginBtn');
+  const logoutBtn  = qs('logoutBtn');
+  const testBtn    = qs('testBtn');
+  const refreshBtnTop = qs('refreshBtnTop');
+
+  const filesBox   = qs('filesBox');
+  const filesMeta  = qs('filesMeta');
+  const downloadMonthBtn = qs('downloadMonthBtn');
+  const wipeMonthBtn = qs('wipeMonthBtn');
+
+  const titleInput  = qs('titleInput');
+  const gamesInput  = qs('gamesInput');
+  const platformInput = qs('platformInput');
+  const urlInput = qs('urlInput');
+  const dateInput = qs('dateInput');
+  const addBtn = qs('addBtn');
+  const clearBtn = qs('clearBtn');
+  const searchInput = qs('searchInput');
+
+  const entriesBody = qs('entriesBody');
+
+  const platformCheckboxes = () => qsa('.plat');
+
+  // Edit modal refs
+  const editModal = qs('editModal');
+  const editTitle = qs('editTitle');
+  const editGames = qs('editGames');
+  const editPlatform = qs('editPlatform');
+  const editUrl = qs('editUrl');
+  const editDate = qs('editDate');
+  const saveBtn = qs('saveBtn');
+  const deleteBtn = qs('deleteBtn');
+  const cancelBtn = qs('cancelBtn');
+
+  // ---------- Local storage (settings) ----------
+  const LS_KEY = 'boostyou_admin_v3';
+  function saveSettings() {
+    const obj = { token: state.token, owner: state.owner, repo: state.repo, username: state.username };
+    localStorage.setItem(LS_KEY, JSON.stringify(obj));
+  }
+  function loadSettings() {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return false;
     try {
-      const user = await ghGet('/user');
-      state.username = user.login;
-      saveSettingsToLocal();
-      showStatus('Authenticated as '+user.login,'ok');
-      onAuthenticated();
-    } catch(err) {
+      const o = JSON.parse(raw);
+      state.token = o.token; state.owner = o.owner; state.repo = o.repo; state.username = o.username;
+      if (state.token) patField.value = state.token;
+      if (state.owner) ownerField.value = state.owner;
+      if (state.repo) repoField.value = state.repo;
+      return true;
+    } catch(e) { return false; }
+  }
+
+  // ---------- Auth flow ----------
+  async function login() {
+    const token = patField.value.trim();
+    const owner = ownerField.value.trim();
+    const repo  = repoField.value.trim();
+    if (!token || !owner || !repo) { status('Enter PAT, owner and repo', false); return; }
+    state.token = token; state.owner = owner; state.repo = repo;
+    status('Checking token…');
+    try {
+      const u = await ghGet('/user');
+      state.username = u.login || u.name || u.email || 'unknown';
+      whoDisplay.textContent = state.username;
+      saveSettings();
+      showAuthUI(true);
+      status(`Authenticated as ${state.username}`, true);
+      await refreshAllFiles();
+    } catch (err) {
       console.error(err);
-      showStatus('Auth failed: '+err.message, 'error');
+      status('Authentication failed: ' + (err.message||err), false);
       state.token = null;
+      showAuthUI(false);
     }
   }
 
-  async function handleLogout(){
+  function showAuthUI(auth) {
+    if (auth) {
+      loginPanel.style.display = 'none';
+      authPanel.style.display  = 'flex';
+      qs('dashboard')?.style && (qs('dashboard').style.display = 'block');
+    } else {
+      loginPanel.style.display = 'flex';
+      authPanel.style.display  = 'none';
+      qs('dashboard')?.style && (qs('dashboard').style.display = 'none');
+    }
+  }
+
+  function logout() {
     localStorage.removeItem(LS_KEY);
-    state = { token:null, owner:null, repo:null, username:null, filesMeta:[], fileContents:{}, mergedEntries:[] };
-    patInput.value=''; ownerInput.value=''; repoInput.value='';
-    showStatus('');
-    loginArea.style.display='flex'; authArea.style.display='none'; dashboard.style.display='none';
+    state.token = null; state.owner = null; state.repo = null; state.username = null;
+    whoDisplay.textContent = '—';
+    showAuthUI(false);
+    status('Logged out');
   }
 
-  // --- On auth success ---
-  function onAuthenticated(){
-    loginArea.style.display='none';
-    authArea.style.display='flex';
-    dashboard.style.display='block';
-    qs('whoName').textContent = state.username || state.owner;
-    saveSettingsToLocal();
-    refreshAllFiles();
+  // ---------- Files & content ----------
+  function isMonthFilename(name) {
+    return /^content_\d{4}_\d{2}\.json$/.test(name);
   }
 
-  // --- File listing and loading ---
-  async function refreshAllFiles() {
-    showStatus('Loading /data/ file list…');
-    state.filesMeta = []; state.fileContents = {}; state.mergedEntries = [];
-    filesBox.innerHTML = '<div class="muted small">Loading…</div>';
+  async function listDataFiles() {
+    // GET /repos/:owner/:repo/contents/data
     try {
-      // list contents of /data folder
-      const resp = await fetch(`https://api.github.com/repos/${state.owner}/${state.repo}/contents/data`, { headers: ghHeaders() });
-      if(resp.status === 404) {
+      const path = `/repos/${state.owner}/${state.repo}/contents/data`;
+      const res = await fetch(`https://api.github.com${path}`, { headers: ghHeaders() });
+      if (res.status === 404) {
         // no data folder yet
-        filesBox.innerHTML = '<div class="muted small">No /data/ folder found. The first save will create it.</div>';
-        filesMeta.innerHTML = '';
-        selectedFilePre.textContent = '';
-        showStatus('No data folder yet. Create content by adding an entry.', 'ok');
-        return;
+        return [];
       }
-      if(!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
-      const list = await resp.json();
-      // filter for files named content_YYYY_MM.json
-      const files = list.filter(f => /^content_\\d{4}_\\d{2}\\.json$/.test(f.name));
-      state.filesMeta = files;
-      renderFilesList();
-      // load each file content
-      for(const f of files){
-        await loadFileContent(f.name);
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(`List data error ${res.status}: ${txt}`);
       }
-      buildMergedEntries();
-      renderEntriesTable();
-      showStatus('Loaded '+files.length+' month files','ok');
-    } catch(err) {
-      console.error(err);
-      filesBox.innerHTML = '<div class="muted small">Error loading files: '+err.message+'</div>';
-      showStatus('Error: '+err.message, 'error');
-    }
-  }
-
-  function renderFilesList(){
-    if(!state.filesMeta || state.filesMeta.length===0) {
-      filesBox.innerHTML = '<div class="muted small">No content_YYYY_MM.json files found.</div>';
-      filesMeta.textContent = '';
-      return;
-    }
-    const html = state.filesMeta.map(f => {
-      const dt = new Date(f.sha ? f.sha.substring(0,0) : f.sha); // no date in item; we'll just show name
-      return `<div style="padding:6px 8px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-weight:700">${f.name}</div>
-          <div class="small muted">Size: ${f.size} bytes</div>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <button class="btn btn-ghost" onclick="selectFile('${f.name}')">View</button>
-        </div>
-      </div>`;
-    }).join('');
-    filesBox.innerHTML = html;
-    filesMeta.textContent = state.filesMeta.length+' file(s)';
-  }
-
-  async function selectFile(filename){
-    qs('selectedFilePre').textContent = 'Loading '+filename+'…';
-    state.selectedFileName = filename;
-    if(!state.fileContents[filename]) {
-      try {
-        await loadFileContent(filename);
-      } catch(e) {
-        showStatus('Error loading file: '+e.message, 'error');
-        return;
-      }
-    }
-    const fc = state.fileContents[filename];
-    qs('selectedFilePre').textContent = JSON.stringify(fc.content, null, 2);
-    // highlight corresponding entries in table (not implemented fancy)
-  }
-
-  async function loadFileContent(filename){
-    try {
-      const res = await fetch(`https://api.github.com/repos/${state.owner}/${state.repo}/contents/data/${filename}`, { headers: ghHeaders() });
-      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-      const j = await res.json();
-      const decoded = decodeContentUnicode(j.content);
-      let parsed = [];
-      try { parsed = JSON.parse(decoded); }
-      catch(e){ parsed = []; }
-      state.fileContents[filename] = { sha: j.sha, content: parsed, raw: decoded };
-      return state.fileContents[filename];
-    } catch(err) {
-      console.error('loadFileContent err', err);
+      const arr = await res.json();
+      // filter to files only and our naming pattern
+      const files = arr.filter(item => item.type === 'file' && isMonthFilename(item.name));
+      return files;
+    } catch (err) {
       throw err;
     }
   }
 
-  // Build a flattened list of entries from loaded files
-  function buildMergedEntries(){
+  async function loadFileContent(filename) {
+    // GET /repos/:owner/:repo/contents/data/filename
+    try {
+      const path = `/repos/${state.owner}/${state.repo}/contents/data/${filename}`;
+      const res = await fetch(`https://api.github.com${path}`, { headers: ghHeaders() });
+      if (res.status === 404) {
+        return null;
+      }
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(`Load file error ${res.status}: ${txt}`);
+      }
+      const j = await res.json();
+      // j.content is base64
+      const decoded = b64DecodeUnicode(j.content);
+      let arr = [];
+      try { arr = JSON.parse(decoded); if (!Array.isArray(arr)) arr = []; } catch(e){ arr = []; }
+      state.fileContents[filename] = { sha: j.sha, arr };
+      return state.fileContents[filename];
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async function refreshAllFiles() {
+    try {
+      status('Loading files...');
+      state.filesMeta = []; state.fileContents = {}; state.mergedEntries = [];
+      filesBox.innerHTML = '<div class="muted">Loading…</div>';
+      const files = await listDataFiles();
+      state.filesMeta = files;
+      if (!files || files.length === 0) {
+        filesBox.innerHTML = '<div class="muted">No content_YYYY_MM.json files found in /data.</div>';
+        filesMeta.innerText = '0 files';
+        // still try to render table empty
+        renderEntries([]);
+        status('No files found — create an entry to start', true);
+        return;
+      }
+
+      // show file list with counts placeholder
+      filesBox.innerHTML = files.map(f => `<div class="file-item"><div><strong>${f.name}</strong><div class="small muted">size: ${f.size} bytes</div></div><div><button class="btn btn-ghost btn-sm" data-file="${f.name}">View</button></div></div>`).join('');
+      filesMeta.innerText = `${files.length} file(s)`;
+
+      // attach click handlers for View buttons
+      qsa('.file-item button').forEach(btn => {
+        btn.onclick = (ev) => {
+          const name = btn.getAttribute('data-file');
+          selectFile(name);
+        };
+      });
+
+      // load file contents in parallel (safe)
+      await Promise.all(files.map(async f => {
+        try { await loadFileContent(f.name); } catch(e) { console.warn('load file failed', f.name, e); }
+      }));
+
+      // build merged entries list
+      buildMergedEntriesFromState();
+
+      // render entries table
+      renderEntries(state.mergedEntries);
+
+      status(`Loaded ${files.length} file(s)`, true);
+    } catch (err) {
+      console.error(err);
+      status('Error loading files: ' + (err.message||err), false);
+      filesBox.innerHTML = `<div class="muted">Error loading files: ${err.message || err}</div>`;
+    }
+  }
+
+  function buildMergedEntriesFromState() {
     state.mergedEntries = [];
-    for(const [filename, obj] of Object.entries(state.fileContents)){
-      const arr = Array.isArray(obj.content) ? obj.content : [];
-      for(let i=0;i<arr.length;i++){
-        const e = arr[i];
-        state.mergedEntries.push(Object.assign({}, e, { __file: filename, __index: i }));
+    for (const filename of Object.keys(state.fileContents)) {
+      const obj = state.fileContents[filename];
+      const arr = Array.isArray(obj.arr) ? obj.arr : [];
+      for (let i = 0; i < arr.length; i++) {
+        const entry = arr[i];
+        // normalize: ensure game array
+        if (entry.game && !Array.isArray(entry.game)) entry.game = [entry.game];
+        state.mergedEntries.push(Object.assign({}, entry, { __file: filename, __index: i }));
       }
     }
     // sort by date desc
-    state.mergedEntries.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    state.mergedEntries.sort((a,b) => new Date(b.date) - new Date(a.date));
   }
 
-  // Render entries table based on filters/search
-  function renderEntriesTable(){
-    const q = (searchInput.value||'').toLowerCase().trim();
-    const tbody = entriesTableBody;
-    if(!state.mergedEntries || state.mergedEntries.length===0){
-      tbody.innerHTML = '<tr><td colspan="7" class="empty">No entries available. Add new content to start.</td></tr>';
-      return;
-    }
-    // apply search filter (title, url, game)
-    const filtered = state.mergedEntries.filter(e=>{
-      if(!q) return true;
-      if((e.title||'').toLowerCase().includes(q)) return true;
-      if((e.url||'').toLowerCase().includes(q)) return true;
-      if((Array.isArray(e.game) ? e.game.join(',') : (e.game||'')).toLowerCase().includes(q)) return true;
+  function renderEntries(list) {
+    const search = (searchInput.value || '').trim().toLowerCase();
+    const allowedPlatforms = qsa('.plat').filter(c => c.checked).map(c => c.value);
+    const timeframe = qs('timeframeSelect').value;
+
+    // apply timeframe to compute start date
+    let since = null;
+    const now = new Date();
+    if (timeframe === 'daily') { since = new Date(now.getTime() - 24*60*60*1000); }
+    else if (timeframe === 'weekly') { since = new Date(now.getTime() - 7*24*60*60*1000); }
+    else if (timeframe === 'monthly') { since = new Date(now.getTime() - 30*24*60*60*1000); }
+    else if (timeframe === 'yearly') { since = new Date(now.getTime() - 365*24*60*60*1000); }
+
+    const filtered = (list || []).filter(e => {
+      // platform filter
+      if (allowedPlatforms.length && !allowedPlatforms.includes(e.platform)) return false;
+      // timeframe filter
+      if (since && e.date) {
+        const d = new Date(e.date);
+        if (d < since) return false;
+      }
+      // search
+      if (!search) return true;
+      if ((e.title||'').toLowerCase().includes(search)) return true;
+      if ((e.url||'').toLowerCase().includes(search)) return true;
+      if (Array.isArray(e.game) && e.game.join(',').toLowerCase().includes(search)) return true;
       return false;
     });
 
+    if (!filtered || filtered.length === 0) {
+      entriesBody.innerHTML = `<tr><td colspan="7" class="muted">No entries match the current filters.</td></tr>`;
+      return;
+    }
+
     const rows = filtered.map(e => {
-      const games = Array.isArray(e.game) ? e.game.join(', ') : (e.game||'');
-      const dateStr = e.date ? new Date(e.date).toISOString().replace('T',' ').replace('Z','') : '';
+      const games = Array.isArray(e.game) ? e.game.join(', ') : (e.game || '');
+      const dateStr = e.date ? formatISOForTable(e.date) : '';
+      const shortUrl = e.url ? (e.url.length > 60 ? e.url.slice(0,56)+'…' : e.url) : '';
       return `<tr data-file="${e.__file}" data-index="${e.__index}">
         <td style="font-size:12px; color:var(--muted)">${e.id || ''}</td>
-        <td>${escapeHtml(e.title||'')}</td>
-        <td class="muted small">${escapeHtml(games)}</td>
-        <td>${escapeHtml(e.platform||'')}</td>
+        <td>${escapeHTML(e.title || '')}</td>
+        <td class="muted small">${escapeHTML(games)}</td>
+        <td>${escapeHTML(e.platform || '')}</td>
         <td class="muted small">${dateStr}</td>
-        <td style="max-width:260px; overflow:hidden; text-overflow:ellipsis;"><a href="${e.url||'#'}" target="_blank" class="muted small">${escapeHtml(e.url||'')}</a></td>
-        <td>
-          <div class="actions">
-            <button class="btn btn-ghost" onclick="onEditEntry('${e.__file}', ${e.__index})">Edit</button>
-            <button class="btn danger" onclick="onDeleteEntry('${e.__file}', ${e.__index})">Delete</button>
-          </div>
+        <td style="max-width:220px; overflow:hidden; text-overflow:ellipsis;"><a href="${escapeHTML(e.url || '#')}" target="_blank" class="muted small">${escapeHTML(shortUrl)}</a></td>
+        <td style="text-align:right;">
+          <button class="btn btn-ghost btn-sm" data-action="edit" data-file="${e.__file}" data-index="${e.__index}">Edit</button>
+          <button class="btn btn-danger btn-sm" data-action="del" data-file="${e.__file}" data-index="${e.__index}">Delete</button>
         </td>
       </tr>`;
     }).join('');
-    tbody.innerHTML = rows || '<tr><td colspan="7" class="empty">No entries match your search.</td></tr>';
+    entriesBody.innerHTML = rows;
+
+    // wire edit/delete buttons
+    entriesBody.querySelectorAll('button[data-action]').forEach(b => {
+      const act = b.getAttribute('data-action');
+      const file = b.getAttribute('data-file');
+      const idx  = Number(b.getAttribute('data-index'));
+      b.onclick = (ev) => {
+        ev.preventDefault();
+        if (act === 'edit') openEditModal(file, idx);
+        if (act === 'del') deleteEntryConfirm(file, idx);
+      };
+    });
   }
 
-  // escape helper for HTML injection safety in this UI
-  function escapeHtml(str) {
-    if(!str) return '';
-    return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
-  }
+  // ---------- Add / Write / Update ----------
+  async function addEntry() {
+    const title = (titleInput.value || '').trim();
+    const games = (gamesInput.value || '').split(',').map(s => s.trim()).filter(Boolean);
+    const platform = platformInput.value;
+    const url = (urlInput.value || '').trim();
+    const dateVal = dateInput.value;
 
-  // --- Add new entry logic ---
-  async function addNewEntry(){
-    const title = inputTitle.value.trim();
-    const games = inputGames.value.split(',').map(s=>s.trim()).filter(Boolean);
-    const platform = inputPlatform.value;
-    const url = inputURL.value.trim();
-    const dateVal = inputDate.value;
-    if(!title || !url) {
-      showStatus('Title and URL required', 'error'); return;
+    if (!title || !url) {
+      status('Title and URL are required', false); return;
     }
     const isoDate = dateVal ? new Date(dateVal).toISOString() : new Date().toISOString();
-    // build entry
     const entry = {
       id: Date.now().toString(),
       title, game: games, platform, url, date: isoDate
     };
 
-    // determine current month file
+    // current month file (UTC)
     const now = new Date();
-    const filename = monthFileNameFromDate(now);
-
-    // ensure file is loaded
-    let fileObj = state.fileContents[filename];
-    if(!fileObj){
-      // file not yet present on repo; attempt to fetch to check if exists
-      try {
-        await loadFileContent(filename);
-        fileObj = state.fileContents[filename];
-      } catch(e){
-        // file doesn't exist — we'll create new
-        fileObj = null;
-      }
-    }
+    const filename = monthFileNameFromDateUTC(now);
 
     try {
-      if(fileObj){
-        // append and update existing file
-        const arr = Array.isArray(fileObj.content) ? fileObj.content : [];
+      let existing = state.fileContents[filename];
+      if (existing && Array.isArray(existing.arr)) {
+        const arr = existing.arr.slice();
         arr.push(entry);
-        await writeFileToGit(`data/${filename}`, arr, fileObj.sha, `Add entry to ${filename} (${entry.title})`);
+        await writeFileToGit(filename, arr, existing.sha, `Add entry to ${filename} — ${title}`);
       } else {
-        // create new file with initial array
-        await writeFileToGit(`data/${filename}`, [entry], null, `Create ${filename} — initial content: ${entry.title}`);
+        // file not present: create it
+        await writeFileToGit(filename, [entry], null, `Create ${filename} — initial entry: ${title}`);
       }
-      showStatus('Entry added and committed', 'ok');
-      // refresh view
-      await refreshAllFiles();
       // clear inputs
-      inputTitle.value=''; inputGames.value=''; inputURL.value=''; inputDate.value = isoNowLocalInput();
-    } catch(err){
+      titleInput.value = ''; gamesInput.value = ''; urlInput.value = ''; dateInput.value = isoLocalNowInput();
+      // refresh
+      await refreshAllFiles();
+      status('Entry added and committed', true);
+    } catch (err) {
       console.error(err);
-      showStatus('Error adding entry: '+err.message, 'error');
+      status('Error adding entry: ' + (err.message||err), false);
     }
   }
 
-  // --- Write file to GitHub (create or update) ---
-  async function writeFileToGit(path, jsonArray, sha, commitMessage){
-    // JSON stringify
-    const bodyStr = JSON.stringify(jsonArray, null, 2);
-    const content = encodeContentUnicode(bodyStr);
-    const body = { message: commitMessage, content };
-    if(sha) body.sha = sha;
+  async function writeFileToGit(filename, arr, sha, message) {
+    // path: data/filename
+    const path = `data/${filename}`;
+    const content = b64EncodeUnicode(JSON.stringify(arr, null, 2));
+    const body = { message: message || `Update ${filename}`, content };
+    if (sha) body.sha = sha;
+
     try {
       const res = await ghPut(`/repos/${state.owner}/${state.repo}/contents/${path}`, body);
-      // update local cached fileContents
-      if(res && res.content && res.content.name){
-        const filename = res.content.name;
-        // re-fetch content to get decoded parsed value
-        await loadFileContent(filename);
+      // update local cache with new sha and content
+      if (res && res.content && res.content.name) {
+        // fetch content freshly to parse and store arr and sha
+        await loadFileContent(res.content.name);
+      } else {
+        // fallback: update local cache
+        state.fileContents[filename] = { sha: res.content && res.content.sha ? res.content.sha : sha, arr };
       }
       return res;
-    } catch(err){
-      console.error('writeFileToGit err', err);
+    } catch (err) {
       throw err;
     }
   }
 
-  // --- Edit / Delete actions ---
-  window.onEditEntry = async function(filename, index){
-    // open modal and populate with selected entry
-    const file = state.fileContents[filename];
-    if(!file) return alert('File not loaded');
-    const arr = Array.isArray(file.content) ? file.content : [];
-    const entry = arr[index];
-    if(!entry) return alert('Entry not found');
-    // fill modal
-    editTitle.value = entry.title || '';
-    editGames.value = Array.isArray(entry.game) ? entry.game.join(',') : (entry.game||'');
-    editPlatform.value = entry.platform || 'Article';
-    editURL.value = entry.url || '';
-    // convert ISO to local datetime-local
+  // ---------- Edit / Delete entry ----------
+  function openEditModal(filename, index) {
+    const fileObj = state.fileContents[filename];
+    if (!fileObj) { status('File not loaded', false); return; }
+    const entry = fileObj.arr[index];
+    if (!entry) { status('Entry not found', false); return; }
+
+    // populate modal
+    qs('editTitle').value = entry.title || '';
+    qs('editGames').value = (Array.isArray(entry.game) ? entry.game.join(',') : entry.game || '');
+    qs('editPlatform').value = entry.platform || 'Article';
+    qs('editUrl').value = entry.url || '';
+    // convert ISO to datetime-local
     try {
       const dt = new Date(entry.date || new Date().toISOString());
-      const tzOffset = dt.getTimezoneOffset()*60000;
+      const tzOffset = dt.getTimezoneOffset() * 60000;
       const local = new Date(dt - tzOffset).toISOString().slice(0,16);
-      editDate.value = local;
-    } catch(e){ editDate.value = isoNowLocalInput(); }
+      qs('editDate').value = local;
+    } catch(e) {
+      qs('editDate').value = isoLocalNowInput();
+    }
 
-    editModal.style.display = 'flex';
-    // attach save logic (store closure)
-    saveEntryBtn.onclick = async () => {
-      try {
-        const newEntry = {
-          ...entry,
-          title: editTitle.value.trim(),
-          game: editGames.value.split(',').map(s=>s.trim()).filter(Boolean),
-          platform: editPlatform.value,
-          url: editURL.value.trim(),
-          date: new Date(editDate.value).toISOString()
-        };
-        // update array
-        const newArr = Array.isArray(file.content) ? file.content.slice() : [];
-        newArr[index] = newEntry;
-        await writeFileToGit(`data/${filename}`, newArr, file.sha, `Update ${filename} — edit ${newEntry.title}`);
-        editModal.style.display = 'none';
-        await refreshAllFiles();
-        showStatus('Entry updated', 'ok');
-      } catch(err) {
-        console.error(err);
-        showStatus('Error updating entry: '+err.message,'error');
-      }
+    // set modal state
+    editModal.dataset.file = filename;
+    editModal.dataset.index = index;
+    editModal.classList.add('active');
+  }
+
+  async function saveEdit() {
+    const filename = editModal.dataset.file;
+    const index = Number(editModal.dataset.index);
+    const fileObj = state.fileContents[filename];
+    if (!fileObj) { status('File not loaded', false); return; }
+    const arr = Array.isArray(fileObj.arr) ? fileObj.arr.slice() : [];
+    if (index < 0 || index >= arr.length) { status('Invalid index', false); return; }
+
+    const updated = {
+      ...arr[index],
+      title: (editTitle.value || '').trim(),
+      game: (editGames.value || '').split(',').map(s=>s.trim()).filter(Boolean),
+      platform: editPlatform.value,
+      url: (editUrl.value || '').trim(),
+      date: new Date(editDate.value).toISOString()
     };
+    arr[index] = updated;
 
-    deleteEntryBtn.onclick = async () => {
-      if(!confirm('Delete this entry? This will remove it from the monthly file and commit the change.')) return;
-      try {
-        const newArr = (Array.isArray(file.content) ? file.content.slice() : []).filter((_,i)=>i!==index);
-        await writeFileToGit(`data/${filename}`, newArr, file.sha, `Delete entry from ${filename}`);
-        editModal.style.display = 'none';
-        await refreshAllFiles();
-        showStatus('Entry deleted', 'ok');
-      } catch(err){
-        console.error(err);
-        showStatus('Error deleting: '+err.message, 'error');
-      }
-    };
-  };
-
-  window.onDeleteEntry = async function(filename, index){
-    if(!confirm('Are you sure? This will permanently remove the entry from the month file.')) return;
-    const file = state.fileContents[filename];
-    if(!file) return showStatus('File not loaded', 'error');
     try {
-      const newArr = (Array.isArray(file.content) ? file.content.slice() : []).filter((_,i)=>i!==index);
-      await writeFileToGit(`data/${filename}`, newArr, file.sha, `Delete entry from ${filename}`);
+      await writeFileToGit(filename, arr, fileObj.sha, `Edit entry in ${filename} — ${updated.title}`);
+      editModal.classList.remove('active');
       await refreshAllFiles();
-      showStatus('Entry deleted', 'ok');
-    } catch(err){
+      status('Entry updated', true);
+    } catch (err) {
       console.error(err);
-      showStatus('Error deleting entry: '+err.message, 'error');
+      status('Error updating entry: ' + (err.message||err), false);
     }
-  };
-
-  // --- Utility actions ---
-  async function downloadCurrentMonthJson(){
-    const now = new Date();
-    const fn = monthFileNameFromDate(now);
-    const file = state.fileContents[fn];
-    if(!file) return alert('Current month file not found.');
-    const blob = new Blob([JSON.stringify(file.content, null, 2)], { type:'application/json' });
-    const u = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = u; a.download = fn; document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(u);
   }
 
-  async function wipeCurrentMonthFile(){
-    if(!confirm('This will DELETE the current month file from the repo (committing a change). Are you sure?')) return;
-    const now = new Date();
-    const fn = monthFileNameFromDate(now);
-    const file = state.fileContents[fn];
-    if(!file) return alert('File not present.');
-    // To delete a file via GitHub API: must provide sha and use DELETE with message (but GitHub's v3 uses PUT - not trivial).
-    // Simpler: overwrite with empty array [] as safer approach
+  async function deleteEntryConfirm(filename, index) {
+    if (!confirm('Delete this entry from the monthly file? This will commit the change.')) return;
     try {
-      await writeFileToGit(`data/${fn}`, [], file.sha, `Wipe ${fn} (set to empty array)`);
+      const fileObj = state.fileContents[filename];
+      if (!fileObj) { status('File not loaded', false); return; }
+      const arr = (Array.isArray(fileObj.arr) ? fileObj.arr.slice() : []).filter((_,i) => i !== index);
+      await writeFileToGit(filename, arr, fileObj.sha, `Delete entry from ${filename}`);
       await refreshAllFiles();
-      showStatus('Month file wiped (set to empty array).', 'ok');
-    } catch(err){
-      showStatus('Error wiping file: '+err.message, 'error');
+      status('Entry deleted', true);
+    } catch (err) {
+      console.error(err);
+      status('Error deleting entry: ' + (err.message||err), false);
     }
   }
 
-  // --- Event wiring ---
-  loginBtn.addEventListener('click', handleLogin);
-  logoutBtn.addEventListener('click', handleLogout);
-  refreshBtn.addEventListener('click', refreshAllFiles);
-  addBtn.addEventListener('click', addNewEntry);
-  downloadJsonBtn.addEventListener('click', downloadCurrentMonthJson);
-  wipeMonthBtn.addEventListener('click', wipeCurrentMonthFile);
-  closeEdit.addEventListener('click', ()=> editModal.style.display = 'none');
-  searchInput.addEventListener('input', renderEntriesTable);
-
-  // --- Init from local storage ---
-  loadSettingsFromLocal();
-  if(state.token && state.owner && state.repo){
-    patInput.value = state.token; ownerInput.value = state.owner; repoInput.value = state.repo;
-    // try auto-login (validate token)
-    (async ()=>{
-      try {
-        showStatus('Auto-checking stored token…');
-        const user = await ghGet('/user');
-        state.username = user.login;
-        onAuthenticated();
-      } catch(e){
-        console.warn('Auto-login failed', e);
-        showStatus('');
-        handleLogout();
-      }
-    })();
+  // handle delete from modal
+  async function deleteFromModal() {
+    const filename = editModal.dataset.file;
+    const index = Number(editModal.dataset.index);
+    if (!confirm('Are you sure you want to DELETE this entry?')) return;
+    await deleteEntryConfirm(filename, index);
+    editModal.classList.remove('active');
   }
+
+  // ---------- Utility actions ----------
+  async function downloadCurrentMonth() {
+    const fn = monthFileNameFromDateUTC(new Date());
+    const fileObj = state.fileContents[fn];
+    if (!fileObj) { alert('Current month file not found'); return; }
+    const blob = new Blob([JSON.stringify(fileObj.arr, null, 2)], { type:'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = fn; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function wipeCurrentMonthFile() {
+    if (!confirm('Wipe current month file (this will set it to an empty array and commit)?')) return;
+    const fn = monthFileNameFromDateUTC(new Date());
+    const fileObj = state.fileContents[fn];
+    if (!fileObj) { alert('File not present'); return; }
+    try {
+      await writeFileToGit(fn, [], fileObj.sha, `Wipe ${fn} (set empty)`);
+      await refreshAllFiles();
+      status('Current month wiped (set to empty array)', true);
+    } catch (err) {
+      console.error(err);
+      status('Error wiping file: '+(err.message||err), false);
+    }
+  }
+
+  // escape helper for html output
+  function escapeHTML(s) {
+    if (!s && s !== 0) return '';
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // ---------- Event wiring ----------
+  loginBtn.addEventListener('click', login);
+  logoutBtn.addEventListener('click', logout);
+  testBtn.addEventListener('click', async () => {
+    if (!state.token) { status('No token set', false); return; }
+    try {
+      const u = await ghGet('/user');
+      status('Token OK — ' + (u.login || u.name), true);
+    } catch (err) {
+      status('Token test failed: ' + (err.message||err), false);
+    }
+  });
+  refreshBtnTop.addEventListener('click', () => refreshAllFiles());
+  qs('refreshBtn') && qs('refreshBtn').addEventListener('click', () => refreshAllFiles());
+
+  addBtn.addEventListener('click', addEntry);
+  clearBtn.addEventListener('click', () => { titleInput.value=''; gamesInput.value=''; urlInput.value=''; dateInput.value = isoLocalNowInput(); });
+
+  searchInput.addEventListener('input', () => renderEntries(state.mergedEntries));
+  qsa('.plat').forEach(c => c.addEventListener('change', () => renderEntries(state.mergedEntries)));
+  qs('timeframeSelect').addEventListener('change', () => renderEntries(state.mergedEntries));
+
+  // modal events
+  saveBtn.addEventListener('click', saveEdit);
+  deleteBtn.addEventListener('click', deleteFromModal);
+  cancelBtn.addEventListener('click', () => editModal.classList.remove('active'));
+  // close modal on backdrop click
+  editModal.addEventListener('click', (ev) => { if (ev.target === editModal) editModal.classList.remove('active'); });
+
+  downloadMonthBtn.addEventListener('click', downloadCurrentMonth);
+  wipeMonthBtn.addEventListener('click', wipeCurrentMonthFile);
+
+  // ---------- Init ----------
+  (function init() {
+    // prefill date inputs
+    dateInput.value = isoLocalNowInput();
+    editDate.value = isoLocalNowInput();
+
+    loadSettings();
+    if (state.token && state.owner && state.repo) {
+      // try auto-login
+      (async () => {
+        try {
+          status('Auto-checking stored token…');
+          const u = await ghGet('/user');
+          state.username = u.login || u.name;
+          whoDisplay.textContent = state.username;
+          showAuthUI(true);
+          await refreshAllFiles();
+          status('Auto-authenticated as ' + state.username, true);
+        } catch (err) {
+          console.warn('Auto-login failed', err);
+          status('', true);
+          showAuthUI(false);
+        }
+      })();
+    } else {
+      showAuthUI(false);
+    }
+  })();
 
 })();
 </script>
