@@ -1,236 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BoostYou.AI Gaming Hub</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-  <style>
-    body {
-      transition: background 0.3s, color 0.3s;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    #logo {
-      font-weight: bold;
-      font-size: 1.3rem;
-    }
-    #filters {
-      margin: 1rem 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-    }
-    .card {
-      padding: 1rem;
-      border-radius: 8px;
-      background: var(--card-bg, #f4f4f4);
-      margin-bottom: 1rem;
-    }
-    .card img {
-      max-width: 100%;
-      border-radius: 6px;
-    }
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-    }
-    .theme-gta6 { --card-bg: #2b2b3d; background: #1a1a24; color: #d2b3ff; }
-    .theme-battlefield6 { --card-bg: #344a3f; background: #1c2a24; color: #a8e6a1; }
-    .theme-wow { --card-bg: #1a2b4a; background: #0e1624; color: #ffd700; }
-    .theme-cod { --card-bg: #2a2a2a; background: #0d0d0d; color: #e0e0e0; }
-    .theme-fortnite { --card-bg: #3a1f4d; background: #2b1540; color: #ff66cc; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoostYou.ai - Gaming News 2025</title>
+<meta name="description" content="BoostYou.ai brings you the latest gaming news, trailers, updates, and highlights from GTA6, Battlefield 6, Fortnite, Call of Duty, World of Warcraft, and more. Stay ahead in gaming with curated content.">
+<meta name="keywords" content="Gaming news, GTA6, Battlefield 6, Fortnite, Call of Duty, World of Warcraft, trailers, YouTube, TikTok, Instagram, Reddit, gaming updates">
+<meta name="author" content="BoostYou.ai">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="BoostYou.ai - Gaming News 2025">
+<meta property="og:description" content="BoostYou.ai brings you the latest gaming news, trailers, updates, and highlights from GTA6, Battlefield 6, Fortnite, Call of Duty, World of Warcraft, and more.">
+<meta property="og:image" content="https://yourdomain.com/placeholder-image.png">
+<meta property="og:url" content="https://boostyou.ai">
+<meta property="og:site_name" content="BoostYou.ai">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BoostYou.ai - Gaming News 2025">
+<meta name="twitter:description" content="BoostYou.ai brings you the latest gaming news, trailers, updates, and highlights from GTA6, Battlefield 6, Fortnite, Call of Duty, World of Warcraft, and more.">
+<meta name="twitter:image" content="https://yourdomain.com/placeholder-image.png">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://boostyou.ai">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "name": "BoostYou.ai",
+  "url": "https://boostyou.ai",
+  "logo": "https://yourdomain.com/logo-placeholder.png",
+  "sameAs": [
+    "https://twitter.com/yourhandle",
+    "https://facebook.com/yourpage",
+    "https://instagram.com/yourpage",
+    "https://youtube.com/yourchannel"
+  ]
+}
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<!-- Fonts + Tailwind CSS for modern responsive design -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Game themes light/dark */
+  :root {
+    --GTA6-light: #FFD700; --GTA6-dark: #B8860B;
+    --BF6-light: #00BFFF; --BF6-dark: #1E90FF;
+    --WoW-light: #32CD32; --WoW-dark: #006400;
+    --CoD-light: #DC143C; --CoD-dark: #8B0000;
+    --Fortnite-light: #FF69B4; --Fortnite-dark: #C71585;
+  }
+  body.light { background-color: #f5f5f5; color: #111; }
+  body.dark { background-color: #111; color: #f5f5f5; }
+  .card { border-radius: 1rem; padding: 1rem; margin-bottom: 1rem; transition: background 0.3s, color 0.3s;}
+</style>
 </head>
-<body>
-  <header>
-    <input type="search" id="search" placeholder="Search news..." />
-    <div id="logo">boostyou.ai [LOGO]</div>
-    <div>
-      <button id="themeToggle">🌙</button>
-      <button id="subscribeBtn">Subscribe</button>
-      <button id="submitNewsBtn">Submit News</button>
+
+<body class="light font-sans">
+<!-- Header -->
+<header class="flex flex-col md:flex-row items-center justify-between p-4 bg-gray-900 text-white sticky top-0 z-50">
+  <div class="flex items-center space-x-4 w-full md:w-auto">
+    <div class="text-2xl font-bold">BoostYou.ai</div>
+    <input type="text" id="search" placeholder="Search..." class="px-2 py-1 rounded text-black w-full md:w-64">
+  </div>
+  <div class="flex items-center space-x-4 mt-2 md:mt-0">
+    <button id="themeBtn" class="px-3 py-1 rounded bg-gray-700">Toggle Light/Dark</button>
+    <select id="gameTheme" class="px-3 py-1 rounded bg-gray-700">
+      <option value="">Select Game Theme</option>
+      <option value="GTA6">GTA6</option>
+      <option value="BF6">Battlefield 6</option>
+      <option value="WoW">World of Warcraft</option>
+      <option value="CoD">Call of Duty</option>
+      <option value="Fortnite">Fortnite</option>
+    </select>
+    <button id="subscribeBtn" class="px-3 py-1 rounded bg-blue-600">Subscribe</button>
+    <button id="submitNewsBtn" class="px-3 py-1 rounded bg-green-600">Submit News</button>
+  </div>
+</header>
+
+<!-- Filters -->
+<section class="flex flex-wrap items-center p-4 space-x-2 bg-gray-800 text-white sticky top-16 z-40">
+  <select id="filterGame" class="px-2 py-1 rounded bg-gray-700">
+    <option value="">All Games</option>
+    <option value="GTA6">GTA6</option>
+    <option value="BF6">Battlefield 6</option>
+    <option value="WoW">World of Warcraft</option>
+    <option value="CoD">Call of Duty</option>
+    <option value="Fortnite">Fortnite</option>
+  </select>
+  <select id="filterPlatform" class="px-2 py-1 rounded bg-gray-700">
+    <option value="">All Platforms</option>
+    <option value="YouTube">YouTube</option>
+    <option value="YouTube Shorts">YouTube Shorts</option>
+    <option value="TikTok">TikTok</option>
+    <option value="Instagram">Instagram</option>
+    <option value="Reddit">Reddit</option>
+    <option value="Article">Article</option>
+  </select>
+  <select id="filterTime" class="px-2 py-1 rounded bg-gray-700">
+    <option value="">All Time</option>
+    <option value="daily">Daily</option>
+    <option value="weekly">Weekly</option>
+    <option value="monthly">Monthly</option>
+    <option value="yearly">Yearly</option>
+  </select>
+</section>
+
+<!-- Content Container -->
+<main id="content" class="p-4 flex flex-col max-w-5xl mx-auto">
+  <!-- Dynamic content cards will be injected here -->
+</main>
+
+<!-- Newsletter / Submit News Modal -->
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white dark:bg-gray-900 p-6 rounded-lg w-96">
+    <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Submit News / Subscribe</h2>
+    <input type="email" id="modalEmail" placeholder="Your Email" class="w-full px-3 py-2 mb-2 rounded border">
+    <input type="url" id="modalLink" placeholder="Content Link" class="w-full px-3 py-2 mb-4 rounded border">
+    <div class="flex justify-end space-x-2">
+      <button id="modalCancel" class="px-3 py-1 rounded bg-red-600 text-white">Cancel</button>
+      <button id="modalSubmit" class="px-3 py-1 rounded bg-green-600 text-white">Submit</button>
     </div>
-  </header>
+  </div>
+</div>
 
-  <section id="filters" class="container">
-    <select id="gameFilter">
-      <option value="">All Games</option>
-    </select>
-    <select id="platformFilter">
-      <option value="">All Platforms</option>
-      <option value="YouTube">YouTube</option>
-      <option value="Shorts">YouTube Shorts</option>
-      <option value="TikTok">TikTok</option>
-      <option value="Instagram">Instagram</option>
-      <option value="Reddit">Reddit</option>
-      <option value="Article">Article</option>
-    </select>
-    <select id="timeFilter">
-      <option value="">Anytime</option>
-      <option value="daily">Last Day</option>
-      <option value="weekly">Last Week</option>
-      <option value="monthly">Last Month</option>
-      <option value="yearly">Last Year</option>
-    </select>
-  </section>
+<script>
+  // ----------------------------
+  // LIGHT/DARK & GAME THEME
+  // ----------------------------
+  const body = document.body;
+  const themeBtn = document.getElementById('themeBtn');
+  const gameTheme = document.getElementById('gameTheme');
 
-  <main class="container" id="feed"></main>
+  // Load stored preferences
+  body.className = localStorage.getItem('mode') || 'light';
+  gameTheme.value = localStorage.getItem('gameTheme') || '';
 
-  <footer class="container">
-    <small>
-      <a href="#">About</a> • 
-      <a href="#">Contact</a> • 
-      <a href="#">Privacy</a>
-    </small>
-  </footer>
+  themeBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    body.classList.toggle('light');
+    localStorage.setItem('mode', body.classList.contains('dark') ? 'dark' : 'light');
+  });
 
-  <!-- Submit News Modal -->
-  <dialog id="submitNewsModal">
-    <article>
-      <h3>Submit Gaming News</h3>
-      <form id="submitNewsForm">
-        <input type="email" id="newsEmail" placeholder="Your Email" required />
-        <input type="url" id="newsLink" placeholder="News Link" required />
-        <button type="submit">Send</button>
-        <button type="button" onclick="submitNewsModal.close()">Cancel</button>
-      </form>
-    </article>
-  </dialog>
+  gameTheme.addEventListener('change', () => {
+    const g = gameTheme.value;
+    if (!g) { body.style.backgroundColor = ''; body.style.color = ''; return; }
+    const light = getComputedStyle(document.documentElement).getPropertyValue(`--${g}-light`);
+    const dark = getComputedStyle(document.documentElement).getPropertyValue(`--${g}-dark`);
+    body.style.backgroundColor = body.classList.contains('dark') ? dark : light;
+    localStorage.setItem('gameTheme', g);
+  });
 
-  <!-- Subscribe Modal -->
-  <dialog id="subscribeModal">
-    <article>
-      <h3>Subscribe to Newsletter</h3>
-      <form id="subscribeForm">
-        <input type="text" id="firstname" placeholder="First Name" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <button type="submit">Subscribe</button>
-        <button type="button" onclick="subscribeModal.close()">Cancel</button>
-      </form>
-    </article>
-  </dialog>
+  // ----------------------------
+  // MODAL for Submit News
+  // ----------------------------
+  const modal = document.getElementById('modal');
+  document.getElementById('submitNewsBtn').onclick = () => modal.classList.remove('hidden');
+  document.getElementById('modalCancel').onclick = () => modal.classList.add('hidden');
+  document.getElementById('modalSubmit').onclick = () => {
+    const email = document.getElementById('modalEmail').value;
+    const link = document.getElementById('modalLink').value;
+    if (!email || !link) { alert('Please fill both fields'); return; }
+    // TODO: integrate Beehiive subscribe & send email to admin
+    alert(`Submitted: ${email}, ${link}`);
+    modal.classList.add('hidden');
+  };
 
-  <script>
-    const feed = document.getElementById('feed');
-    const gameFilter = document.getElementById('gameFilter');
-    const platformFilter = document.getElementById('platformFilter');
-    const timeFilter = document.getElementById('timeFilter');
-    const searchInput = document.getElementById('search');
-    let allData = [];
-    let visibleData = [];
-    let itemsPerLoad = 5;
-    let currentIndex = 0;
+  // ----------------------------
+  // INFINITE SCROLL & FILTERS
+  // ----------------------------
+  let page = 0, perPage = 10, data = [];
+  const content = document.getElementById('content');
 
-    // Fetch data
-    async function loadData() {
-      // For demo, simulate loading from one file. You can extend to loop over /data folder.
-      const res = await fetch('/data/gaming.json');
-      const data = await res.json();
-      allData = data;
-      populateGameFilter();
-      applyFilters();
+  async function loadData() {
+    const res = await fetch('/data/content.json'); // Load all .json for demo
+    data = await res.json();
+    renderItems();
+  }
+
+  function renderItems() {
+    const search = document.getElementById('search').value.toLowerCase();
+    const fGame = document.getElementById('filterGame').value;
+    const fPlatform = document.getElementById('filterPlatform').value;
+    const fTime = document.getElementById('filterTime').value;
+    const filtered = data.filter(d => 
+      (!fGame || d.game.includes(fGame)) &&
+      (!fPlatform || d.platform === fPlatform) &&
+      (!fTime || true) && // TODO: implement timeframe filtering
+      (!search || d.title.toLowerCase().includes(search))
+    );
+    const items = filtered.slice(0, (page+1)*perPage);
+    content.innerHTML = items.map(d => `
+      <div class="card bg-gray-200 dark:bg-gray-800">
+        <h3 class="text-lg font-bold mb-1">${d.title}</h3>
+        <p class="text-sm mb-2">${d.platform} - ${new Date(d.date).toLocaleString()}</p>
+        <a href="${d.url}" target="_blank" class="text-blue-600 dark:text-blue-400 underline">View</a>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('search').addEventListener('input', () => { page=0; renderItems(); });
+  document.getElementById('filterGame').addEventListener('change', () => { page=0; renderItems(); });
+  document.getElementById('filterPlatform').addEventListener('change', () => { page=0; renderItems(); });
+  document.getElementById('filterTime').addEventListener('change', () => { page=0; renderItems(); });
+
+  window.addEventListener('scroll', () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+      page++; renderItems();
     }
+  });
 
-    function populateGameFilter() {
-      const games = new Set();
-      allData.forEach(item => item.game.forEach(g => games.add(g)));
-      games.forEach(g => {
-        let opt = document.createElement('option');
-        opt.value = g;
-        opt.textContent = g;
-        gameFilter.appendChild(opt);
-      });
-    }
-
-    function applyFilters() {
-      const game = gameFilter.value;
-      const platform = platformFilter.value;
-      const timeframe = timeFilter.value;
-      const search = searchInput.value.toLowerCase();
-
-      visibleData = allData.filter(item => {
-        let match = true;
-        if (game && !item.game.includes(game)) match = false;
-        if (platform && item.platform !== platform) match = false;
-        if (search && !item.title.toLowerCase().includes(search)) match = false;
-        if (timeframe) {
-          const now = new Date();
-          const date = new Date(item.date);
-          if (timeframe === 'daily' && (now - date) > 86400000) match = false;
-          if (timeframe === 'weekly' && (now - date) > 604800000) match = false;
-          if (timeframe === 'monthly' && (now - date) > 2592000000) match = false;
-          if (timeframe === 'yearly' && (now - date) > 31536000000) match = false;
-        }
-        return match;
-      });
-
-      feed.innerHTML = '';
-      currentIndex = 0;
-      loadMore();
-    }
-
-    function loadMore() {
-      const slice = visibleData.slice(currentIndex, currentIndex + itemsPerLoad);
-      slice.forEach(item => renderCard(item));
-      currentIndex += itemsPerLoad;
-    }
-
-    function renderCard(item) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      const unsplashUrl = `https://source.unsplash.com/400x200/?${item.game[0]},gaming`;
-      card.innerHTML = `
-        <h4>${item.title}</h4>
-        <p><strong>${item.game.join(', ')}</strong> • ${item.platform} • ${new Date(item.date).toLocaleString()}</p>
-        <img src="${unsplashUrl}" alt="${item.game[0]} preview">
-        <p><a href="${item.url}" target="_blank">Watch/Read</a></p>
-      `;
-      feed.appendChild(card);
-    }
-
-    // Infinite Scroll
-    window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-        loadMore();
-      }
-    });
-
-    // Filters events
-    [gameFilter, platformFilter, timeFilter, searchInput].forEach(el => {
-      el.addEventListener('input', applyFilters);
-    });
-
-    // Theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-    });
-
-    // Persist theme
-    if (localStorage.getItem('theme') === 'dark') {
-      document.body.classList.add('dark');
-    }
-
-    // Submit news modal
-    const submitNewsBtn = document.getElementById('submitNewsBtn');
-    const submitNewsModal = document.getElementById('submitNewsModal');
-    submitNewsBtn.onclick = () => submitNewsModal.showModal();
-
-    // Subscribe modal
-    const subscribeBtn = document.getElementById('subscribeBtn');
-    const subscribeModal = document.getElementById('subscribeModal');
-    subscribeBtn.onclick = () => subscribeModal.showModal();
-
-    // Start
-    loadData();
-  </script>
+  loadData();
+</script>
 </body>
 </html>
