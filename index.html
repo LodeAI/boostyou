@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BOOSTYOU.AI - Your ultimate gaming news aggregator. Stay updated with the latest news from GTA6, Battlefield, and more across all platforms.">
-    <meta name="keywords" content="gaming news, GTA6, Battlefield, gaming updates, YouTube gaming, TikTok gaming, gaming articles">
+    <meta name="description" content="BOOSTYOU.AI - Your ultimate gaming news aggregator. Stay updated with the latest gaming news from GTA6, Battlefield, Call of Duty, FIFA and more across YouTube, TikTok, Instagram, Twitter, Reddit and official sources.">
+    <meta name="keywords" content="gaming news, GTA6, Battlefield, Call of Duty, FIFA, gaming updates, YouTube gaming, TikTok gaming, gaming articles, gaming news aggregator, latest gaming news">
+    <meta name="author" content="BOOSTYOU.AI">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="BOOSTYOU.AI - Gaming News Hub">
-    <meta property="og:description" content="Get the latest gaming news from all platforms in one place">
+    <meta property="og:description" content="Get the latest gaming news from all platforms in one place. Stay updated with GTA6, Battlefield, Call of Duty and more.">
     <meta property="og:type" content="website">
-    <title>BOOSTYOU.AI - Gaming News Hub</title>
+    <meta property="og:url" content="https://boostyou.ai">
+    <meta property="og:site_name" content="BOOSTYOU.AI">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BOOSTYOU.AI - Gaming News Hub">
+    <meta name="twitter:description" content="Get the latest gaming news from all platforms in one place">
+    <link rel="canonical" href="https://boostyou.ai">
+    <title>BOOSTYOU.AI - Latest Gaming News Hub | GTA6, Battlefield, Call of Duty & More</title>
     
-    <!-- Google Analytics placeholder -->
-    <!-- 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V8NDLSEBGZ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
+      gtag('config', 'G-V8NDLSEBGZ');
     </script>
-    -->
     
     <style>
         :root {
@@ -33,19 +39,7 @@
             --border-color: #333;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Light theme */
-        [data-theme="light"] {
-            --primary-bg: #f5f5f5;
-            --secondary-bg: #ffffff;
-            --card-bg: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --accent: #00cc6a;
-            --accent-hover: #00ff88;
-            --border-color: #e0e0e0;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --glow-color: rgba(0, 255, 136, 0.3);
         }
 
         /* GTA6 Theme */
@@ -56,6 +50,7 @@
             --accent: #ff006e;
             --accent-hover: #ff4081;
             --border-color: #ff006e40;
+            --glow-color: rgba(255, 0, 110, 0.3);
         }
 
         /* Battlefield Theme */
@@ -66,6 +61,7 @@
             --accent: #ff9800;
             --accent-hover: #ffa726;
             --border-color: #3282b840;
+            --glow-color: rgba(255, 152, 0, 0.3);
         }
 
         /* Call of Duty Theme */
@@ -76,6 +72,7 @@
             --accent: #e74c3c;
             --accent-hover: #c0392b;
             --border-color: #e74c3c40;
+            --glow-color: rgba(231, 76, 60, 0.3);
         }
 
         /* FIFA Theme */
@@ -86,6 +83,7 @@
             --accent: #f1c40f;
             --accent-hover: #f39c12;
             --border-color: #f1c40f40;
+            --glow-color: rgba(241, 196, 15, 0.3);
         }
 
         * {
@@ -125,6 +123,7 @@
             position: relative;
             display: flex;
             align-items: center;
+            width: 50px;
         }
 
         .search-icon {
@@ -137,6 +136,7 @@
         .search-icon:hover {
             background: var(--card-bg);
             transform: scale(1.1);
+            box-shadow: 0 5px 15px var(--glow-color);
         }
 
         .search-bar {
@@ -159,57 +159,112 @@
             transform: translateY(-50%) scaleX(1);
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px var(--accent);
-            animation: glow 2s ease-in-out infinite alternate;
+        .search-bar:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--glow-color);
         }
 
-        @keyframes glow {
-            from { filter: brightness(1); }
-            to { filter: brightness(1.2); }
+        .logo-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            height: 45px;
+            width: auto;
+            max-width: 200px;
+            filter: drop-shadow(0 0 10px var(--glow-color));
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            filter: drop-shadow(0 0 15px var(--glow-color));
+            transform: scale(1.05);
         }
 
         .theme-controls {
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
-
-        .theme-switch {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 15px;
-            background: var(--card-bg);
-            border-radius: 25px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .theme-switch:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+            justify-content: flex-end;
+            width: 200px;
         }
 
         .game-selector {
-            padding: 10px 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .game-selector-button {
+            padding: 12px 20px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--text-primary);
             cursor: pointer;
             transition: var(--transition);
             outline: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 140px;
+            justify-content: space-between;
         }
 
-        .game-selector:hover {
+        .game-selector-button:hover {
             border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 15px var(--glow-color);
+            transform: translateY(-2px);
+        }
+
+        .game-selector-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+            min-width: 160px;
+            max-height: 300px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+
+        .game-selector-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .game-selector-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .game-selector-option:last-child {
+            border-bottom: none;
+        }
+
+        .game-selector-option:hover {
+            background: var(--secondary-bg);
+            color: var(--accent);
+        }
+
+        .game-selector-option.active {
+            background: var(--accent);
+            color: #000;
+            font-weight: 600;
         }
 
         /* Newsletter Button */
@@ -230,6 +285,10 @@
             animation: pulse 2s infinite;
         }
 
+        .newsletter-btn.hidden {
+            display: none;
+        }
+
         @keyframes pulse {
             0%, 100% { transform: translateX(-50%) scale(1); }
             50% { transform: translateX(-50%) scale(1.05); }
@@ -237,7 +296,7 @@
 
         .newsletter-btn:hover {
             transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+            box-shadow: 0 10px 30px var(--glow-color);
         }
 
         /* Header Section */
@@ -286,7 +345,7 @@
         .filter-btn:hover {
             transform: translateY(-2px);
             border-color: var(--accent);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 5px 15px var(--glow-color);
         }
 
         .filter-btn.active {
@@ -294,7 +353,7 @@
             color: #000;
             border-color: var(--accent);
             font-weight: bold;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            box-shadow: 0 0 20px var(--glow-color);
         }
 
         /* Content Grid */
@@ -368,7 +427,7 @@
 
         .content-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 20px 40px var(--glow-color);
             border-color: var(--accent);
         }
 
@@ -452,15 +511,14 @@
         }
 
         .article-text {
-            padding: 15px;
             color: var(--text-secondary);
             font-size: 14px;
             line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         .read-more {
             display: inline-block;
-            margin-top: 10px;
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
@@ -528,7 +586,7 @@
             max-height: 80vh;
             overflow-y: auto;
             border: 2px solid var(--accent);
-            box-shadow: 0 0 50px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 50px var(--glow-color);
             animation: slideDown 0.3s ease;
         }
 
@@ -554,6 +612,8 @@
 
         .game-checkboxes {
             margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: auto;
         }
 
         .checkbox-item {
@@ -593,7 +653,7 @@
         .email-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 20px var(--glow-color);
         }
 
         .modal-buttons {
@@ -619,7 +679,7 @@
 
         .modal-btn.primary:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+            box-shadow: 0 10px 30px var(--glow-color);
         }
 
         .modal-btn.secondary {
@@ -631,6 +691,7 @@
         .modal-btn.secondary:hover {
             background: var(--secondary-bg);
             border-color: var(--accent);
+            box-shadow: 0 5px 15px var(--glow-color);
         }
 
         /* No data message */
@@ -651,10 +712,11 @@
         .error-message {
             background: #ff4444;
             color: white;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px;
             text-align: center;
+            animation: slideDown 0.3s ease;
         }
 
         /* Mobile Responsive */
@@ -663,16 +725,20 @@
                 padding: 0 10px;
             }
 
+            .search-container {
+                width: 40px;
+            }
+
             .search-bar {
                 width: 200px;
             }
 
             .logo {
-                font-size: 18px;
+                height: 35px;
             }
 
             .theme-controls {
-                gap: 10px;
+                width: 120px;
             }
 
             .header-section {
@@ -685,10 +751,23 @@
             .filter-buttons {
                 justify-content: center;
             }
+
+            .game-selector-button {
+                min-width: 100px;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .newsletter-btn {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
         }
     </style>
 </head>
-<body data-theme="dark" data-game-theme="default">
+<body data-game-theme="default">
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="search-container">
@@ -700,43 +779,41 @@
             <input type="text" class="search-bar" id="searchBar" placeholder="Search news..." onkeyup="handleSearch(event)">
         </div>
         
-        <div class="logo">BOOSTYOU.AI</div>
+        <div class="logo-container">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDIwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMGZmODgiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDBjYzZhIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPGNpcmNsZSBjeD0iMzAiIGN5PSI1MCIgcj0iMjUiIGZpbGw9InVybCgjZ3JhZGllbnQpIiBvcGFjaXR5PSIwLjMiLz4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQpIiBvcGFjaXR5PSIwLjUiLz4KPHRleHQgeD0iNzAiIHk9IjM1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9IjI0IiBmaWxsPSJ1cmwoI2dyYWRpZW50KSI+Qk9PU1Q8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI2NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1zaXplPSIyNCIgZmlsbD0idXJsKCNncmFkaWVudCkiPllPVTwvdGV4dD4KPHBhdGggZD0ibTE3MCAyNSA4IDEwIDEwLTggMTAgOC04IDEwIDggMTAtMTAgOC0xMC04eiIgZmlsbD0idXJsKCNncmFkaWVudCkiLz4KPC9zdmc+" alt="BOOSTYOU.AI" class="logo">
+        </div>
         
         <div class="theme-controls">
-            <div class="theme-switch" onclick="toggleTheme()">
-                <span id="themeIcon">🌙</span>
-                <span id="themeText">Dark</span>
+            <div class="game-selector">
+                <button class="game-selector-button" onclick="toggleGameSelector()">
+                    <span id="selectedTheme">Default Theme</span>
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </button>
+                <div class="game-selector-dropdown" id="gameSelector">
+                    <div class="game-selector-option active" data-theme="default">Default Theme</div>
+                </div>
             </div>
-            <select class="game-selector" id="gameThemeSelector" onchange="changeGameTheme(this.value)">
-                <option value="default">Default Theme</option>
-            </select>
         </div>
     </div>
 
     <!-- Newsletter Button -->
-    <button class="newsletter-btn" onclick="openNewsletterModal()">📧 Free Monthly Newsletter</button>
+    <button class="newsletter-btn" id="newsletterBtn" onclick="openNewsletterModal()">📧 Free Monthly Newsletter</button>
 
     <!-- Header Section with Filters -->
     <div class="header-section">
         <div class="filter-group">
             <div class="filter-label">Games</div>
             <div class="filter-buttons" id="gameFilters">
-                <button class="filter-btn active" data-game="all" onclick="filterByGame('all')">All Games</button>
+                <button class="filter-btn active" data-game="all" onclick="toggleGameFilter('all')">All Games</button>
             </div>
         </div>
         
         <div class="filter-group">
             <div class="filter-label">Platforms</div>
             <div class="filter-buttons" id="platformFilters">
-                <button class="filter-btn active" data-platform="all" onclick="filterByPlatform('all')">All</button>
-                <button class="filter-btn" data-platform="Official" onclick="filterByPlatform('Official')">Official News</button>
-                <button class="filter-btn" data-platform="Article" onclick="filterByPlatform('Article')">Articles</button>
-                <button class="filter-btn" data-platform="Reddit" onclick="filterByPlatform('Reddit')">Reddit</button>
-                <button class="filter-btn" data-platform="YouTube" onclick="filterByPlatform('YouTube')">YouTube</button>
-                <button class="filter-btn" data-platform="Shorts" onclick="filterByPlatform('Shorts')">Shorts</button>
-                <button class="filter-btn" data-platform="TikTok" onclick="filterByPlatform('TikTok')">TikTok</button>
-                <button class="filter-btn" data-platform="Instagram" onclick="filterByPlatform('Instagram')">Instagram</button>
-                <button class="filter-btn" data-platform="Twitter" onclick="filterByPlatform('Twitter')">Twitter</button>
+                <button class="filter-btn active" data-platform="all" onclick="togglePlatformFilter('all')">All</button>
             </div>
         </div>
         
@@ -766,10 +843,13 @@
     <div class="modal" id="newsletterModal">
         <div class="modal-content">
             <h2 class="modal-title">Subscribe to Newsletter</h2>
+            <p style="text-align: center; margin-bottom: 20px; color: var(--text-secondary);">
+                Get the latest gaming news delivered to your inbox monthly!
+            </p>
             <div class="game-checkboxes" id="gameCheckboxes">
                 <!-- Game checkboxes will be dynamically added -->
             </div>
-            <input type="email" class="email-input" id="emailInput" placeholder="Enter your email address">
+            <input type="email" class="email-input" id="emailInput" placeholder="Enter your email address" required>
             <div class="modal-buttons">
                 <button class="modal-btn primary" onclick="subscribeNewsletter()">Subscribe</button>
                 <button class="modal-btn secondary" onclick="closeNewsletterModal()">Cancel</button>
@@ -780,11 +860,10 @@
     <script>
         // App State
         let appState = {
-            theme: localStorage.getItem('theme') || 'dark',
             gameTheme: localStorage.getItem('gameTheme') || 'default',
             filters: {
-                game: localStorage.getItem('filterGame') || 'all',
-                platform: localStorage.getItem('filterPlatform') || 'all',
+                games: JSON.parse(localStorage.getItem('filterGames') || '["all"]'),
+                platforms: JSON.parse(localStorage.getItem('filterPlatforms') || '["all"]'),
                 timeframe: localStorage.getItem('filterTime') || 'week'
             },
             currentPage: 1,
@@ -792,263 +871,276 @@
             allContent: [],
             filteredContent: [],
             availableGames: new Set(),
+            availablePlatforms: new Set(),
             isLoading: false,
             searchQuery: '',
-            hasMoreContent: true
+            hasMoreContent: true,
+            isSubscribed: localStorage.getItem('newsletterSubscribed') === 'true'
         };
-
-        // Enhanced mock data for demonstration
-        const mockData = [
-            {
-                id: "1757871414916",
-                title: "Grand Theft Auto VI Trailer 1",
-                game: ["GTA6"],
-                platform: "YouTube",
-                url: "https://www.youtube.com/watch?v=QdBZY2fkU-0",
-                date: "2025-09-14T17:31:00.000Z",
-                text: ""
-            },
-            {
-                id: "1757874102744",
-                title: "Grand Theft Auto VI Trailer 2",
-                game: ["GTA6"],
-                platform: "YouTube",
-                url: "https://www.youtube.com/watch?v=VQRLujxTm3c",
-                date: "2025-09-14T18:21:00.000Z",
-                text: ""
-            },
-            {
-                id: "1757874102745",
-                title: "Grand Theft Auto VI: Everything We Know So Far",
-                game: ["GTA6"],
-                platform: "Article",
-                url: "https://www.ign.com/articles/gta6-everything-we-know",
-                date: "2025-09-14T18:21:00.000Z",
-                text: "After years of waiting, Rockstar Games has finally revealed Grand Theft Auto VI. Set in a modern-day Vice City, the game promises to deliver the most immersive open-world experience yet created. The game will feature two protagonists, Lucia and Jason, in what appears to be a Bonnie and Clyde-style narrative..."
-            },
-            {
-                id: "1757874102746",
-                title: "Battlefield 2042 Season 7 Update",
-                game: ["Battlefield"],
-                platform: "Official",
-                url: "https://www.ea.com/games/battlefield/battlefield-2042",
-                date: "2025-09-13T10:00:00.000Z",
-                text: "Season 7 brings new maps, weapons, and vehicles to the battlefield. Experience intense combat across reimagined classic maps from the Battlefield franchise. New specialist abilities and game modes await."
-            },
-            {
-                id: "1757874102747",
-                title: "Epic GTA6 Gameplay Leak Discussion",
-                game: ["GTA6"],
-                platform: "Shorts",
-                url: "https://www.youtube.com/shorts/abc123",
-                date: "2025-09-14T20:00:00.000Z",
-                text: ""
-            },
-            {
-                id: "1757874102748",
-                title: "Battlefield Tips & Tricks",
-                game: ["Battlefield"],
-                platform: "Shorts",
-                url: "https://www.youtube.com/shorts/def456",
-                date: "2025-09-14T15:00:00.000Z",
-                text: ""
-            },
-            {
-                id: "1757874102749",
-                title: "Call of Duty Black Ops 6 Reveal",
-                game: ["Call of Duty"],
-                platform: "YouTube",
-                url: "https://www.youtube.com/watch?v=xyz789",
-                date: "2025-09-12T14:00:00.000Z",
-                text: ""
-            },
-            {
-                id: "1757874102750",
-                title: "FIFA 24 Ultimate Team New Features",
-                game: ["FIFA"],
-                platform: "Article",
-                url: "https://www.ea.com/games/fifa",
-                date: "2025-09-11T12:00:00.000Z",
-                text: "FIFA 24 introduces revolutionary Ultimate Team features including enhanced chemistry system and new pack animations. Experience the most realistic football simulation ever created with improved AI and gameplay mechanics."
-            },
-            {
-                id: "1757874102751",
-                title: "GTA6 Vice City Leaked Footage",
-                game: ["GTA6"],
-                platform: "TikTok",
-                url: "https://www.tiktok.com/@gamer123",
-                date: "2025-09-13T16:30:00.000Z",
-                text: ""
-            },
-            {
-                id: "1757874102752",
-                title: "Battlefield Community Update",
-                game: ["Battlefield"],
-                platform: "Reddit",
-                url: "https://www.reddit.com/r/battlefield",
-                date: "2025-09-10T09:15:00.000Z",
-                text: "The Battlefield community discusses the latest updates and upcoming features. Players share strategies, gameplay tips, and feedback on the recent patches."
-            }
-        ];
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
-            loadContent();
-            setupInfiniteScroll();
         });
 
-        function initializeApp() {
+        async function initializeApp() {
             // Apply saved theme
-            document.body.setAttribute('data-theme', appState.theme);
             document.body.setAttribute('data-game-theme', appState.gameTheme);
-            updateThemeUI();
-
-            // Try to load real data first, fallback to mock data
-            loadGameData();
-
-            // Apply saved filters
-            setTimeout(() => {
-                applyFilters();
-                updateFilterUI();
-            }, 100);
-        }
-
-        async function loadGameData() {
-            try {
-                // Try to load current month's data
-                const currentDate = new Date();
-                const year = currentDate.getFullYear();
-                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-                const dataUrl = `/data/content_${year}_${month}.json`;
-                
-                const response = await fetch(dataUrl);
-                if (response.ok) {
-                    const data = await response.json();
-                    appState.allContent = data;
-                    console.log('Loaded real data from:', dataUrl);
-                } else {
-                    throw new Error('Could not load current month data');
-                }
-            } catch (error) {
-                console.log('Using mock data for demonstration');
-                appState.allContent = mockData;
+            
+            // Hide newsletter button if already subscribed
+            if (appState.isSubscribed) {
+                document.getElementById('newsletterBtn').classList.add('hidden');
             }
 
-            // Extract unique games
-            appState.allContent.forEach(item => {
-                item.game.forEach(game => appState.availableGames.add(game));
-            });
+            try {
+                await loadAllContentData();
+                populateGameFilters();
+                populatePlatformFilters();
+                populateGameThemes();
+                populateNewsletterOptions();
+                applyFilters();
+                loadContent();
+                setupInfiniteScroll();
+            } catch (error) {
+                showError('Failed to load content data. Please refresh the page.');
+                console.error('Initialization error:', error);
+            }
+        }
 
-            // Populate game filters and theme selector
-            populateGameFilters();
-            populateGameThemes();
-            populateNewsletterGames();
+        async function loadAllContentData() {
+            const allContent = [];
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
+
+            // Try to load multiple months of data
+            const monthsToLoad = [];
+            
+            // Current and previous 11 months
+            for (let i = 0; i < 12; i++) {
+                let year = currentYear;
+                let month = currentMonth - i;
+                
+                if (month <= 0) {
+                    month += 12;
+                    year -= 1;
+                }
+                
+                monthsToLoad.push({ 
+                    year, 
+                    month: String(month).padStart(2, '0') 
+                });
+            }
+
+            // Load data from each available file
+            for (const { year, month } of monthsToLoad) {
+                try {
+                    const response = await fetch(`/data/content_${year}_${month}.json`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (Array.isArray(data)) {
+                            allContent.push(...data);
+                        }
+                    }
+                } catch (error) {
+                    console.log(`Could not load content_${year}_${month}.json`);
+                }
+            }
+
+            if (allContent.length === 0) {
+                throw new Error('No content data found');
+            }
+
+            appState.allContent = allContent;
+
+            // Extract unique games and platforms
+            allContent.forEach(item => {
+                if (item.game && Array.isArray(item.game)) {
+                    item.game.forEach(game => appState.availableGames.add(game));
+                }
+                if (item.platform) {
+                    appState.availablePlatforms.add(item.platform);
+                }
+            });
         }
 
         function populateGameFilters() {
             const gameFiltersContainer = document.getElementById('gameFilters');
-            // Clear existing filters except "All Games"
-            const allGamesBtn = gameFiltersContainer.querySelector('[data-game="all"]');
-            gameFiltersContainer.innerHTML = '';
-            gameFiltersContainer.appendChild(allGamesBtn);
-
-            appState.availableGames.forEach(game => {
+            
+            // Clear existing game filters (keep "All Games")
+            const existingGameButtons = gameFiltersContainer.querySelectorAll('[data-game]:not([data-game="all"])');
+            existingGameButtons.forEach(btn => btn.remove());
+            
+            Array.from(appState.availableGames).sort().forEach(game => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn';
                 btn.setAttribute('data-game', game);
-                btn.onclick = () => filterByGame(game);
+                btn.onclick = () => toggleGameFilter(game);
                 btn.textContent = game;
                 gameFiltersContainer.appendChild(btn);
             });
         }
 
-        function populateGameThemes() {
-            const selector = document.getElementById('gameThemeSelector');
-            // Clear existing options except default
-            const defaultOption = selector.querySelector('[value="default"]');
-            selector.innerHTML = '';
-            selector.appendChild(defaultOption);
-
-            appState.availableGames.forEach(game => {
-                const option = document.createElement('option');
-                option.value = game;
-                option.textContent = `${game} Theme`;
-                selector.appendChild(option);
+        function populatePlatformFilters() {
+            const platformFiltersContainer = document.getElementById('platformFilters');
+            
+            // Clear existing platform filters (keep "All")
+            const existingPlatformButtons = platformFiltersContainer.querySelectorAll('[data-platform]:not([data-platform="all"])');
+            existingPlatformButtons.forEach(btn => btn.remove());
+            
+            Array.from(appState.availablePlatforms).sort().forEach(platform => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.setAttribute('data-platform', platform);
+                btn.onclick = () => togglePlatformFilter(platform);
+                btn.textContent = platform === 'Official' ? 'Official News' : platform;
+                platformFiltersContainer.appendChild(btn);
             });
-
-            // Set current theme
-            selector.value = appState.gameTheme;
         }
 
-        function populateNewsletterGames() {
-            const container = document.getElementById('gameCheckboxes');
-            container.innerHTML = '';
+        function populateGameThemes() {
+            const dropdown = document.getElementById('gameSelector');
+            
+            // Clear existing options (keep default)
+            const existingOptions = dropdown.querySelectorAll('.game-selector-option:not([data-theme="default"])');
+            existingOptions.forEach(option => option.remove());
+            
+            Array.from(appState.availableGames).sort().forEach(game => {
+                const option = document.createElement('div');
+                option.className = 'game-selector-option';
+                option.setAttribute('data-theme', game);
+                option.textContent = `${game} Theme`;
+                option.onclick = () => changeGameTheme(game);
+                dropdown.appendChild(option);
+            });
+            
+            // Update selected theme display
+            updateThemeSelector();
+        }
 
-            appState.availableGames.forEach(game => {
+        function populateNewsletterOptions() {
+            const checkboxContainer = document.getElementById('gameCheckboxes');
+            checkboxContainer.innerHTML = '';
+            
+            Array.from(appState.availableGames).sort().forEach(game => {
                 const checkboxItem = document.createElement('div');
                 checkboxItem.className = 'checkbox-item';
                 checkboxItem.innerHTML = `
-                    <input type="checkbox" id="newsletter_${game}" value="${game}">
-                    <label for="newsletter_${game}">${game}</label>
+                    <input type="checkbox" id="game-${game}" value="${game}" checked>
+                    <label for="game-${game}">${game}</label>
                 `;
-                container.appendChild(checkboxItem);
+                checkboxContainer.appendChild(checkboxItem);
+            });
+        }
+
+        function applyFilters() {
+            let filtered = [...appState.allContent];
+
+            // Apply search filter
+            if (appState.searchQuery) {
+                filtered = filtered.filter(item =>
+                    item.title.toLowerCase().includes(appState.searchQuery.toLowerCase()) ||
+                    (item.text && item.text.toLowerCase().includes(appState.searchQuery.toLowerCase()))
+                );
+            }
+
+            // Apply game filter
+            if (!appState.filters.games.includes('all')) {
+                filtered = filtered.filter(item => 
+                    item.game && item.game.some(game => appState.filters.games.includes(game))
+                );
+            }
+
+            // Apply platform filter
+            if (!appState.filters.platforms.includes('all')) {
+                filtered = filtered.filter(item => appState.filters.platforms.includes(item.platform));
+            }
+
+            // Apply time filter
+            if (appState.filters.timeframe !== 'all') {
+                const now = new Date();
+                const timeLimit = new Date();
+                
+                switch (appState.filters.timeframe) {
+                    case 'day':
+                        timeLimit.setDate(now.getDate() - 1);
+                        break;
+                    case 'week':
+                        timeLimit.setDate(now.getDate() - 7);
+                        break;
+                    case 'month':
+                        timeLimit.setMonth(now.getMonth() - 1);
+                        break;
+                    case 'year':
+                        timeLimit.setFullYear(now.getFullYear() - 1);
+                        break;
+                }
+                
+                filtered = filtered.filter(item => new Date(item.date) >= timeLimit);
+            }
+
+            // Sort by date (newest first)
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            appState.filteredContent = filtered;
+            updateActiveFilterButtons();
+        }
+
+        function updateActiveFilterButtons() {
+            // Update game filter buttons
+            document.querySelectorAll('[data-game]').forEach(btn => {
+                const game = btn.dataset.game;
+                btn.classList.toggle('active', appState.filters.games.includes(game));
+            });
+
+            // Update platform filter buttons
+            document.querySelectorAll('[data-platform]').forEach(btn => {
+                const platform = btn.dataset.platform;
+                btn.classList.toggle('active', appState.filters.platforms.includes(platform));
+            });
+
+            // Update time filter buttons
+            document.querySelectorAll('[data-time]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.time === appState.filters.timeframe);
             });
         }
 
         function loadContent() {
             if (appState.isLoading) return;
             
-            appState.isLoading = true;
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            loadingIndicator.style.display = 'block';
-
-            // Simulate API delay
-            setTimeout(() => {
-                const grid = document.getElementById('contentGrid');
-                const startIndex = (appState.currentPage - 1) * appState.itemsPerPage;
-                const endIndex = startIndex + appState.itemsPerPage;
-                
-                // Filter content based on current filters
-                applyFilters();
-                
-                const contentToShow = appState.filteredContent.slice(startIndex, endIndex);
-                
-                if (appState.currentPage === 1) {
-                    grid.innerHTML = '';
-                }
-
-                if (contentToShow.length === 0 && appState.currentPage === 1) {
-                    grid.innerHTML = `
-                        <div class="no-data">
-                            <h2>No content found</h2>
-                            <p>Try adjusting your filters or check back later for new content.</p>
-                        </div>
-                    `;
-                } else {
-                    renderContent(contentToShow, appState.currentPage === 1);
-                }
-
-                appState.hasMoreContent = endIndex < appState.filteredContent.length;
-                appState.isLoading = false;
-                loadingIndicator.style.display = 'none';
-            }, 500);
-        }
-
-        function renderContent(content, clearGrid = false) {
             const grid = document.getElementById('contentGrid');
+            const startIndex = (appState.currentPage - 1) * appState.itemsPerPage;
+            const endIndex = startIndex + appState.itemsPerPage;
             
-            if (clearGrid) {
+            applyFilters();
+            
+            const contentToShow = appState.filteredContent.slice(0, endIndex);
+            
+            if (appState.currentPage === 1) {
                 grid.innerHTML = '';
             }
 
-            // Group shorts content
-            const shortsContent = content.filter(item => 
-                item.platform === 'Shorts' || item.platform === 'TikTok' || 
-                (item.platform === 'Instagram' && item.url.includes('reel'))
-            );
-            
-            const regularContent = content.filter(item => !shortsContent.includes(item));
+            if (contentToShow.length === 0 && appState.currentPage === 1) {
+                grid.innerHTML = `
+                    <div class="no-data">
+                        <h2>No content found</h2>
+                        <p>Try adjusting your filters or check back later for new content.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Group shorts together
+            const regularContent = [];
+            const shortsContent = [];
+
+            contentToShow.slice(startIndex).forEach(item => {
+                if (item.platform === 'Shorts' || item.platform === 'TikTok') {
+                    shortsContent.push(item);
+                } else {
+                    regularContent.push(item);
+                }
+            });
 
             // Render regular content
             regularContent.forEach(item => {
@@ -1056,7 +1148,7 @@
                 grid.appendChild(card);
             });
 
-            // Render shorts in a separate container if any exist
+            // Render shorts in a container
             if (shortsContent.length > 0) {
                 const shortsContainer = document.createElement('div');
                 shortsContainer.className = 'shorts-container';
@@ -1068,182 +1160,189 @@
                 
                 grid.appendChild(shortsContainer);
             }
+
+            appState.hasMoreContent = endIndex < appState.filteredContent.length;
         }
 
         function createContentCard(item) {
             const card = document.createElement('div');
-            const isShorts = item.platform === 'Shorts' || item.platform === 'TikTok' || 
-                           (item.platform === 'Instagram' && item.url.includes('reel'));
-            
-            card.className = `content-card ${isShorts ? 'shorts' : item.platform.toLowerCase()}`;
-            
-            let cardContent = '';
+            card.className = 'content-card';
+            card.dataset.id = item.id;
+
+            const timeAgo = getTimeAgo(item.date);
 
             if (item.platform === 'YouTube') {
-                const videoId = extractVideoId(item.url);
-                cardContent = `
+                const videoId = extractYouTubeId(item.url);
+                card.innerHTML = `
                     <div class="video-wrapper">
                         <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                title="${item.title}" allowfullscreen></iframe>
+                                title="${escapeHtml(item.title)}" 
+                                allowfullscreen>
+                        </iframe>
                     </div>
                     <div class="content-info">
-                        <h3 class="content-title">${item.title}</h3>
+                        <h3 class="content-title">${escapeHtml(item.title)}</h3>
                         <div class="content-meta">
                             <span class="platform-badge">${item.platform}</span>
-                            <span>${formatDate(item.date)}</span>
+                            <span>${timeAgo}</span>
                         </div>
                     </div>
                 `;
-            } else if (isShorts) {
-                const videoId = extractVideoId(item.url) || 'dQw4w9WgXcQ'; // Fallback ID
-                cardContent = `
+            } else if (item.platform === 'Shorts' || item.platform === 'TikTok') {
+                card.classList.add('shorts');
+                const embedUrl = item.platform === 'Shorts' ? 
+                    `https://www.youtube.com/embed/${extractYouTubeId(item.url)}` :
+                    item.url;
+                
+                card.innerHTML = `
                     <div class="shorts-wrapper">
-                        <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                title="${item.title}" allowfullscreen></iframe>
+                        <iframe src="${embedUrl}" 
+                                title="${escapeHtml(item.title)}" 
+                                allowfullscreen>
+                        </iframe>
                     </div>
                     <div class="content-info">
-                        <h3 class="content-title">${item.title}</h3>
+                        <h3 class="content-title">${escapeHtml(item.title)}</h3>
                         <div class="content-meta">
                             <span class="platform-badge">${item.platform}</span>
-                            <span>${formatDate(item.date)}</span>
+                            <span>${timeAgo}</span>
                         </div>
                     </div>
                 `;
             } else {
-                // Articles, Official news, Reddit, Twitter, etc.
-                cardContent = `
+                // Article, Official news, Reddit, Twitter, Instagram
+                const platformIcon = getPlatformIcon(item.platform);
+                card.innerHTML = `
                     <div class="article-image">
-                        <span>📰 ${item.platform} Article</span>
+                        <div>${platformIcon} ${item.platform} ${item.platform === 'Official' ? 'News' : 'Post'}</div>
                     </div>
                     <div class="content-info">
-                        <h3 class="content-title">${item.title}</h3>
+                        <h3 class="content-title">${escapeHtml(item.title)}</h3>
                         <div class="content-meta">
                             <span class="platform-badge">${item.platform}</span>
-                            <span>${formatDate(item.date)}</span>
+                            <span>${timeAgo}</span>
                         </div>
                         ${item.text ? `
                             <div class="article-text">
-                                ${item.text.substring(0, 150)}${item.text.length > 150 ? '...' : ''}
+                                ${escapeHtml(item.text.substring(0, 200))}${item.text.length > 200 ? '...' : ''}
                             </div>
                         ` : ''}
                         <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="read-more">
-                            Read Original →
+                            Read Full ${item.platform === 'Official' ? 'Article' : 'Post'} →
                         </a>
                     </div>
                 `;
             }
 
-            card.innerHTML = cardContent;
             return card;
         }
 
-        function extractVideoId(url) {
-            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : null;
+        function getPlatformIcon(platform) {
+            const icons = {
+                'Official': '📰',
+                'Article': '📝',
+                'Reddit': '🔴',
+                'Twitter': '🐦',
+                'Instagram': '📸'
+            };
+            return icons[platform] || '📄';
         }
 
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffTime = Math.abs(now - date);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
 
-            if (diffDays === 1) return 'Yesterday';
-            if (diffDays < 7) return `${diffDays} days ago`;
-            if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+        function extractYouTubeId(url) {
+            const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([^&\n?#]+)/);
+            return match ? match[1] : '';
+        }
+
+        function getTimeAgo(dateString) {
+            const now = new Date();
+            const date = new Date(dateString);
+            const diffInSeconds = Math.floor((now - date) / 1000);
+
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+            if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
+            
             return date.toLocaleDateString();
         }
 
-        function applyFilters() {
-            let filtered = [...appState.allContent];
-
-            // Apply game filter
-            if (appState.filters.game !== 'all') {
-                filtered = filtered.filter(item => 
-                    item.game.includes(appState.filters.game)
-                );
-            }
-
-            // Apply platform filter
-            if (appState.filters.platform !== 'all') {
-                filtered = filtered.filter(item => 
-                    item.platform === appState.filters.platform
-                );
-            }
-
-            // Apply time filter
-            const now = new Date();
-            let timeThreshold;
+        function setupInfiniteScroll() {
+            let isThrottled = false;
             
-            switch (appState.filters.timeframe) {
-                case 'day':
-                    timeThreshold = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-                    break;
-                case 'week':
-                    timeThreshold = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                    break;
-                case 'month':
-                    timeThreshold = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-                    break;
-                case 'year':
-                    timeThreshold = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-                    break;
-                default:
-                    timeThreshold = new Date(0);
-            }
-
-            filtered = filtered.filter(item => 
-                new Date(item.date) >= timeThreshold
-            );
-
-            // Apply search filter
-            if (appState.searchQuery) {
-                const query = appState.searchQuery.toLowerCase();
-                filtered = filtered.filter(item => 
-                    item.title.toLowerCase().includes(query) ||
-                    item.game.some(game => game.toLowerCase().includes(query)) ||
-                    (item.text && item.text.toLowerCase().includes(query))
-                );
-            }
-
-            // Sort by date (newest first)
-            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            appState.filteredContent = filtered;
+            window.addEventListener('scroll', () => {
+                if (isThrottled) return;
+                
+                isThrottled = true;
+                setTimeout(() => isThrottled = false, 100);
+                
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+                    if (appState.hasMoreContent && !appState.isLoading) {
+                        loadMoreContent();
+                    }
+                }
+            });
         }
 
-        function updateFilterUI() {
-            // Update game filter buttons
-            document.querySelectorAll('[data-game]').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.game === appState.filters.game);
-            });
-
-            // Update platform filter buttons
-            document.querySelectorAll('[data-platform]').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.platform === appState.filters.platform);
-            });
-
-            // Update time filter buttons
-            document.querySelectorAll('[data-time]').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.time === appState.filters.timeframe);
-            });
+        function loadMoreContent() {
+            if (appState.isLoading || !appState.hasMoreContent) return;
+            
+            appState.isLoading = true;
+            document.getElementById('loadingIndicator').style.display = 'block';
+            
+            setTimeout(() => {
+                appState.currentPage++;
+                loadContent();
+                appState.isLoading = false;
+                document.getElementById('loadingIndicator').style.display = 'none';
+            }, 500);
         }
 
         // Filter functions
-        function filterByGame(game) {
-            appState.filters.game = game;
-            localStorage.setItem('filterGame', game);
+        function toggleGameFilter(game) {
+            if (game === 'all') {
+                appState.filters.games = ['all'];
+            } else {
+                if (appState.filters.games.includes('all')) {
+                    appState.filters.games = [game];
+                } else if (appState.filters.games.includes(game)) {
+                    appState.filters.games = appState.filters.games.filter(g => g !== game);
+                    if (appState.filters.games.length === 0) {
+                        appState.filters.games = ['all'];
+                    }
+                } else {
+                    appState.filters.games.push(game);
+                }
+            }
+            
+            localStorage.setItem('filterGames', JSON.stringify(appState.filters.games));
             appState.currentPage = 1;
-            updateFilterUI();
             loadContent();
         }
 
-        function filterByPlatform(platform) {
-            appState.filters.platform = platform;
-            localStorage.setItem('filterPlatform', platform);
+        function togglePlatformFilter(platform) {
+            if (platform === 'all') {
+                appState.filters.platforms = ['all'];
+            } else {
+                if (appState.filters.platforms.includes('all')) {
+                    appState.filters.platforms = [platform];
+                } else if (appState.filters.platforms.includes(platform)) {
+                    appState.filters.platforms = appState.filters.platforms.filter(p => p !== platform);
+                    if (appState.filters.platforms.length === 0) {
+                        appState.filters.platforms = ['all'];
+                    }
+                } else {
+                    appState.filters.platforms.push(platform);
+                }
+            }
+            
+            localStorage.setItem('filterPlatforms', JSON.stringify(appState.filters.platforms));
             appState.currentPage = 1;
-            updateFilterUI();
             loadContent();
         }
 
@@ -1251,131 +1350,143 @@
             appState.filters.timeframe = timeframe;
             localStorage.setItem('filterTime', timeframe);
             appState.currentPage = 1;
-            updateFilterUI();
             loadContent();
-        }
-
-        // Theme functions
-        function toggleTheme() {
-            appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', appState.theme);
-            localStorage.setItem('theme', appState.theme);
-            updateThemeUI();
-        }
-
-        function changeGameTheme(theme) {
-            appState.gameTheme = theme;
-            document.body.setAttribute('data-game-theme', theme);
-            localStorage.setItem('gameTheme', theme);
-        }
-
-        function updateThemeUI() {
-            const themeIcon = document.getElementById('themeIcon');
-            const themeText = document.getElementById('themeText');
-            
-            if (appState.theme === 'dark') {
-                themeIcon.textContent = '🌙';
-                themeText.textContent = 'Dark';
-            } else {
-                themeIcon.textContent = '☀️';
-                themeText.textContent = 'Light';
-            }
         }
 
         // Search functionality
         function toggleSearch() {
             const searchBar = document.getElementById('searchBar');
-            searchBar.classList.toggle('active');
-            if (searchBar.classList.contains('active')) {
+            const isActive = searchBar.classList.contains('active');
+            
+            if (!isActive) {
+                searchBar.classList.add('active');
                 searchBar.focus();
             } else {
-                searchBar.blur();
+                searchBar.classList.remove('active');
+                searchBar.value = '';
+                appState.searchQuery = '';
+                appState.currentPage = 1;
+                loadContent();
             }
         }
 
         function handleSearch(event) {
-            appState.searchQuery = event.target.value;
-            
-            // Debounce search
-            clearTimeout(appState.searchTimeout);
-            appState.searchTimeout = setTimeout(() => {
-                appState.currentPage = 1;
-                loadContent();
-            }, 300);
-
             if (event.key === 'Enter') {
-                clearTimeout(appState.searchTimeout);
+                appState.searchQuery = event.target.value.trim();
                 appState.currentPage = 1;
                 loadContent();
             }
+        }
+
+        // Theme functions
+        function toggleGameSelector() {
+            const dropdown = document.getElementById('gameSelector');
+            dropdown.classList.toggle('active');
+        }
+
+        function changeGameTheme(theme) {
+            appState.gameTheme = theme;
+            localStorage.setItem('gameTheme', theme);
+            document.body.setAttribute('data-game-theme', theme);
+            updateThemeSelector();
+            
+            // Close dropdown
+            document.getElementById('gameSelector').classList.remove('active');
+        }
+
+        function updateThemeSelector() {
+            const selectedThemeElement = document.getElementById('selectedTheme');
+            const options = document.querySelectorAll('.game-selector-option');
+            
+            options.forEach(option => {
+                option.classList.toggle('active', option.dataset.theme === appState.gameTheme);
+            });
+            
+            selectedThemeElement.textContent = appState.gameTheme === 'default' ? 
+                'Default Theme' : `${appState.gameTheme} Theme`;
         }
 
         // Newsletter functions
         function openNewsletterModal() {
-            const modal = document.getElementById('newsletterModal');
-            modal.classList.add('active');
+            document.getElementById('newsletterModal').classList.add('active');
         }
 
         function closeNewsletterModal() {
-            const modal = document.getElementById('newsletterModal');
-            modal.classList.remove('active');
+            document.getElementById('newsletterModal').classList.remove('active');
         }
 
-        function subscribeNewsletter() {
-            const email = document.getElementById('emailInput').value;
-            const selectedGames = [];
+        async function subscribeNewsletter() {
+            const email = document.getElementById('emailInput').value.trim();
+            const games = Array.from(document.querySelectorAll('#gameCheckboxes input:checked')).map(i => i.value);
             
-            document.querySelectorAll('#gameCheckboxes input[type="checkbox"]:checked').forEach(checkbox => {
-                selectedGames.push(checkbox.value);
-            });
-
-            if (!email || !email.includes('@')) {
-                alert('Please enter a valid email address.');
+            if (!email || !email.includes('@')) { 
+                alert('Please enter a valid email address'); 
+                return; 
+            }
+            
+            if (games.length === 0) {
+                alert('Please select at least one game.');
                 return;
             }
 
-            if (selectedGames.length === 0) {
-                alert('Please select at least one game to subscribe to.');
-                return;
-            }
-
-            // Here you would integrate with Beehiiv
-            // For now, show a success message
-            alert(`Thank you for subscribing! You'll receive updates for: ${selectedGames.join(', ')}`);
-            closeNewsletterModal();
-            
-            // Clear form
-            document.getElementById('emailInput').value = '';
-            document.querySelectorAll('#gameCheckboxes input[type="checkbox"]').forEach(checkbox => {
-                checkbox.checked = false;
-            });
-        }
-
-        // Infinite scroll
-        function setupInfiniteScroll() {
-            window.addEventListener('scroll', () => {
-                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
-                    if (!appState.isLoading && appState.hasMoreContent) {
-                        appState.currentPage++;
-                        loadContent();
-                    }
+            try {
+                const res = await fetch('https://boostyou.ai/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, games })
+                });
+                
+                const j = await res.json();
+                
+                if (res.ok) { 
+                    alert('Successfully subscribed! Check your email for confirmation.');
+                    localStorage.setItem('newsletterSubscribed', 'true');
+                    document.getElementById('newsletterBtn').classList.add('hidden');
+                    closeNewsletterModal();
+                    
+                    // Clear form
+                    document.getElementById('emailInput').value = '';
+                } else { 
+                    alert('Error: ' + (j.message || JSON.stringify(j))); 
                 }
-            });
+            } catch (error) {
+                alert('Network error. Please try again later.');
+                console.error('Newsletter subscription error:', error);
+            }
         }
 
-        // Close modal when clicking outside
-        document.getElementById('newsletterModal').addEventListener('click', (e) => {
-            if (e.target.id === 'newsletterModal') {
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            
+            document.body.insertBefore(errorDiv, document.body.firstChild);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        // Close modals and dropdowns when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('newsletterModal');
+            if (event.target === modal) {
                 closeNewsletterModal();
+            }
+            
+            const gameSelector = document.getElementById('gameSelector');
+            const gameSelectorButton = document.querySelector('.game-selector-button');
+            if (!gameSelectorButton.contains(event.target)) {
+                gameSelector.classList.remove('active');
             }
         });
 
         // Close search when clicking outside
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', function(event) {
             const searchContainer = document.querySelector('.search-container');
             const searchBar = document.getElementById('searchBar');
             
-            if (!searchContainer.contains(e.target) && searchBar.classList.contains('active')) {
+            if (!searchContainer.contains(event.target) && searchBar.classList.contains('active')) {
                 searchBar.classList.remove('active');
             }
         });
