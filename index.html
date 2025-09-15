@@ -1,1153 +1,1384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BOOSTYOU.AI - Gaming Content Hub</title>
-
-<style>
-  /* ---------- CSS Variables & Base ---------- */
-  :root {
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #151520;
-    --bg-card: rgba(25, 25, 40, 0.8);
-    --bg-glass: rgba(255, 255, 255, 0.03);
-    --border-glass: rgba(255, 255, 255, 0.08);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BOOSTYOU.AI - Your ultimate gaming news aggregator. Stay updated with the latest news from GTA6, Battlefield, and more across all platforms.">
+    <meta name="keywords" content="gaming news, GTA6, Battlefield, gaming updates, YouTube gaming, TikTok gaming, gaming articles">
+    <meta property="og:title" content="BOOSTYOU.AI - Gaming News Hub">
+    <meta property="og:description" content="Get the latest gaming news from all platforms in one place">
+    <meta property="og:type" content="website">
+    <title>BOOSTYOU.AI - Gaming News Hub</title>
     
-    --accent-cyber: #00ff88;
-    --accent-neon: #ff0080;
-    --accent-blue: #00d4ff;
-    --accent-purple: #8b5cf6;
+    <!-- Google Analytics placeholder -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    -->
     
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.5);
-    
-    --glow-cyan: 0 0 20px rgba(0, 255, 136, 0.3);
-    --glow-pink: 0 0 20px rgba(255, 0, 128, 0.3);
-    --glow-blue: 0 0 20px rgba(0, 212, 255, 0.3);
-    
-    --radius: 16px;
-    --radius-sm: 8px;
-    --max-width: 1400px;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html, body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
-
-  /* ---------- Dynamic Backgrounds ---------- */
-  .bg-default {
-    background: 
-      radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 40% 70%, rgba(255, 0, 128, 0.06) 0%, transparent 50%),
-      linear-gradient(180deg, #0a0a0f 0%, #151520 100%);
-  }
-
-  .bg-gta6 {
-    background: 
-      radial-gradient(ellipse at 30% 30%, rgba(255, 20, 147, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 70%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
-      linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #0f0a1a 100%);
-  }
-
-  .bg-bf6 {
-    background: 
-      radial-gradient(ellipse at 50% 30%, rgba(255, 69, 0, 0.1) 0%, transparent 60%),
-      radial-gradient(ellipse at 20% 80%, rgba(139, 69, 19, 0.08) 0%, transparent 50%),
-      linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 50%, #0f0f0f 100%);
-  }
-
-  /* ---------- Header ---------- */
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    backdrop-filter: blur(20px);
-    background: rgba(10, 10, 15, 0.85);
-    border-bottom: 1px solid var(--border-glass);
-    padding: 1rem 2rem;
-    transition: all 0.3s ease;
-  }
-
-  .header-content {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-weight: 900;
-    font-size: 1.5rem;
-    text-decoration: none;
-    color: var(--text-primary);
-    background: linear-gradient(135deg, var(--accent-cyber), var(--accent-blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .logo::before {
-    content: "⚡";
-    background: linear-gradient(135deg, var(--accent-cyber), var(--accent-blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 2rem;
-    filter: drop-shadow(var(--glow-cyan));
-  }
-
-  .search-container {
-    flex: 1;
-    max-width: 500px;
-    position: relative;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 0.75rem 1rem 0.75rem 3rem;
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: var(--accent-cyber);
-    box-shadow: var(--glow-cyan);
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    font-size: 1.2rem;
-  }
-
-  .subscribe-btn {
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, var(--accent-neon), var(--accent-purple));
-    border: none;
-    border-radius: var(--radius);
-    color: white;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: var(--glow-pink);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .subscribe-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(255, 0, 128, 0.4);
-  }
-
-  /* ---------- Main Content ---------- */
-  .main {
-    margin-top: 100px;
-    padding: 2rem;
-    max-width: var(--max-width);
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* ---------- Filters ---------- */
-  .filters {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
-    backdrop-filter: blur(15px);
-  }
-
-  .filter-group h3 {
-    margin-bottom: 0.75rem;
-    color: var(--accent-cyber);
-    font-size: 1.1rem;
-    font-weight: 700;
-  }
-
-  .filter-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .filter-chip {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-  }
-
-  .filter-chip:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--accent-cyber);
-  }
-
-  .filter-chip.active {
-    background: linear-gradient(135deg, var(--accent-cyber), var(--accent-blue));
-    color: var(--bg-primary);
-    border-color: transparent;
-    box-shadow: var(--glow-cyan);
-  }
-
-  .filter-chip input[type="checkbox"] {
-    display: none;
-  }
-
-  .filter-chip input[type="radio"] {
-    display: none;
-  }
-
-  /* ---------- Content Grid ---------- */
-  .content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .content-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(15px);
-    position: relative;
-  }
-
-  .content-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-    border-color: var(--accent-cyber);
-  }
-
-  .card-media {
-    width: 100%;
-    height: 200px;
-    background: var(--bg-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card-media iframe {
-    width: 100%;
-    height: 100%;
-  }
-
-  .platform-badge {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    background: var(--accent-neon);
-    color: white;
-    border-radius: 15px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .card-content {
-    padding: 1.5rem;
-  }
-
-  .card-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-    line-height: 1.4;
-  }
-
-  .card-games {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .game-tag {
-    padding: 0.25rem 0.75rem;
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-    color: white;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-
-  .card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-  }
-
-  .card-date {
-    color: var(--text-secondary);
-  }
-
-  /* ---------- Modal ---------- */
-  .modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    padding: 1rem;
-  }
-
-  .modal.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .modal-content {
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
-    padding: 2rem;
-    max-width: 500px;
-    width: 100%;
-    backdrop-filter: blur(20px);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-  }
-
-  .modal.active .modal-content {
-    transform: translateY(0);
-  }
-
-  .modal-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .modal-title {
-    font-size: 1.8rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--accent-cyber), var(--accent-blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
-  }
-
-  .modal-description {
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  .email-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .email-input {
-    padding: 1rem;
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-
-  .email-input:focus {
-    outline: none;
-    border-color: var(--accent-cyber);
-    box-shadow: var(--glow-cyan);
-  }
-
-  .form-buttons {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .btn-primary {
-    flex: 1;
-    padding: 1rem;
-    background: linear-gradient(135deg, var(--accent-cyber), var(--accent-blue));
-    border: none;
-    border-radius: var(--radius);
-    color: var(--bg-primary);
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--glow-cyan);
-  }
-
-  .btn-secondary {
-    padding: 1rem 1.5rem;
-    background: transparent;
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .btn-secondary:hover {
-    background: var(--bg-glass);
-    color: var(--text-primary);
-  }
-
-  /* ---------- Loading & Empty States ---------- */
-  .loading, .no-results {
-    text-align: center;
-    padding: 3rem;
-    color: var(--text-muted);
-  }
-
-  .loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid var(--bg-glass);
-    border-top: 3px solid var(--accent-cyber);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  /* ---------- Ad Placeholders ---------- */
-  .ad-container {
-    background: var(--bg-glass);
-    border: 1px dashed var(--border-glass);
-    border-radius: var(--radius);
-    padding: 2rem;
-    text-align: center;
-    color: var(--text-muted);
-    margin: 2rem 0;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* ---------- Responsive Design ---------- */
-  @media (max-width: 768px) {
-    .header {
-      padding: 1rem;
-    }
-    
-    .header-content {
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-    .search-container {
-      order: 1;
-      max-width: none;
-    }
-    
-    .main {
-      margin-top: 140px;
-      padding: 1rem;
-    }
-    
-    .content-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .filters {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* ---------- Animations ---------- */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .content-card {
-    animation: fadeInUp 0.6s ease forwards;
-  }
-</style>
-</head>
-<body class="bg-default">
-  <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <a href="#" class="logo">BOOSTYOU.AI</a>
-      
-      <div class="search-container">
-        <div class="search-icon">🔍</div>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search games, titles, content...">
-      </div>
-      
-      <button class="subscribe-btn" id="subscribeBtn">Subscribe</button>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="main">
-    <!-- Filters -->
-    <div class="filters">
-      <div class="filter-group">
-        <h3>Games</h3>
-        <div class="filter-options" id="gameFilters">
-          <!-- Dynamic game filters will be populated here -->
-        </div>
-      </div>
-      
-      <div class="filter-group">
-        <h3>Platforms</h3>
-        <div class="filter-options" id="platformFilters">
-          <label class="filter-chip active">
-            <input type="checkbox" value="Article" checked>
-            <span>Article</span>
-          </label>
-          <label class="filter-chip active">
-            <input type="checkbox" value="YouTube" checked>
-            <span>YouTube</span>
-          </label>
-          <label class="filter-chip active">
-            <input type="checkbox" value="YouTubeShorts" checked>
-            <span>Shorts</span>
-          </label>
-          <label class="filter-chip active">
-            <input type="checkbox" value="Reddit" checked>
-            <span>Reddit</span>
-          </label>
-          <label class="filter-chip active">
-            <input type="checkbox" value="Instagram" checked>
-            <span>Instagram</span>
-          </label>
-          <label class="filter-chip active">
-            <input type="checkbox" value="TikTok" checked>
-            <span>TikTok</span>
-          </label>
-        </div>
-      </div>
-      
-      <div class="filter-group">
-        <h3>Timeframe</h3>
-        <div class="filter-options" id="timeFilters">
-          <label class="filter-chip">
-            <input type="radio" name="timeframe" value="daily">
-            <span>Daily</span>
-          </label>
-          <label class="filter-chip">
-            <input type="radio" name="timeframe" value="weekly">
-            <span>Weekly</span>
-          </label>
-          <label class="filter-chip active">
-            <input type="radio" name="timeframe" value="monthly" checked>
-            <span>Monthly</span>
-          </label>
-          <label class="filter-chip">
-            <input type="radio" name="timeframe" value="yearly">
-            <span>Yearly</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ad Container (Top) -->
-    <div class="ad-container">
-      <div>
-        <h3>Advertisement Space</h3>
-        <p>728x90 Banner Ad Placement</p>
-      </div>
-    </div>
-
-    <!-- Content Grid -->
-    <div class="content-grid" id="contentGrid">
-      <div class="loading">
-        <div class="loading-spinner"></div>
-        <p>Loading gaming content...</p>
-      </div>
-    </div>
-
-    <!-- Ad Container (Middle) -->
-    <div class="ad-container" id="midAd" style="display: none;">
-      <div>
-        <h3>Advertisement Space</h3>
-        <p>300x250 Square Ad Placement</p>
-      </div>
-    </div>
-
-    <!-- Load More Button -->
-    <div style="text-align: center; margin: 2rem 0;">
-      <button id="loadMoreBtn" class="btn-primary" style="display: none; padding: 1rem 2rem;">
-        Load More Content
-      </button>
-    </div>
-  </main>
-
-  <!-- Subscribe Modal -->
-  <div class="modal" id="subscribeModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">Join the BOOST Revolution</h2>
-        <p class="modal-description">
-          Get the latest news, trailers, articles, boosting strategies, XP boosts, discount codes and more straight into your inbox. No more useless endless grinds — only optimized, time-efficient gaming.
-        </p>
-      </div>
-      
-      <!-- Beehiiv Form (Replace with your actual embed code) -->
-      <form class="email-form" id="subscribeForm" action="https://your-beehiiv-publication.beehiiv.com/subscribe" method="post">
-        <input type="email" name="email" class="email-input" placeholder="Enter your email address" required>
-        <div class="form-buttons">
-          <button type="submit" class="btn-primary">Subscribe Now</button>
-          <button type="button" class="btn-secondary" id="closeModal">Maybe Later</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-<script>
-// App state
-const state = {
-  allContent: [],
-  filteredContent: [],
-  displayedContent: [],
-  filters: {
-    search: '',
-    games: [],
-    platforms: ['Article', 'YouTube', 'YouTubeShorts', 'Reddit', 'Instagram', 'TikTok'],
-    timeframe: 'monthly'
-  },
-  currentPage: 0,
-  itemsPerPage: 12,
-  selectedGames: []
-};
-
-// DOM elements
-const searchInput = document.getElementById('searchInput');
-const contentGrid = document.getElementById('contentGrid');
-const subscribeBtn = document.getElementById('subscribeBtn');
-const subscribeModal = document.getElementById('subscribeModal');
-const closeModal = document.getElementById('closeModal');
-const loadMoreBtn = document.getElementById('loadMoreBtn');
-const gameFilters = document.getElementById('gameFilters');
-
-// Initialize app
-document.addEventListener('DOMContentLoaded', async () => {
-  loadUserPreferences();
-  await loadContent();
-  setupEventListeners();
-  applyFilters();
-});
-
-// Load content from JSON files
-async function loadContent() {
-  try {
-    // Try to load current month first, then fall back to static data
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const currentMonthFile = `data/content_${year}_${month}.json`;
-    
-    let content = [];
-    
-    try {
-      const response = await fetch(currentMonthFile);
-      if (response.ok) {
-        content = await response.json();
-      }
-    } catch (e) {
-      console.log('Current month file not found, trying to load other files...');
-    }
-    
-    // If no current month data, try to load any available month files
-    if (!content.length) {
-      // This would need to be expanded to check multiple month files
-      // For now, we'll use the sample data you provided
-      content = [
-        {
-          "id": "1757871414916",
-          "title": "Grand Theft Auto VI Trailer 1",
-          "game": ["GTA6"],
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/watch?v=QdBZY2fkU-0",
-          "date": "2025-09-14T17:31:00.000Z"
-        },
-        {
-          "id": "1757874102744",
-          "title": "Grand Theft Auto VI Trailer 2", 
-          "game": ["GTA6"],
-          "platform": "YouTube",
-          "url": "https://www.youtube.com/watch?v=VQRLujxTm3c",
-          "date": "2025-09-14T18:21:00.000Z"
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --card-bg: #242424;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #00ff88;
+            --accent-hover: #00cc6a;
+            --border-color: #333;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-      ];
-    }
-    
-    state.allContent = content;
-    populateGameFilters();
-    
-  } catch (error) {
-    console.error('Error loading content:', error);
-    showNoResults('Failed to load content. Please try again later.');
-  }
-}
 
-// Populate game filters dynamically
-function populateGameFilters() {
-  const games = [...new Set(state.allContent.flatMap(item => item.game || []))];
-  gameFilters.innerHTML = games.map(game => `
-    <label class="filter-chip active">
-      <input type="checkbox" value="${game}" checked>
-      <span>${game}</span>
-    </label>
-  `).join('');
-  
-  // Update state with all games initially selected
-  state.filters.games = games;
-}
+        /* Light theme */
+        [data-theme="light"] {
+            --primary-bg: #f5f5f5;
+            --secondary-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent: #00cc6a;
+            --accent-hover: #00ff88;
+            --border-color: #e0e0e0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-// Setup event listeners
-function setupEventListeners() {
-  // Search input
-  searchInput.addEventListener('input', (e) => {
-    state.filters.search = e.target.value.toLowerCase();
-    applyFilters();
-  });
-  
-  // Subscribe modal
-  subscribeBtn.addEventListener('click', () => {
-    subscribeModal.classList.add('active');
-  });
-  
-  closeModal.addEventListener('click', () => {
-    subscribeModal.classList.remove('active');
-  });
-  
-  subscribeModal.addEventListener('click', (e) => {
-    if (e.target === subscribeModal) {
-      subscribeModal.classList.remove('active');
-    }
-  });
-  
-  // Filter chips
-  document.addEventListener('change', (e) => {
-    if (e.target.type === 'checkbox' && e.target.closest('#gameFilters')) {
-      updateGameFilters();
-    } else if (e.target.type === 'checkbox' && e.target.closest('#platformFilters')) {
-      updatePlatformFilters();
-    } else if (e.target.type === 'radio' && e.target.name === 'timeframe') {
-      state.filters.timeframe = e.target.value;
-      updateFilterChipStyles();
-      applyFilters();
-    }
-  });
-  
-  // Load more button
-  loadMoreBtn.addEventListener('click', loadMore);
-  
-  // Infinite scroll
-  window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
-      loadMore();
-    }
-  });
-}
+        /* GTA6 Theme */
+        [data-game-theme="GTA6"] {
+            --primary-bg: linear-gradient(135deg, #ff006e 0%, #8338ec 50%, #3a86ff 100%);
+            --secondary-bg: rgba(26, 26, 26, 0.95);
+            --card-bg: rgba(36, 36, 36, 0.95);
+            --accent: #ff006e;
+            --accent-hover: #ff4081;
+            --border-color: #ff006e40;
+        }
 
-// Update game filters
-function updateGameFilters() {
-  const checkedGames = Array.from(document.querySelectorAll('#gameFilters input[type="checkbox"]:checked'))
-    .map(input => input.value);
-  
-  state.filters.games = checkedGames;
-  state.selectedGames = checkedGames;
-  
-  updateFilterChipStyles();
-  updateBackgroundTheme();
-  applyFilters();
-  saveUserPreferences();
-}
+        /* Battlefield Theme */
+        [data-game-theme="Battlefield"] {
+            --primary-bg: linear-gradient(135deg, #0f4c75 0%, #3282b8 50%, #bbe1fa 100%);
+            --secondary-bg: rgba(15, 76, 117, 0.95);
+            --card-bg: rgba(50, 130, 184, 0.2);
+            --accent: #ff9800;
+            --accent-hover: #ffa726;
+            --border-color: #3282b840;
+        }
 
-// Update platform filters  
-function updatePlatformFilters() {
-  const checkedPlatforms = Array.from(document.querySelectorAll('#platformFilters input[type="checkbox"]:checked'))
-    .map(input => input.value);
-  
-  state.filters.platforms = checkedPlatforms;
-  updateFilterChipStyles();
-  applyFilters();
-  saveUserPreferences();
-}
+        /* Call of Duty Theme */
+        [data-game-theme="Call of Duty"] {
+            --primary-bg: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #1a252f 100%);
+            --secondary-bg: rgba(44, 62, 80, 0.95);
+            --card-bg: rgba(52, 73, 94, 0.3);
+            --accent: #e74c3c;
+            --accent-hover: #c0392b;
+            --border-color: #e74c3c40;
+        }
 
-// Update filter chip visual styles
-function updateFilterChipStyles() {
-  document.querySelectorAll('.filter-chip').forEach(chip => {
-    const input = chip.querySelector('input');
-    if (input.checked || (input.type === 'radio' && input.value === state.filters.timeframe)) {
-      chip.classList.add('active');
-    } else {
-      chip.classList.remove('active');
-    }
-  });
-}
+        /* FIFA Theme */
+        [data-game-theme="FIFA"] {
+            --primary-bg: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #1e8449 100%);
+            --secondary-bg: rgba(39, 174, 96, 0.95);
+            --card-bg: rgba(46, 204, 113, 0.2);
+            --accent: #f1c40f;
+            --accent-hover: #f39c12;
+            --border-color: #f1c40f40;
+        }
 
-// Update background theme based on selected games
-function updateBackgroundTheme() {
-  const body = document.body;
-  
-  // Reset all theme classes
-  body.classList.remove('bg-default', 'bg-gta6', 'bg-bf6');
-  
-  if (state.selectedGames.length === 1) {
-    const game = state.selectedGames[0].toLowerCase();
-    if (game.includes('gta')) {
-      body.classList.add('bg-gta6');
-    } else if (game.includes('bf') || game.includes('battlefield')) {
-      body.classList.add('bg-bf6');
-    } else {
-      body.classList.add('bg-default');
-    }
-  } else {
-    body.classList.add('bg-default');
-  }
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-// Apply filters and update display
-function applyFilters() {
-  let filtered = state.allContent;
-  
-  // Search filter
-  if (state.filters.search) {
-    filtered = filtered.filter(item => 
-      (item.title || '').toLowerCase().includes(state.filters.search) ||
-      (item.game || []).some(g => g.toLowerCase().includes(state.filters.search))
-    );
-  }
-  
-  // Game filter
-  if (state.filters.games.length) {
-    filtered = filtered.filter(item => 
-      (item.game || []).some(g => state.filters.games.includes(g))
-    );
-  }
-  
-  // Platform filter
-  if (state.filters.platforms.length) {
-    filtered = filtered.filter(item => 
-      state.filters.platforms.includes(item.platform)
-    );
-  }
-  
-  // Time filter
-  if (state.filters.timeframe !== 'yearly') {
-    const now = new Date();
-    let cutoff;
-    
-    switch (state.filters.timeframe) {
-      case 'daily':
-        cutoff = new Date(now - 24 * 60 * 60 * 1000);
-        break;
-      case 'weekly':
-        cutoff = new Date(now - 7 * 24 * 60 * 60 * 1000);
-        break;
-      case 'monthly':
-        cutoff = new Date(now - 30 * 24 * 60 * 60 * 1000);
-        break;
-    }
-    
-    if (cutoff) {
-      filtered = filtered.filter(item => new Date(item.date) > cutoff);
-    }
-  }
-  
-  // Sort by date (newest first)
-  filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-  state.filteredContent = filtered;
-  state.currentPage = 0;
-  state.displayedContent = [];
-  
-  loadMore();
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
 
-// Load more content (pagination/infinite scroll)
-function loadMore() {
-  if (state.displayedContent.length >= state.filteredContent.length) {
-    loadMoreBtn.style.display = 'none';
-    return;
-  }
-  
-  const start = state.currentPage * state.itemsPerPage;
-  const end = start + state.itemsPerPage;
-  const newContent = state.filteredContent.slice(start, end);
-  
-  if (newContent.length === 0) {
-    loadMoreBtn.style.display = 'none';
-    return;
-  }
-  
-  state.displayedContent = [...state.displayedContent, ...newContent];
-  state.currentPage++;
-  
-  renderContent();
-  
-  // Show load more button if there's more content
-  if (state.displayedContent.length < state.filteredContent.length) {
-    loadMoreBtn.style.display = 'block';
-  } else {
-    loadMoreBtn.style.display = 'none';
-  }
-  
-  // Show mid ad after certain amount of content
-  if (state.displayedContent.length >= 6) {
-    document.getElementById('midAd').style.display = 'block';
-  }
-}
+        /* Top Bar */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--secondary-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
 
-// Render content cards
-function renderContent() {
-  if (state.displayedContent.length === 0) {
-    showNoResults();
-    return;
-  }
-  
-  const cards = state.displayedContent.map(item => createContentCard(item)).join('');
-  contentGrid.innerHTML = cards;
-}
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
 
-// Create individual content card
-function createContentCard(item) {
-  const games = (item.game || []).map(g => `<span class="game-tag">${g}</span>`).join('');
-  const date = new Date(item.date).toLocaleDateString();
-  const media = getMediaEmbed(item);
-  
-  return `
-    <div class="content-card">
-      <div class="card-media">
-        ${media}
-        <div class="platform-badge">${item.platform}</div>
-      </div>
-      <div class="card-content">
-        <h3 class="card-title">${escapeHtml(item.title)}</h3>
-        <div class="card-games">${games}</div>
-        <div class="card-meta">
-          <span class="card-date">${date}</span>
-          <a href="${item.url}" target="_blank" class="btn-secondary" style="padding: 0.5rem 1rem; text-decoration: none; font-size: 0.9rem;">
-            View Content
-          </a>
+        .search-icon {
+            cursor: pointer;
+            padding: 10px;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        .search-icon:hover {
+            background: var(--card-bg);
+            transform: scale(1.1);
+        }
+
+        .search-bar {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%) scaleX(0);
+            transform-origin: left;
+            width: 300px;
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            outline: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .search-bar.active {
+            transform: translateY(-50%) scaleX(1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--accent);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+
+        .theme-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: var(--card-bg);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-switch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .game-selector {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .game-selector:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+        }
+
+        /* Newsletter Button */
+        .newsletter-btn {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            border: none;
+            border-radius: 25px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 999;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        .newsletter-btn:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Header Section */
+        .header-section {
+            margin-top: 140px;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Content Grid */
+        .content-container {
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Responsive grid layouts */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .shorts-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .shorts-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (min-width: 1201px) {
+            .content-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .shorts-container {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 20px;
+            }
+        }
+
+        .shorts-container {
+            display: grid;
+            grid-column: 1 / -1;
+            margin: 20px 0;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+            border-color: var(--accent);
+        }
+
+        .content-card.shorts {
+            aspect-ratio: 9/16;
+            max-height: 400px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .shorts-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .shorts-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .content-info {
+            padding: 15px;
+        }
+
+        .content-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .content-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .platform-badge {
+            padding: 4px 10px;
+            background: var(--accent);
+            color: #000;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .article-text {
+            padding: 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            transform: translateX(5px);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Loading Indicator */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .game-checkboxes {
+            margin-bottom: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: var(--primary-bg);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .checkbox-item:hover {
+            background: var(--secondary-bg);
+            transform: translateX(5px);
+        }
+
+        .checkbox-item input {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .modal-btn.primary {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .modal-btn.primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+        }
+
+        .modal-btn.secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-btn.secondary:hover {
+            background: var(--secondary-bg);
+            border-color: var(--accent);
+        }
+
+        /* No data message */
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+
+        .no-data h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        /* Error message */
+        .error-message {
+            background: #ff4444;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0 10px;
+            }
+
+            .search-bar {
+                width: 200px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .theme-controls {
+                gap: 10px;
+            }
+
+            .header-section {
+                margin-top: 120px;
+                padding: 15px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark" data-game-theme="default">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="search-container">
+            <div class="search-icon" onclick="toggleSearch()">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </div>
+            <input type="text" class="search-bar" id="searchBar" placeholder="Search news..." onkeyup="handleSearch(event)">
         </div>
-      </div>
+        
+        <div class="logo">BOOSTYOU.AI</div>
+        
+        <div class="theme-controls">
+            <div class="theme-switch" onclick="toggleTheme()">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Dark</span>
+            </div>
+            <select class="game-selector" id="gameThemeSelector" onchange="changeGameTheme(this.value)">
+                <option value="default">Default Theme</option>
+            </select>
+        </div>
     </div>
-  `;
-}
 
-// Get media embed based on platform and URL
-function getMediaEmbed(item) {
-  const { platform, url } = item;
-  
-  if (platform === 'YouTube' && url) {
-    const videoId = extractYouTubeId(url);
-    if (videoId) {
-      return `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
-    }
-  }
-  
-  if (platform === 'YouTubeShorts' && url) {
-    const videoId = extractYouTubeId(url);
-    if (videoId) {
-      return `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen style="height: 300px;"></iframe>`;
-    }
-  }
-  
-  // Default placeholder for other platforms
-  const platformIcon = getPlatformIcon(platform);
-  return `
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted);">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">${platformIcon}</div>
-      <div>${platform}</div>
+    <!-- Newsletter Button -->
+    <button class="newsletter-btn" onclick="openNewsletterModal()">📧 Free Monthly Newsletter</button>
+
+    <!-- Header Section with Filters -->
+    <div class="header-section">
+        <div class="filter-group">
+            <div class="filter-label">Games</div>
+            <div class="filter-buttons" id="gameFilters">
+                <button class="filter-btn active" data-game="all" onclick="filterByGame('all')">All Games</button>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <div class="filter-label">Platforms</div>
+            <div class="filter-buttons" id="platformFilters">
+                <button class="filter-btn active" data-platform="all" onclick="filterByPlatform('all')">All</button>
+                <button class="filter-btn" data-platform="Official" onclick="filterByPlatform('Official')">Official News</button>
+                <button class="filter-btn" data-platform="Article" onclick="filterByPlatform('Article')">Articles</button>
+                <button class="filter-btn" data-platform="Reddit" onclick="filterByPlatform('Reddit')">Reddit</button>
+                <button class="filter-btn" data-platform="YouTube" onclick="filterByPlatform('YouTube')">YouTube</button>
+                <button class="filter-btn" data-platform="Shorts" onclick="filterByPlatform('Shorts')">Shorts</button>
+                <button class="filter-btn" data-platform="TikTok" onclick="filterByPlatform('TikTok')">TikTok</button>
+                <button class="filter-btn" data-platform="Instagram" onclick="filterByPlatform('Instagram')">Instagram</button>
+                <button class="filter-btn" data-platform="Twitter" onclick="filterByPlatform('Twitter')">Twitter</button>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <div class="filter-label">Timeframe</div>
+            <div class="filter-buttons" id="timeFilters">
+                <button class="filter-btn" data-time="day" onclick="filterByTime('day')">Day</button>
+                <button class="filter-btn active" data-time="week" onclick="filterByTime('week')">Week</button>
+                <button class="filter-btn" data-time="month" onclick="filterByTime('month')">Month</button>
+                <button class="filter-btn" data-time="year" onclick="filterByTime('year')">Year</button>
+            </div>
+        </div>
     </div>
-  `;
-}
 
-// Extract YouTube video ID from URL
-function extractYouTubeId(url) {
-  const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
-  const match = url.match(regex);
-  return match ? match[1] : null;
-}
-
-// Get platform icon
-function getPlatformIcon(platform) {
-  const icons = {
-    'YouTube': '📺',
-    'YouTubeShorts': '📱',
-    'Article': '📰',
-    'Reddit': '🔴',
-    'Instagram': '📸',
-    'TikTok': '🎵'
-  };
-  return icons[platform] || '🎮';
-}
-
-// Show no results message
-function showNoResults(message = 'No content matches your current filters.') {
-  contentGrid.innerHTML = `
-    <div class="no-results" style="grid-column: 1 / -1;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">🎮</div>
-      <h3>No Content Found</h3>
-      <p>${message}</p>
-      <button onclick="resetFilters()" class="btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem;">
-        Reset Filters
-      </button>
+    <!-- Content Container -->
+    <div class="content-container">
+        <div class="content-grid" id="contentGrid">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+        <div class="loading" id="loadingIndicator" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Loading more content...</p>
+        </div>
     </div>
-  `;
-}
 
-// Reset all filters
-function resetFilters() {
-  // Reset search
-  searchInput.value = '';
-  state.filters.search = '';
-  
-  // Reset all checkboxes to checked
-  document.querySelectorAll('input[type="checkbox"]').forEach(input => {
-    input.checked = true;
-  });
-  
-  // Reset timeframe to monthly
-  document.querySelector('input[value="monthly"]').checked = true;
-  state.filters.timeframe = 'monthly';
-  
-  // Update state
-  populateGameFilters();
-  state.filters.platforms = ['Article', 'YouTube', 'YouTubeShorts', 'Reddit', 'Instagram', 'TikTok'];
-  state.selectedGames = state.filters.games;
-  
-  updateFilterChipStyles();
-  updateBackgroundTheme();
-  applyFilters();
-}
+    <!-- Newsletter Modal -->
+    <div class="modal" id="newsletterModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Subscribe to Newsletter</h2>
+            <div class="game-checkboxes" id="gameCheckboxes">
+                <!-- Game checkboxes will be dynamically added -->
+            </div>
+            <input type="email" class="email-input" id="emailInput" placeholder="Enter your email address">
+            <div class="modal-buttons">
+                <button class="modal-btn primary" onclick="subscribeNewsletter()">Subscribe</button>
+                <button class="modal-btn secondary" onclick="closeNewsletterModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-// Save user preferences to localStorage
-function saveUserPreferences() {
-  const prefs = {
-    games: state.filters.games,
-    platforms: state.filters.platforms,
-    timeframe: state.filters.timeframe
-  };
-  localStorage.setItem('boostyou_preferences', JSON.stringify(prefs));
-}
+    <script>
+        // App State
+        let appState = {
+            theme: localStorage.getItem('theme') || 'dark',
+            gameTheme: localStorage.getItem('gameTheme') || 'default',
+            filters: {
+                game: localStorage.getItem('filterGame') || 'all',
+                platform: localStorage.getItem('filterPlatform') || 'all',
+                timeframe: localStorage.getItem('filterTime') || 'week'
+            },
+            currentPage: 1,
+            itemsPerPage: 12,
+            allContent: [],
+            filteredContent: [],
+            availableGames: new Set(),
+            isLoading: false,
+            searchQuery: '',
+            hasMoreContent: true
+        };
 
-// Load user preferences from localStorage
-function loadUserPreferences() {
-  const saved = localStorage.getItem('boostyou_preferences');
-  if (saved) {
-    try {
-      const prefs = JSON.parse(saved);
-      state.filters = { ...state.filters, ...prefs };
-    } catch (e) {
-      console.warn('Failed to load user preferences');
-    }
-  }
-}
+        // Enhanced mock data for demonstration
+        const mockData = [
+            {
+                id: "1757871414916",
+                title: "Grand Theft Auto VI Trailer 1",
+                game: ["GTA6"],
+                platform: "YouTube",
+                url: "https://www.youtube.com/watch?v=QdBZY2fkU-0",
+                date: "2025-09-14T17:31:00.000Z",
+                text: ""
+            },
+            {
+                id: "1757874102744",
+                title: "Grand Theft Auto VI Trailer 2",
+                game: ["GTA6"],
+                platform: "YouTube",
+                url: "https://www.youtube.com/watch?v=VQRLujxTm3c",
+                date: "2025-09-14T18:21:00.000Z",
+                text: ""
+            },
+            {
+                id: "1757874102745",
+                title: "Grand Theft Auto VI: Everything We Know So Far",
+                game: ["GTA6"],
+                platform: "Article",
+                url: "https://www.ign.com/articles/gta6-everything-we-know",
+                date: "2025-09-14T18:21:00.000Z",
+                text: "After years of waiting, Rockstar Games has finally revealed Grand Theft Auto VI. Set in a modern-day Vice City, the game promises to deliver the most immersive open-world experience yet created. The game will feature two protagonists, Lucia and Jason, in what appears to be a Bonnie and Clyde-style narrative..."
+            },
+            {
+                id: "1757874102746",
+                title: "Battlefield 2042 Season 7 Update",
+                game: ["Battlefield"],
+                platform: "Official",
+                url: "https://www.ea.com/games/battlefield/battlefield-2042",
+                date: "2025-09-13T10:00:00.000Z",
+                text: "Season 7 brings new maps, weapons, and vehicles to the battlefield. Experience intense combat across reimagined classic maps from the Battlefield franchise. New specialist abilities and game modes await."
+            },
+            {
+                id: "1757874102747",
+                title: "Epic GTA6 Gameplay Leak Discussion",
+                game: ["GTA6"],
+                platform: "Shorts",
+                url: "https://www.youtube.com/shorts/abc123",
+                date: "2025-09-14T20:00:00.000Z",
+                text: ""
+            },
+            {
+                id: "1757874102748",
+                title: "Battlefield Tips & Tricks",
+                game: ["Battlefield"],
+                platform: "Shorts",
+                url: "https://www.youtube.com/shorts/def456",
+                date: "2025-09-14T15:00:00.000Z",
+                text: ""
+            },
+            {
+                id: "1757874102749",
+                title: "Call of Duty Black Ops 6 Reveal",
+                game: ["Call of Duty"],
+                platform: "YouTube",
+                url: "https://www.youtube.com/watch?v=xyz789",
+                date: "2025-09-12T14:00:00.000Z",
+                text: ""
+            },
+            {
+                id: "1757874102750",
+                title: "FIFA 24 Ultimate Team New Features",
+                game: ["FIFA"],
+                platform: "Article",
+                url: "https://www.ea.com/games/fifa",
+                date: "2025-09-11T12:00:00.000Z",
+                text: "FIFA 24 introduces revolutionary Ultimate Team features including enhanced chemistry system and new pack animations. Experience the most realistic football simulation ever created with improved AI and gameplay mechanics."
+            },
+            {
+                id: "1757874102751",
+                title: "GTA6 Vice City Leaked Footage",
+                game: ["GTA6"],
+                platform: "TikTok",
+                url: "https://www.tiktok.com/@gamer123",
+                date: "2025-09-13T16:30:00.000Z",
+                text: ""
+            },
+            {
+                id: "1757874102752",
+                title: "Battlefield Community Update",
+                game: ["Battlefield"],
+                platform: "Reddit",
+                url: "https://www.reddit.com/r/battlefield",
+                date: "2025-09-10T09:15:00.000Z",
+                text: "The Battlefield community discusses the latest updates and upcoming features. Players share strategies, gameplay tips, and feedback on the recent patches."
+            }
+        ];
 
-// Utility function to escape HTML
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            loadContent();
+            setupInfiniteScroll();
+        });
 
-// Handle subscribe form submission
-document.addEventListener('submit', (e) => {
-  if (e.target.id === 'subscribeForm') {
-    e.preventDefault();
-    
-    // Get email value
-    const email = e.target.querySelector('input[type="email"]').value;
-    
-    // Here you would integrate with Beehiiv API
-    // For now, we'll show a success message
-    alert('Thank you for subscribing! You will receive our gaming newsletter soon.');
-    subscribeModal.classList.remove('active');
-    e.target.reset();
-  }
-});
+        function initializeApp() {
+            // Apply saved theme
+            document.body.setAttribute('data-theme', appState.theme);
+            document.body.setAttribute('data-game-theme', appState.gameTheme);
+            updateThemeUI();
 
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-  // ESC to close modal
-  if (e.key === 'Escape' && subscribeModal.classList.contains('active')) {
-    subscribeModal.classList.remove('active');
-  }
-  
-  // Ctrl/Cmd + K to focus search
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-    e.preventDefault();
-    searchInput.focus();
-  }
-});
+            // Try to load real data first, fallback to mock data
+            loadGameData();
 
-// Performance optimization: Debounce search
-let searchTimeout;
-searchInput.addEventListener('input', (e) => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    state.filters.search = e.target.value.toLowerCase();
-    applyFilters();
-  }, 300);
-});
+            // Apply saved filters
+            setTimeout(() => {
+                applyFilters();
+                updateFilterUI();
+            }, 100);
+        }
+
+        async function loadGameData() {
+            try {
+                // Try to load current month's data
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const dataUrl = `/data/content_${year}_${month}.json`;
+                
+                const response = await fetch(dataUrl);
+                if (response.ok) {
+                    const data = await response.json();
+                    appState.allContent = data;
+                    console.log('Loaded real data from:', dataUrl);
+                } else {
+                    throw new Error('Could not load current month data');
+                }
+            } catch (error) {
+                console.log('Using mock data for demonstration');
+                appState.allContent = mockData;
+            }
+
+            // Extract unique games
+            appState.allContent.forEach(item => {
+                item.game.forEach(game => appState.availableGames.add(game));
+            });
+
+            // Populate game filters and theme selector
+            populateGameFilters();
+            populateGameThemes();
+            populateNewsletterGames();
+        }
+
+        function populateGameFilters() {
+            const gameFiltersContainer = document.getElementById('gameFilters');
+            // Clear existing filters except "All Games"
+            const allGamesBtn = gameFiltersContainer.querySelector('[data-game="all"]');
+            gameFiltersContainer.innerHTML = '';
+            gameFiltersContainer.appendChild(allGamesBtn);
+
+            appState.availableGames.forEach(game => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.setAttribute('data-game', game);
+                btn.onclick = () => filterByGame(game);
+                btn.textContent = game;
+                gameFiltersContainer.appendChild(btn);
+            });
+        }
+
+        function populateGameThemes() {
+            const selector = document.getElementById('gameThemeSelector');
+            // Clear existing options except default
+            const defaultOption = selector.querySelector('[value="default"]');
+            selector.innerHTML = '';
+            selector.appendChild(defaultOption);
+
+            appState.availableGames.forEach(game => {
+                const option = document.createElement('option');
+                option.value = game;
+                option.textContent = `${game} Theme`;
+                selector.appendChild(option);
+            });
+
+            // Set current theme
+            selector.value = appState.gameTheme;
+        }
+
+        function populateNewsletterGames() {
+            const container = document.getElementById('gameCheckboxes');
+            container.innerHTML = '';
+
+            appState.availableGames.forEach(game => {
+                const checkboxItem = document.createElement('div');
+                checkboxItem.className = 'checkbox-item';
+                checkboxItem.innerHTML = `
+                    <input type="checkbox" id="newsletter_${game}" value="${game}">
+                    <label for="newsletter_${game}">${game}</label>
+                `;
+                container.appendChild(checkboxItem);
+            });
+        }
+
+        function loadContent() {
+            if (appState.isLoading) return;
+            
+            appState.isLoading = true;
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            loadingIndicator.style.display = 'block';
+
+            // Simulate API delay
+            setTimeout(() => {
+                const grid = document.getElementById('contentGrid');
+                const startIndex = (appState.currentPage - 1) * appState.itemsPerPage;
+                const endIndex = startIndex + appState.itemsPerPage;
+                
+                // Filter content based on current filters
+                applyFilters();
+                
+                const contentToShow = appState.filteredContent.slice(startIndex, endIndex);
+                
+                if (appState.currentPage === 1) {
+                    grid.innerHTML = '';
+                }
+
+                if (contentToShow.length === 0 && appState.currentPage === 1) {
+                    grid.innerHTML = `
+                        <div class="no-data">
+                            <h2>No content found</h2>
+                            <p>Try adjusting your filters or check back later for new content.</p>
+                        </div>
+                    `;
+                } else {
+                    renderContent(contentToShow, appState.currentPage === 1);
+                }
+
+                appState.hasMoreContent = endIndex < appState.filteredContent.length;
+                appState.isLoading = false;
+                loadingIndicator.style.display = 'none';
+            }, 500);
+        }
+
+        function renderContent(content, clearGrid = false) {
+            const grid = document.getElementById('contentGrid');
+            
+            if (clearGrid) {
+                grid.innerHTML = '';
+            }
+
+            // Group shorts content
+            const shortsContent = content.filter(item => 
+                item.platform === 'Shorts' || item.platform === 'TikTok' || 
+                (item.platform === 'Instagram' && item.url.includes('reel'))
+            );
+            
+            const regularContent = content.filter(item => !shortsContent.includes(item));
+
+            // Render regular content
+            regularContent.forEach(item => {
+                const card = createContentCard(item);
+                grid.appendChild(card);
+            });
+
+            // Render shorts in a separate container if any exist
+            if (shortsContent.length > 0) {
+                const shortsContainer = document.createElement('div');
+                shortsContainer.className = 'shorts-container';
+                
+                shortsContent.forEach(item => {
+                    const card = createContentCard(item);
+                    shortsContainer.appendChild(card);
+                });
+                
+                grid.appendChild(shortsContainer);
+            }
+        }
+
+        function createContentCard(item) {
+            const card = document.createElement('div');
+            const isShorts = item.platform === 'Shorts' || item.platform === 'TikTok' || 
+                           (item.platform === 'Instagram' && item.url.includes('reel'));
+            
+            card.className = `content-card ${isShorts ? 'shorts' : item.platform.toLowerCase()}`;
+            
+            let cardContent = '';
+
+            if (item.platform === 'YouTube') {
+                const videoId = extractVideoId(item.url);
+                cardContent = `
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                title="${item.title}" allowfullscreen></iframe>
+                    </div>
+                    <div class="content-info">
+                        <h3 class="content-title">${item.title}</h3>
+                        <div class="content-meta">
+                            <span class="platform-badge">${item.platform}</span>
+                            <span>${formatDate(item.date)}</span>
+                        </div>
+                    </div>
+                `;
+            } else if (isShorts) {
+                const videoId = extractVideoId(item.url) || 'dQw4w9WgXcQ'; // Fallback ID
+                cardContent = `
+                    <div class="shorts-wrapper">
+                        <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                title="${item.title}" allowfullscreen></iframe>
+                    </div>
+                    <div class="content-info">
+                        <h3 class="content-title">${item.title}</h3>
+                        <div class="content-meta">
+                            <span class="platform-badge">${item.platform}</span>
+                            <span>${formatDate(item.date)}</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Articles, Official news, Reddit, Twitter, etc.
+                cardContent = `
+                    <div class="article-image">
+                        <span>📰 ${item.platform} Article</span>
+                    </div>
+                    <div class="content-info">
+                        <h3 class="content-title">${item.title}</h3>
+                        <div class="content-meta">
+                            <span class="platform-badge">${item.platform}</span>
+                            <span>${formatDate(item.date)}</span>
+                        </div>
+                        ${item.text ? `
+                            <div class="article-text">
+                                ${item.text.substring(0, 150)}${item.text.length > 150 ? '...' : ''}
+                            </div>
+                        ` : ''}
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="read-more">
+                            Read Original →
+                        </a>
+                    </div>
+                `;
+            }
+
+            card.innerHTML = cardContent;
+            return card;
+        }
+
+        function extractVideoId(url) {
+            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return `${diffDays} days ago`;
+            if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+            return date.toLocaleDateString();
+        }
+
+        function applyFilters() {
+            let filtered = [...appState.allContent];
+
+            // Apply game filter
+            if (appState.filters.game !== 'all') {
+                filtered = filtered.filter(item => 
+                    item.game.includes(appState.filters.game)
+                );
+            }
+
+            // Apply platform filter
+            if (appState.filters.platform !== 'all') {
+                filtered = filtered.filter(item => 
+                    item.platform === appState.filters.platform
+                );
+            }
+
+            // Apply time filter
+            const now = new Date();
+            let timeThreshold;
+            
+            switch (appState.filters.timeframe) {
+                case 'day':
+                    timeThreshold = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                    break;
+                case 'week':
+                    timeThreshold = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    break;
+                case 'month':
+                    timeThreshold = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    break;
+                case 'year':
+                    timeThreshold = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+                    break;
+                default:
+                    timeThreshold = new Date(0);
+            }
+
+            filtered = filtered.filter(item => 
+                new Date(item.date) >= timeThreshold
+            );
+
+            // Apply search filter
+            if (appState.searchQuery) {
+                const query = appState.searchQuery.toLowerCase();
+                filtered = filtered.filter(item => 
+                    item.title.toLowerCase().includes(query) ||
+                    item.game.some(game => game.toLowerCase().includes(query)) ||
+                    (item.text && item.text.toLowerCase().includes(query))
+                );
+            }
+
+            // Sort by date (newest first)
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            appState.filteredContent = filtered;
+        }
+
+        function updateFilterUI() {
+            // Update game filter buttons
+            document.querySelectorAll('[data-game]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.game === appState.filters.game);
+            });
+
+            // Update platform filter buttons
+            document.querySelectorAll('[data-platform]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.platform === appState.filters.platform);
+            });
+
+            // Update time filter buttons
+            document.querySelectorAll('[data-time]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.time === appState.filters.timeframe);
+            });
+        }
+
+        // Filter functions
+        function filterByGame(game) {
+            appState.filters.game = game;
+            localStorage.setItem('filterGame', game);
+            appState.currentPage = 1;
+            updateFilterUI();
+            loadContent();
+        }
+
+        function filterByPlatform(platform) {
+            appState.filters.platform = platform;
+            localStorage.setItem('filterPlatform', platform);
+            appState.currentPage = 1;
+            updateFilterUI();
+            loadContent();
+        }
+
+        function filterByTime(timeframe) {
+            appState.filters.timeframe = timeframe;
+            localStorage.setItem('filterTime', timeframe);
+            appState.currentPage = 1;
+            updateFilterUI();
+            loadContent();
+        }
+
+        // Theme functions
+        function toggleTheme() {
+            appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', appState.theme);
+            localStorage.setItem('theme', appState.theme);
+            updateThemeUI();
+        }
+
+        function changeGameTheme(theme) {
+            appState.gameTheme = theme;
+            document.body.setAttribute('data-game-theme', theme);
+            localStorage.setItem('gameTheme', theme);
+        }
+
+        function updateThemeUI() {
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (appState.theme === 'dark') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            }
+        }
+
+        // Search functionality
+        function toggleSearch() {
+            const searchBar = document.getElementById('searchBar');
+            searchBar.classList.toggle('active');
+            if (searchBar.classList.contains('active')) {
+                searchBar.focus();
+            } else {
+                searchBar.blur();
+            }
+        }
+
+        function handleSearch(event) {
+            appState.searchQuery = event.target.value;
+            
+            // Debounce search
+            clearTimeout(appState.searchTimeout);
+            appState.searchTimeout = setTimeout(() => {
+                appState.currentPage = 1;
+                loadContent();
+            }, 300);
+
+            if (event.key === 'Enter') {
+                clearTimeout(appState.searchTimeout);
+                appState.currentPage = 1;
+                loadContent();
+            }
+        }
+
+        // Newsletter functions
+        function openNewsletterModal() {
+            const modal = document.getElementById('newsletterModal');
+            modal.classList.add('active');
+        }
+
+        function closeNewsletterModal() {
+            const modal = document.getElementById('newsletterModal');
+            modal.classList.remove('active');
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById('emailInput').value;
+            const selectedGames = [];
+            
+            document.querySelectorAll('#gameCheckboxes input[type="checkbox"]:checked').forEach(checkbox => {
+                selectedGames.push(checkbox.value);
+            });
+
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            if (selectedGames.length === 0) {
+                alert('Please select at least one game to subscribe to.');
+                return;
+            }
+
+            // Here you would integrate with Beehiiv
+            // For now, show a success message
+            alert(`Thank you for subscribing! You'll receive updates for: ${selectedGames.join(', ')}`);
+            closeNewsletterModal();
+            
+            // Clear form
+            document.getElementById('emailInput').value = '';
+            document.querySelectorAll('#gameCheckboxes input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+
+        // Infinite scroll
+        function setupInfiniteScroll() {
+            window.addEventListener('scroll', () => {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
+                    if (!appState.isLoading && appState.hasMoreContent) {
+                        appState.currentPage++;
+                        loadContent();
+                    }
+                }
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('newsletterModal').addEventListener('click', (e) => {
+            if (e.target.id === 'newsletterModal') {
+                closeNewsletterModal();
+            }
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', (e) => {
+            const searchContainer = document.querySelector('.search-container');
+            const searchBar = document.getElementById('searchBar');
+            
+            if (!searchContainer.contains(e.target) && searchBar.classList.contains('active')) {
+                searchBar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
