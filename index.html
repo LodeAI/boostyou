@@ -796,8 +796,6 @@
         }
     }
 </style>
-```
-
 </head>
 <body data-game-theme="default">
     <!-- Top Bar -->
@@ -810,8 +808,6 @@
             </div>
             <input type="text" class="search-bar" id="searchBar" placeholder="Search news..." onkeyup="handleSearch(event)">
         </div>
-
-```
     <!-- FIXED: Logo container with your custom text logo -->
     <div class="logo-container">
         <div class="logo-text" onclick="resetToDefault()">BOOSTYOU.AI</div>
@@ -1486,7 +1482,7 @@
             
             const result = await response.json();
             
-            alert('Successfully subscribed! Check your email for confirmation.');
+            alert('Successfully subscribed!');
             localStorage.setItem('newsletterSubscribed', 'true');
             appState.isSubscribed = true;
             document.getElementById('newsletterBtn').classList.add('hidden');
