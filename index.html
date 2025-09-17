@@ -930,11 +930,14 @@
         // Apply saved theme
         document.body.setAttribute('data-game-theme', appState.gameTheme);
         
-        // Hide newsletter button if already subscribed
+        // Handle newsletter subscription status and apply body class
         if (appState.isSubscribed) {
             document.getElementById('newsletterBtn').classList.add('hidden');
+            document.body.classList.add('newsletter-subscribed');
+        } else {
+            document.body.classList.remove('newsletter-subscribed');
         }
-
+    
         try {
             await loadAllContentData();
             populateGameFilters();
@@ -1462,8 +1465,8 @@
     function closeNewsletterModal() {
         document.getElementById('newsletterModal').classList.remove('active');
     }
-
-    // FIXED: Newsletter subscription with proper error handling
+    
+    // Updated newsletter subscription function
     async function subscribeNewsletter() {
         const email = document.getElementById('emailInput').value.trim();
         const games = Array.from(document.querySelectorAll('#gameCheckboxes input:checked')).map(i => i.value);
@@ -1477,7 +1480,7 @@
             alert('Please select at least one game.');
             return;
         }
-
+    
         try {
             const response = await fetch('/api/subscribe', {
                 method: 'POST',
@@ -1497,7 +1500,11 @@
             alert('Successfully subscribed!');
             localStorage.setItem('newsletterSubscribed', 'true');
             appState.isSubscribed = true;
+            
+            // Hide button and add body class for spacing adjustment
             document.getElementById('newsletterBtn').classList.add('hidden');
+            document.body.classList.add('newsletter-subscribed');
+            
             closeNewsletterModal();
             
             // Clear form
