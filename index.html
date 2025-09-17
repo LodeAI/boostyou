@@ -311,7 +311,7 @@
 
     /* Header Section */
     .header-section {
-        margin-top: 140px;
+        margin-top: 140px; /* Default when newsletter button is visible */
         margin-bottom: 30px;
         padding: 25px;
         background: var(--secondary-bg);
@@ -321,6 +321,15 @@
         margin-right: 20px;
         box-shadow: var(--shadow);
         backdrop-filter: blur(10px);
+        transition: var(--transition);
+    }
+    /* When newsletter button is hidden, reduce top margin */
+    body.newsletter-subscribed .header-section {
+        margin-top: 90px; /* Only account for top bar height */
+    }
+    /* Newsletter Button - Updated hidden class */
+    .newsletter-btn.hidden {
+        display: none !important;
     }
 
     .filter-group {
@@ -776,6 +785,9 @@
             padding: 15px;
             margin-left: 10px;
             margin-right: 10px;
+        }
+        body.newsletter-subscribed .header-section {
+        margin-top: 80px; /* Reduced mobile spacing when subscribed */
         }
 
         .filter-buttons {
