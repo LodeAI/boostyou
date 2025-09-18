@@ -1086,7 +1086,7 @@
         if (appState.searchQuery) {
             filtered = filtered.filter(item =>
                 item.title.toLowerCase().includes(appState.searchQuery.toLowerCase()) ||
-                (item.text && item.text.toLowerCase().includes(appState.searchQuery.toLowerCase()))
+                (item.description && item.description.toLowerCase().includes(appState.searchQuery.toLowerCase()))
             );
         }
 
@@ -1270,7 +1270,7 @@
                     </div>
                     ${item.text ? `
                         <div class="article-text">
-                            ${escapeHtml(item.text.substring(0, 200))}${item.text.length > 200 ? '...' : ''}
+                            ${escapeHtml(item.description.substring(0, 200))}${item.description.length > 200 ? '...' : ''}
                         </div>
                     ` : ''}
                     <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="read-more">
