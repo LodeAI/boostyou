@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BOOSTYOU.AI — Admin</title>
+<title>BOOSTYOU.AI – Admin</title>
 
 <!--
   Full Admin Page
@@ -67,6 +67,11 @@
   input[type=text], input[type=url], input[type=password], input[type=datetime-local], select, textarea {
     width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.02); color:#fff;
     font-size:14px;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
   }
   .small { font-size:12px; color:var(--muted); }
 
@@ -148,7 +153,7 @@
       <div class="brand">
         <div class="logo">BY</div>
         <div>
-          <div class="title">BOOSTYOU.AI — Admin</div>
+          <div class="title">BOOSTYOU.AI – Admin</div>
           <div class="subtitle">Manage content_YYYY_MM.json • Add / Edit / Delete • Commits to GitHub</div>
         </div>
       </div>
@@ -217,11 +222,11 @@
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;">
             <div>
               <label>Title</label>
-              <input id="titleInput" type="text" placeholder="GTA6 trailer leak" />
+              <input id="titleInput" type="text" />
             </div>
             <div>
               <label>Games (comma separated)</label>
-              <input id="gamesInput" type="text" placeholder="GTA6,BF6" />
+              <input id="gamesInput" type="text" />
             </div>
             <div>
               <label>Platform</label>
@@ -232,9 +237,8 @@
             </div>
             <div>
               <label>URL</label>
-              <input id="urlInput" type="url" placeholder="https://..." />
+              <input id="urlInput" type="url" />
             </div>
-
             <div>
               <label>Date & Time (local)</label>
               <input id="dateInput" type="datetime-local" />
@@ -243,6 +247,12 @@
               <button id="addBtn" class="btn btn-primary">Add Content</button>
               <button id="clearBtn" class="btn btn-ghost">Clear</button>
             </div>
+          </div>
+
+          <!-- Description field spans full width -->
+          <div style="margin-top:12px;">
+            <label>Description</label>
+            <textarea id="descriptionInput" placeholder="Enter article content or description..."></textarea>
           </div>
         </div>
 
@@ -328,6 +338,10 @@
         <div>
           <label>Date & Time (local)</label>
           <input id="editDate" type="datetime-local" />
+        </div>
+        <div>
+          <label>Description</label>
+          <textarea id="editDescription" placeholder="Enter article content or description..."></textarea>
         </div>
 
         <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:6px;">
@@ -467,6 +481,7 @@
   const platformInput = qs('platformInput');
   const urlInput = qs('urlInput');
   const dateInput = qs('dateInput');
+  const descriptionInput = qs('descriptionInput');
   const addBtn = qs('addBtn');
   const clearBtn = qs('clearBtn');
   const searchInput = qs('searchInput');
@@ -482,6 +497,7 @@
   const editPlatform = qs('editPlatform');
   const editUrl = qs('editUrl');
   const editDate = qs('editDate');
+  const editDescription = qs('editDescription');
   const saveBtn = qs('saveBtn');
   const deleteBtn = qs('deleteBtn');
   const cancelBtn = qs('cancelBtn');
@@ -690,6 +706,7 @@
       if (!search) return true;
       if ((e.title||'').toLowerCase().includes(search)) return true;
       if ((e.url||'').toLowerCase().includes(search)) return true;
+      if ((e.description||'').toLowerCase().includes(search)) return true;
       if (Array.isArray(e.game) && e.game.join(',').toLowerCase().includes(search)) return true;
       return false;
     });
@@ -737,6 +754,7 @@
     const games = (gamesInput.value || '').split(',').map(s => s.trim()).filter(Boolean);
     const platform = platformInput.value;
     const url = (urlInput.value || '').trim();
+    const description = descriptionInput.value || '';
     const dateVal = dateInput.value;
 
     if (!title || !url) {
@@ -745,7 +763,7 @@
     const isoDate = dateVal ? new Date(dateVal).toISOString() : new Date().toISOString();
     const entry = {
       id: Date.now().toString(),
-      title, game: games, platform, url, date: isoDate
+      title, game: games, platform, url, date: isoDate, description
     };
 
     // current month file (UTC)
@@ -763,7 +781,7 @@
         await writeFileToGit(filename, [entry], null, `Create ${filename} — initial entry: ${title}`);
       }
       // clear inputs
-      titleInput.value = ''; gamesInput.value = ''; urlInput.value = ''; dateInput.value = isoLocalNowInput();
+      titleInput.value = ''; gamesInput.value = ''; urlInput.value = ''; descriptionInput.value = ''; dateInput.value = isoLocalNowInput();
       // refresh
       await refreshAllFiles();
       status('Entry added and committed', true);
@@ -808,6 +826,7 @@
     qs('editGames').value = (Array.isArray(entry.game) ? entry.game.join(',') : entry.game || '');
     qs('editPlatform').value = entry.platform || 'Article';
     qs('editUrl').value = entry.url || '';
+    qs('editDescription').value = entry.description || '';
     // convert ISO to datetime-local
     try {
       const dt = new Date(entry.date || new Date().toISOString());
@@ -838,6 +857,7 @@
       game: (editGames.value || '').split(',').map(s=>s.trim()).filter(Boolean),
       platform: editPlatform.value,
       url: (editUrl.value || '').trim(),
+      description: editDescription.value || '',
       date: new Date(editDate.value).toISOString()
     };
     arr[index] = updated;
@@ -926,7 +946,13 @@
   qs('refreshBtn') && qs('refreshBtn').addEventListener('click', () => refreshAllFiles());
 
   addBtn.addEventListener('click', addEntry);
-  clearBtn.addEventListener('click', () => { titleInput.value=''; gamesInput.value=''; urlInput.value=''; dateInput.value = isoLocalNowInput(); });
+  clearBtn.addEventListener('click', () => { 
+    titleInput.value=''; 
+    gamesInput.value=''; 
+    urlInput.value=''; 
+    descriptionInput.value=''; 
+    dateInput.value = isoLocalNowInput(); 
+  });
 
   searchInput.addEventListener('input', () => renderEntries(state.mergedEntries));
   qsa('.plat').forEach(c => c.addEventListener('change', () => renderEntries(state.mergedEntries)));
