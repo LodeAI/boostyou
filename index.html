@@ -1268,7 +1268,7 @@
                         <span class="platform-badge">${item.platform}</span>
                         <span>${timeAgo}</span>
                     </div>
-                    ${item.text ? `
+                    ${item.description ? `
                         <div class="article-text">
                             ${escapeHtml(item.description.substring(0, 200))}${item.description.length > 200 ? '...' : ''}
                         </div>
